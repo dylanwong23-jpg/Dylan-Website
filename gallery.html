@@ -1,0 +1,1231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Agent Gallery — Automation Agent Academy</title>
+<meta name="description" content="Browse 200k+ agent onboarding flows, dashboards, and automations. Built by the Automation Agent Academy community." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:       '#0A0908',
+          coal:      '#11100E',
+          char:      '#1A1714',
+          smoke:     '#241F1A',
+          rule:      '#2C2620',
+          gold:      '#C6A559',
+          'gold-2':  '#E6B979',
+          'gold-3':  '#F5D58B',
+          'gold-dim':'#8E7740',
+          cream:     '#F5EBD8',
+          dim:       '#A89F8E',
+        },
+        fontFamily: { sans: ['Montserrat','system-ui','sans-serif'] },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#0A0908; --coal:#11100E; --char:#1A1714;
+    --gold-start:#C6A559; --gold-end:#E6B979; --gold-bright:#F5D58B;
+    --cream:#F5EBD8;
+  }
+
+  html, body{ background: var(--ink); color: var(--cream); }
+  body{
+    font-family: 'Montserrat', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Stage with gold ambient */
+  .stage{
+    background:
+      radial-gradient(40% 30% at 100% 0%, rgba(230,185,121,.08), transparent 60%),
+      radial-gradient(40% 40% at 0% 50%, rgba(198,165,89,.06), transparent 65%),
+      var(--ink);
+  }
+
+  /* Grain */
+  .grain::before{
+    content:""; position:fixed; inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.65  0 0 0 0 0.35  0 0 0 0 0.28 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity:.15; mix-blend-mode:overlay; pointer-events:none; z-index:90;
+  }
+
+  .gold-text{
+    background: linear-gradient(135deg, #C6A559 0%, #F5D58B 50%, #E6B979 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .btn-gold{
+    background: linear-gradient(135deg, #C6A559 0%, #F5D58B 50%, #E6B979 100%);
+    color:#1A1410;
+    transition: transform .25s cubic-bezier(.2,.8,.2,1), filter .25s ease, box-shadow .25s ease;
+    box-shadow: 0 1px 0 rgba(255,220,150,.4) inset, 0 6px 18px -6px rgba(198,165,89,.55);
+  }
+  .btn-gold:hover{ transform: translateY(-1px); filter: brightness(1.05); }
+  .btn-gold:focus-visible{ outline:2px solid #F5D58B; outline-offset:3px; }
+
+  .btn-ghost{
+    border:1px solid rgba(198,165,89,.35); color:#F5EBD8;
+    transition: background-color .2s ease, border-color .2s ease;
+    background: transparent;
+  }
+  .btn-ghost:hover{ background: rgba(198,165,89,.08); border-color: rgba(245,213,139,.6); }
+  .btn-ghost:focus-visible{ outline:2px solid #F5D58B; outline-offset:3px; }
+
+  .btn-dark{
+    background:#0A0908; color:#F5D58B; border:1px solid rgba(198,165,89,.6);
+    transition: background-color .2s, color .2s;
+  }
+  .btn-dark:hover{ background:#1A1714; color:#F5EBD8; }
+
+  .label-mono{
+    font-weight:500; font-size:11px; letter-spacing:.18em;
+    text-transform:uppercase; color:#A89F8E;
+  }
+
+  ::selection{ background:#F5D58B; color:#1A1410; }
+
+  /* Card row */
+  .row-card{
+    background: linear-gradient(180deg, rgba(26,23,20,.85) 0%, rgba(17,16,14,.85) 100%);
+    border:1px solid rgba(198,165,89,.18);
+    border-radius:18px;
+    box-shadow: 0 1px 0 rgba(245,213,139,.05) inset, 0 24px 48px -28px rgba(0,0,0,.7);
+  }
+
+  /* Phone frame */
+  .phone{
+    width: 196px;
+    height: 414px;
+    background: linear-gradient(180deg, #FAF6EE 0%, #F1E9D6 100%);
+    border-radius: 28px;
+    border:1px solid rgba(198,165,89,.32);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.6) inset,
+      0 0 0 6px rgba(15,12,8,.55),
+      0 0 0 7px rgba(198,165,89,.22),
+      0 18px 40px -16px rgba(0,0,0,.7);
+    overflow:hidden;
+    position:relative;
+    color:#1A1410;
+    flex-shrink:0;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1);
+  }
+  .phone:hover{ transform: translateY(-4px); }
+  .phone .notch{
+    position:absolute; top:7px; left:50%; transform:translateX(-50%);
+    width:78px; height:18px; background:#0A0908; border-radius:14px; z-index:5;
+  }
+  .phone .status{
+    position:absolute; top:11px; left:0; right:0;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:0 18px; font-size:9px; font-weight:600; color:#1A1410; z-index:6;
+  }
+  .phone-content{ padding-top: 36px; height:100%; display:flex; flex-direction:column; }
+
+  /* Phone-screen primary button */
+  .p-btn{
+    background: linear-gradient(135deg, #C6A559 0%, #F5D58B 50%, #E6B979 100%);
+    color:#1A1410;
+    border-radius: 999px;
+    font-weight:700;
+    font-size:11px;
+    padding:9px 14px;
+    text-align:center;
+    box-shadow: 0 1px 0 rgba(255,220,150,.55) inset, 0 6px 14px -4px rgba(198,165,89,.5);
+  }
+  .p-btn-ghost{
+    background:#0A0908; color:#F5D58B;
+    border:1px solid rgba(198,165,89,.4);
+    border-radius:999px;
+    font-weight:600; font-size:11px; padding:9px 14px; text-align:center;
+  }
+  .p-btn-light{
+    background:#1A1410; color:#F5EBD8;
+    border-radius:8px; font-weight:600; font-size:10.5px;
+    padding:9px 12px; text-align:center;
+  }
+
+  /* Pro lock overlay */
+  .pro-lock{
+    position:absolute; inset:0; z-index:8;
+    backdrop-filter: blur(7px);
+    background:
+      linear-gradient(180deg, rgba(10,9,8,.18) 0%, rgba(10,9,8,.78) 75%, rgba(10,9,8,.92) 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
+    padding-bottom:18px; gap:10px;
+  }
+  .pro-lock p{ color:#F5D58B; font-weight:700; font-size:12px; letter-spacing:.08em; }
+
+  /* Horizontal scrollbar styling for screens strip */
+  .screens-strip::-webkit-scrollbar{ height:8px; }
+  .screens-strip::-webkit-scrollbar-track{ background: transparent; }
+  .screens-strip::-webkit-scrollbar-thumb{
+    background: linear-gradient(90deg, #C6A559, #E6B979);
+    border-radius:8px;
+  }
+  .screens-strip{ scrollbar-color: #C6A559 transparent; scrollbar-width: thin; }
+
+  /* Soft fade on edges */
+  .fade-edges{
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+  }
+
+  /* Right edge sticky tab */
+  .edge-tab{
+    position: fixed; right:0; top:50%; transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    background: linear-gradient(180deg, #C6A559 0%, #F5D58B 50%, #E6B979 100%);
+    color:#1A1410; font-weight:800; letter-spacing:.22em;
+    padding:18px 8px; border-radius: 8px 0 0 8px;
+    z-index:60; font-size:12px; text-transform:uppercase;
+    box-shadow: 0 8px 24px -8px rgba(198,165,89,.55);
+  }
+
+  /* Sidebar mini icon tile (for app icon) */
+  .app-tile{
+    width:48px; height:48px; border-radius:12px;
+    background: linear-gradient(180deg, #2A2218 0%, #1A1410 100%);
+    border:1px solid rgba(198,165,89,.35);
+    display:grid; place-items:center;
+    box-shadow: 0 1px 0 rgba(245,213,139,.08) inset, 0 4px 14px -4px rgba(198,165,89,.3);
+  }
+  .app-tile img{ width:30px; height:30px; }
+
+  /* Stars */
+  .stars{ letter-spacing:1px; color:#E6B979; font-size:11px; }
+
+  /* Dropdown arrow */
+  .arrow-down{ display:inline-block; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-top:5px solid currentColor; }
+
+  /* Search input */
+  .search-input{
+    background: rgba(245,235,216,.04);
+    border:1px solid rgba(198,165,89,.22);
+    color: #F5EBD8;
+    border-radius:999px;
+  }
+  .search-input::placeholder{ color: #A89F8E; }
+  .search-input:focus{ outline:none; border-color: rgba(245,213,139,.6); background: rgba(245,235,216,.06); }
+
+  /* Tabs */
+  .tab-active{
+    background: linear-gradient(135deg, #C6A559 0%, #E6B979 100%);
+    color:#1A1410; font-weight:700;
+  }
+
+  /* Reveal */
+  @keyframes reveal { from{opacity:0; transform: translateY(8px);} to{opacity:1; transform: translateY(0);} }
+  .reveal{ opacity:0; animation: reveal .7s cubic-bezier(.2,.7,.2,1) forwards; }
+  .delay-1{ animation-delay:.05s } .delay-2{ animation-delay:.15s } .delay-3{ animation-delay:.28s }
+
+  /* Spider chart label */
+  .radar-label{ font-size:8px; fill:#A89F8E; font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
+
+  /* Pulse */
+  @keyframes pulse-dot{ 0%,100%{box-shadow:0 0 0 0 rgba(245,213,139,.6);} 50%{box-shadow:0 0 0 5px rgba(245,213,139,0);} }
+  .pulse-dot{ animation: pulse-dot 2.4s ease-out infinite; }
+
+  /* Hide scrollbar in app rail */
+  .no-scrollbar::-webkit-scrollbar{ display:none; }
+  .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+</style>
+</head>
+<body class="stage grain">
+
+<!-- ============== TOP NAV ============== -->
+<header class="sticky top-0 z-50 border-b border-rule/80 backdrop-blur-md" style="background: rgba(10,9,8,.75);">
+  <div class="max-w-[1600px] mx-auto px-5 lg:px-8 py-3.5 flex items-center gap-4">
+
+    <!-- Brand -->
+    <a href="#" class="flex items-center gap-2.5 shrink-0">
+      <img src="Brand_assets/Tester%20Logo.png" alt="" class="w-9 h-9" style="filter: drop-shadow(0 2px 10px rgba(245,213,139,.45));"/>
+      <span class="text-[16px] font-extrabold tracking-[-0.015em] text-cream leading-none hidden sm:flex items-baseline gap-1.5">
+        <span class="gold-text">agent</span><span class="text-cream">gallery</span>
+      </span>
+    </a>
+
+    <!-- Pill badge -->
+    <a href="#" class="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[11.5px] font-semibold tracking-[.02em] text-gold-2 border border-gold/30 bg-gold/[.06] hover:bg-gold/10 transition-colors">
+      <span>Build agents instantly</span>
+      <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+    </a>
+
+    <!-- Search + filters (center) -->
+    <div class="flex-1 flex items-center justify-center gap-2.5">
+      <label class="relative w-full max-w-[440px]">
+        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gold-2 pointer-events-none">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>
+        </span>
+        <input type="search" placeholder="Search 200k+ agent flows" class="search-input w-full pl-10 pr-4 py-2.5 text-[13px] font-medium" />
+      </label>
+
+      <button class="hidden md:inline-flex btn-ghost items-center gap-2 px-3.5 py-2.5 rounded-full text-[12.5px] font-semibold">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M6 12h12M10 18h4"/></svg>
+        Filter
+      </button>
+      <button class="hidden md:inline-flex btn-ghost items-center gap-2 px-3.5 py-2.5 rounded-full text-[12.5px] font-semibold">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+        Downloads
+        <span class="arrow-down -mr-1"></span>
+      </button>
+
+      <!-- Device toggle -->
+      <div class="hidden lg:inline-flex items-center rounded-full border border-gold/25 overflow-hidden">
+        <button title="Mobile" class="px-3 py-2.5 text-gold-3 bg-gold/[.08]">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M11 18h2"/></svg>
+        </button>
+        <button title="Desktop" class="px-3 py-2.5 text-dim hover:text-cream transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M9 21h6M12 17v4"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <a href="#" class="btn-dark px-4 py-2.5 rounded-full text-[12.5px] font-bold tracking-[.04em] hidden sm:inline-flex items-center gap-2">
+      <svg width="11" height="11" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6V4a3 3 0 016 0v2M3 6h8v6a1 1 0 01-1 1H4a1 1 0 01-1-1V6z"/></svg>
+      Unlock Pro
+    </a>
+    <button aria-label="Menu" class="w-10 h-10 grid place-items-center rounded-full border border-gold/25 text-cream hover:bg-gold/10 transition-colors">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+
+  <!-- Sub-navigation: categories -->
+  <div class="border-t border-rule/60">
+    <div class="max-w-[1600px] mx-auto px-5 lg:px-8 py-2.5 flex items-center gap-2 overflow-x-auto no-scrollbar">
+      <button class="shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gold/15 text-gold-3 border border-gold/30 text-[11.5px] font-bold tracking-[.04em]">
+        ✦ Trending
+      </button>
+      <button class="shrink-0 inline-flex items-center px-3.5 py-1.5 rounded-full text-cream/70 hover:text-cream hover:bg-cream/[.04] text-[11.5px] font-semibold tracking-[.02em] transition-colors">Onboarding</button>
+      <button class="shrink-0 inline-flex items-center px-3.5 py-1.5 rounded-full text-cream/70 hover:text-cream hover:bg-cream/[.04] text-[11.5px] font-semibold tracking-[.02em] transition-colors">Sign-up</button>
+      <button class="shrink-0 inline-flex items-center px-3.5 py-1.5 rounded-full text-cream/70 hover:text-cream hover:bg-cream/[.04] text-[11.5px] font-semibold tracking-[.02em] transition-colors">Paywalls</button>
+      <button class="shrink-0 inline-flex items-center px-3.5 py-1.5 rounded-full text-cream/70 hover:text-cream hover:bg-cream/[.04] text-[11.5px] font-semibold tracking-[.02em] transition-colors">Empty states</button>
+      <button class="shrink-0 inline-flex items-center px-3.5 py-1.5 rounded-full text-cream/70 hover:text-cream hover:bg-cream/[.04] text-[11.5px] font-semibold tracking-[.02em] transition-colors">Settings</button>
+      <button class="shrink-0 inline-flex items-center px-3.5 py-1.5 rounded-full text-cream/70 hover:text-cream hover:bg-cream/[.04] text-[11.5px] font-semibold tracking-[.02em] transition-colors">Permissions</button>
+      <button class="shrink-0 inline-flex items-center px-3.5 py-1.5 rounded-full text-cream/70 hover:text-cream hover:bg-cream/[.04] text-[11.5px] font-semibold tracking-[.02em] transition-colors">Errors</button>
+      <button class="shrink-0 inline-flex items-center px-3.5 py-1.5 rounded-full text-cream/70 hover:text-cream hover:bg-cream/[.04] text-[11.5px] font-semibold tracking-[.02em] transition-colors">Pricing</button>
+    </div>
+  </div>
+</header>
+
+<!-- ============== EDGE TAB ============== -->
+<a href="#" class="edge-tab">flows</a>
+
+<!-- ============== MAIN ============== -->
+<main class="max-w-[1600px] mx-auto px-5 lg:px-8 py-6 space-y-6">
+
+  <!-- Hero strip -->
+  <div class="flex flex-wrap items-end justify-between gap-4 pt-2 pb-4 border-b border-rule/60 reveal delay-1">
+    <div>
+      <h1 class="text-[28px] md:text-[34px] font-extrabold tracking-[-0.02em] text-cream leading-tight">
+        <span class="gold-text">200,418</span> agent screens.
+        <span class="text-cream/55 font-light italic">Reverse-engineered.</span>
+      </h1>
+      <p class="mt-2 text-[13px] text-dim font-medium max-w-2xl">
+        The largest gallery of production agent UIs — onboarding, paywalls, settings, error states.
+        Filter by pattern. Download the assets. Cite the source in your PRDs.
+      </p>
+    </div>
+    <div class="flex items-center gap-2 label-mono">
+      <span>Sort</span>
+      <button class="btn-ghost rounded-full px-3.5 py-2 text-[12px] font-semibold inline-flex items-center gap-2">Most popular <span class="arrow-down"></span></button>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- ROW 1 — Invoice Reconciler                                      -->
+  <!-- ============================================================== -->
+  <article class="row-card p-5 lg:p-6 grid grid-cols-12 gap-5 lg:gap-6 reveal delay-2">
+
+    <!-- Sidebar -->
+    <aside class="col-span-12 lg:col-span-3 xl:col-span-2 flex flex-col">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-3">
+          <span class="app-tile">
+            <img src="Brand_assets/Tester%20Logo.png" alt="" />
+          </span>
+          <div>
+            <p class="text-[14px] font-extrabold text-cream leading-tight">Invoice Reconciler</p>
+            <p class="text-[11px] text-dim font-medium leading-tight mt-0.5">Auto-match · NetSuite</p>
+          </div>
+        </div>
+        <button aria-label="Save" class="text-gold-2/70 hover:text-gold-3 transition-colors mt-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14v17l-7-4-7 4V4z"/></svg>
+        </button>
+      </div>
+
+      <dl class="mt-5 space-y-3 text-[12px] border-t border-rule/60 pt-4">
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Rating</dt>
+          <dd class="flex items-center gap-1"><span class="stars">★★★★★</span><span class="text-cream/60 ml-1">4.9</span></dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Revenue/mo</dt>
+          <dd class="text-cream font-bold">$1.2M</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Installs/mo</dt>
+          <dd class="text-cream font-bold">14k</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Onboarding</dt>
+          <dd class="text-cream font-bold">8 steps</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Developer</dt>
+          <dd class="text-gold-2 font-semibold">Ramp</dd>
+        </div>
+      </dl>
+
+      <!-- Onboarding Radar -->
+      <div class="mt-5 border-t border-rule/60 pt-4">
+        <p class="label-mono mb-2">Onboarding Radar</p>
+        <svg viewBox="0 0 200 200" class="w-full h-auto">
+          <defs>
+            <radialGradient id="radarFill1" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#F5D58B" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="#C6A559" stop-opacity=".15"/>
+            </radialGradient>
+          </defs>
+          <g transform="translate(100,100)">
+            <!-- web rings -->
+            <polygon points="0,-78 67.5,-39 67.5,39 0,78 -67.5,39 -67.5,-39" fill="none" stroke="#3B3127" stroke-width="1"/>
+            <polygon points="0,-58 50,-29 50,29 0,58 -50,29 -50,-29" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <polygon points="0,-38 33,-19 33,19 0,38 -33,19 -33,-19" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <polygon points="0,-18 15.5,-9 15.5,9 0,18 -15.5,9 -15.5,-9" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <!-- spokes -->
+            <line x1="0" y1="-78" x2="0" y2="78" stroke="#2C2620"/>
+            <line x1="-67.5" y1="-39" x2="67.5" y2="39" stroke="#2C2620"/>
+            <line x1="67.5" y1="-39" x2="-67.5" y2="39" stroke="#2C2620"/>
+            <!-- data shape -->
+            <polygon points="0,-72 60,-22 55,32 0,68 -42,30 -50,-26"
+                     fill="url(#radarFill1)" stroke="#F5D58B" stroke-width="1.5"/>
+            <!-- dots -->
+            <circle cx="0"   cy="-72" r="2.4" fill="#F5D58B"/>
+            <circle cx="60"  cy="-22" r="2.4" fill="#F5D58B"/>
+            <circle cx="55"  cy="32"  r="2.4" fill="#F5D58B"/>
+            <circle cx="0"   cy="68"  r="2.4" fill="#F5D58B"/>
+            <circle cx="-42" cy="30"  r="2.4" fill="#F5D58B"/>
+            <circle cx="-50" cy="-26" r="2.4" fill="#F5D58B"/>
+            <!-- labels -->
+            <text x="0"   y="-86" text-anchor="middle" class="radar-label">Speed</text>
+            <text x="78"  y="-40" text-anchor="start"  class="radar-label">Trust</text>
+            <text x="78"  y="48"  text-anchor="start"  class="radar-label">Eval</text>
+            <text x="0"   y="92"  text-anchor="middle" class="radar-label">Cost</text>
+            <text x="-78" y="48"  text-anchor="end"    class="radar-label">UX</text>
+            <text x="-78" y="-40" text-anchor="end"    class="radar-label">Tools</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Tabs / Buttons -->
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <button class="tab-active inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-[11.5px]">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+          App Video
+        </button>
+        <button class="btn-ghost inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-[11.5px] font-semibold">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          Analysis
+        </button>
+      </div>
+
+      <div class="mt-3 flex items-center justify-end gap-1.5 text-gold-2/70">
+        <button aria-label="Copy" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+        </button>
+        <button aria-label="Layers" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,3 22,8 12,13 2,8"/><polyline points="2,13 12,18 22,13"/></svg>
+        </button>
+        <button aria-label="Download" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Screens strip -->
+    <div class="col-span-12 lg:col-span-9 xl:col-span-10 relative">
+      <div class="screens-strip fade-edges flex gap-3.5 overflow-x-auto pb-3 pt-1">
+
+        <!-- SCREEN 1 — welcome -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5 justify-between items-center text-center">
+            <div class="mt-12 flex flex-col items-center gap-3">
+              <img src="Brand_assets/Tester%20Logo.png" class="w-14 h-14" alt=""/>
+              <p class="text-[18px] font-extrabold tracking-[-0.02em] mt-1">Reconciler</p>
+              <p class="text-[10.5px] text-[#5C4F3D] leading-[1.5] max-w-[150px]">
+                Match invoices automatically. Catch what your team would miss.
+              </p>
+            </div>
+            <div class="w-full space-y-2">
+              <div class="p-btn">Get Started</div>
+              <div class="text-[10px] font-semibold text-[#7A6C56]">Sign in</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCREEN 2 — sign in choices -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5 justify-between">
+            <div class="mt-10">
+              <p class="text-[16px] font-extrabold tracking-[-0.02em] leading-tight">Let's get started</p>
+              <p class="text-[10px] text-[#5C4F3D] mt-1.5 leading-[1.5]">Continue with your work account.</p>
+            </div>
+            <div class="w-full space-y-2 mb-1">
+              <div class="p-btn-light">Continue with Apple</div>
+              <div class="p-btn-light">Continue with Google</div>
+              <div class="p-btn-light" style="background:#FAF6EE;color:#1A1410;border:1px solid #D9CFB6;">Sign up</div>
+              <div class="p-btn-light" style="background:transparent;color:#1A1410;border:1px solid #D9CFB6;">Log in</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCREEN 3 — connect data -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5">
+            <div class="mt-10">
+              <p class="text-[10px] font-bold uppercase tracking-[.18em] text-[#8E7740]">Step 1 of 8</p>
+              <p class="text-[17px] font-extrabold tracking-[-0.02em] leading-tight mt-1.5">Connect your accounting</p>
+              <p class="text-[10px] text-[#5C4F3D] mt-2 leading-[1.5]">We pull invoices read-only. Nothing leaves your stack.</p>
+            </div>
+            <div class="space-y-2 mt-4">
+              <div class="flex items-center gap-2 p-2.5 rounded-lg border border-[#D9CFB6] bg-white/60">
+                <span class="w-7 h-7 rounded bg-[#1A1410] grid place-items-center text-[#F5D58B] text-[10px] font-bold">N</span>
+                <span class="text-[11px] font-semibold flex-1">NetSuite</span>
+                <span class="text-[10px] text-[#8E7740] font-bold">Connect</span>
+              </div>
+              <div class="flex items-center gap-2 p-2.5 rounded-lg border border-[#D9CFB6] bg-white/60">
+                <span class="w-7 h-7 rounded bg-[#1A1410] grid place-items-center text-[#F5D58B] text-[10px] font-bold">Q</span>
+                <span class="text-[11px] font-semibold flex-1">QuickBooks</span>
+                <span class="text-[10px] text-[#8E7740] font-bold">Connect</span>
+              </div>
+              <div class="flex items-center gap-2 p-2.5 rounded-lg border border-[#D9CFB6] bg-white/60">
+                <span class="w-7 h-7 rounded bg-[#1A1410] grid place-items-center text-[#F5D58B] text-[10px] font-bold">X</span>
+                <span class="text-[11px] font-semibold flex-1">Xero</span>
+                <span class="text-[10px] text-[#8E7740] font-bold">Connect</span>
+              </div>
+            </div>
+            <div class="mt-auto pt-4"><div class="p-btn">Continue</div></div>
+          </div>
+        </div>
+
+        <!-- SCREEN 4 — permissions modal -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5 justify-end relative" style="background:linear-gradient(180deg,#FAF6EE 0%, #E2D6BC 100%);">
+            <div class="rounded-[14px] bg-white border border-[#D9CFB6] p-3.5 mb-3" style="box-shadow:0 12px 30px -12px rgba(0,0,0,.15);">
+              <p class="text-[11.5px] font-extrabold leading-tight">"Reconciler" Wants Read Access to NetSuite</p>
+              <p class="text-[9.5px] text-[#5C4F3D] mt-1.5 leading-[1.5]">Allows the agent to list invoices, vendors, and POs. Does not grant write access.</p>
+              <div class="grid grid-cols-2 gap-2 mt-3">
+                <div class="text-center text-[10.5px] font-bold py-1.5 rounded-md border border-[#D9CFB6] text-[#1A1410]">Cancel</div>
+                <div class="text-center text-[10.5px] font-extrabold py-1.5 rounded-md" style="background:linear-gradient(135deg,#C6A559,#F5D58B);color:#1A1410;">Allow</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SCREEN 5 — first run dashboard -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10 flex items-center justify-between">
+              <p class="text-[14px] font-extrabold">Today</p>
+              <span class="text-[9px] font-bold text-[#8E7740] uppercase tracking-[.16em]">Live</span>
+            </div>
+            <div class="mt-3 rounded-xl p-3" style="background:linear-gradient(135deg,#1A1410,#241F1A);color:#F5EBD8;">
+              <p class="text-[9px] uppercase tracking-[.16em] text-[#F5D58B] font-bold">Reconciled</p>
+              <p class="text-[26px] font-extrabold mt-1 leading-none gold-text">128/142</p>
+              <p class="text-[10px] text-[#A89F8E] mt-1.5">$84,210 matched · 14 to review</p>
+            </div>
+
+            <ul class="mt-3 space-y-1.5 text-[10.5px]">
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">Invoice 4421</span><span class="font-bold text-[#1A1410]">Resolved</span></li>
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">Invoice 4422</span><span class="font-bold text-[#1A1410]">Resolved</span></li>
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">Invoice 4429</span><span class="font-bold text-[#8E7740]">Review</span></li>
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">Invoice 4430</span><span class="font-bold text-[#1A1410]">Resolved</span></li>
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">Invoice 4431</span><span class="font-bold text-[#1A1410]">Resolved</span></li>
+            </ul>
+
+            <div class="mt-auto pt-3"><div class="p-btn">Review 14</div></div>
+          </div>
+        </div>
+
+        <!-- SCREEN 6 — locked -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Eval Run #04</p>
+              <p class="text-[10px] text-[#5C4F3D] mt-1">June 12 · 96.4% pass</p>
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-3 text-[9px]">
+              <div class="rounded-lg border border-[#D9CFB6] p-2"><p class="text-[#8E7740] uppercase tracking-[.14em] font-bold">tokens</p><p class="font-extrabold text-[12px] mt-0.5">12.4k</p></div>
+              <div class="rounded-lg border border-[#D9CFB6] p-2"><p class="text-[#8E7740] uppercase tracking-[.14em] font-bold">cost</p><p class="font-extrabold text-[12px] mt-0.5">$0.07</p></div>
+              <div class="rounded-lg border border-[#D9CFB6] p-2"><p class="text-[#8E7740] uppercase tracking-[.14em] font-bold">p50</p><p class="font-extrabold text-[12px] mt-0.5">1.4s</p></div>
+              <div class="rounded-lg border border-[#D9CFB6] p-2"><p class="text-[#8E7740] uppercase tracking-[.14em] font-bold">runs</p><p class="font-extrabold text-[12px] mt-0.5">2,481</p></div>
+            </div>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+
+        <!-- SCREEN 7 — locked -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Settings</p>
+            </div>
+            <ul class="mt-3 space-y-2">
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+            </ul>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+
+        <!-- SCREEN 8 — locked -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Pricing</p>
+            </div>
+            <div class="mt-3 space-y-2">
+              <div class="h-20 rounded-lg bg-[#E5DBC2]"></div>
+              <div class="h-20 rounded-lg bg-[#E5DBC2]"></div>
+            </div>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================================================== -->
+  <!-- ROW 2 — Triage Agent                                            -->
+  <!-- ============================================================== -->
+  <article class="row-card p-5 lg:p-6 grid grid-cols-12 gap-5 lg:gap-6 reveal delay-3">
+
+    <aside class="col-span-12 lg:col-span-3 xl:col-span-2 flex flex-col">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-3">
+          <span class="app-tile">
+            <img src="Brand_assets/Tester%20Logo.png" alt="" />
+          </span>
+          <div>
+            <p class="text-[14px] font-extrabold text-cream leading-tight">Triage Agent</p>
+            <p class="text-[11px] text-dim font-medium leading-tight mt-0.5">Inbox · Tickets · SLAs</p>
+          </div>
+        </div>
+        <button aria-label="Save" class="text-gold-2/70 hover:text-gold-3 transition-colors mt-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14v17l-7-4-7 4V4z"/></svg>
+        </button>
+      </div>
+
+      <dl class="mt-5 space-y-3 text-[12px] border-t border-rule/60 pt-4">
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Rating</dt>
+          <dd class="flex items-center gap-1"><span class="stars">★★★★★</span><span class="text-cream/60 ml-1">4.8</span></dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Revenue/mo</dt>
+          <dd class="text-cream font-bold">$680k</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Installs/mo</dt>
+          <dd class="text-cream font-bold">9.2k</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Onboarding</dt>
+          <dd class="text-cream font-bold">6 steps</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Developer</dt>
+          <dd class="text-gold-2 font-semibold">Quarry Labs</dd>
+        </div>
+      </dl>
+
+      <div class="mt-5 border-t border-rule/60 pt-4">
+        <p class="label-mono mb-2">Onboarding Radar</p>
+        <svg viewBox="0 0 200 200" class="w-full h-auto">
+          <defs>
+            <radialGradient id="radarFill2" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#F5D58B" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="#C6A559" stop-opacity=".15"/>
+            </radialGradient>
+          </defs>
+          <g transform="translate(100,100)">
+            <polygon points="0,-78 67.5,-39 67.5,39 0,78 -67.5,39 -67.5,-39" fill="none" stroke="#3B3127" stroke-width="1"/>
+            <polygon points="0,-58 50,-29 50,29 0,58 -50,29 -50,-29" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <polygon points="0,-38 33,-19 33,19 0,38 -33,19 -33,-19" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <polygon points="0,-18 15.5,-9 15.5,9 0,18 -15.5,9 -15.5,-9" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <line x1="0" y1="-78" x2="0" y2="78" stroke="#2C2620"/>
+            <line x1="-67.5" y1="-39" x2="67.5" y2="39" stroke="#2C2620"/>
+            <line x1="67.5" y1="-39" x2="-67.5" y2="39" stroke="#2C2620"/>
+            <polygon points="0,-50 48,-30 62,28 0,72 -55,32 -38,-22"
+                     fill="url(#radarFill2)" stroke="#F5D58B" stroke-width="1.5"/>
+            <circle cx="0"   cy="-50" r="2.4" fill="#F5D58B"/>
+            <circle cx="48"  cy="-30" r="2.4" fill="#F5D58B"/>
+            <circle cx="62"  cy="28"  r="2.4" fill="#F5D58B"/>
+            <circle cx="0"   cy="72"  r="2.4" fill="#F5D58B"/>
+            <circle cx="-55" cy="32"  r="2.4" fill="#F5D58B"/>
+            <circle cx="-38" cy="-22" r="2.4" fill="#F5D58B"/>
+            <text x="0"   y="-86" text-anchor="middle" class="radar-label">Speed</text>
+            <text x="78"  y="-40" text-anchor="start"  class="radar-label">Trust</text>
+            <text x="78"  y="48"  text-anchor="start"  class="radar-label">Eval</text>
+            <text x="0"   y="92"  text-anchor="middle" class="radar-label">Cost</text>
+            <text x="-78" y="48"  text-anchor="end"    class="radar-label">UX</text>
+            <text x="-78" y="-40" text-anchor="end"    class="radar-label">Tools</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <button class="tab-active inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-[11.5px]">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+          App Video
+        </button>
+        <button class="btn-ghost inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-[11.5px] font-semibold">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          Analysis
+        </button>
+      </div>
+
+      <div class="mt-3 flex items-center justify-end gap-1.5 text-gold-2/70">
+        <button aria-label="Copy" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+        </button>
+        <button aria-label="Layers" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,3 22,8 12,13 2,8"/><polyline points="2,13 12,18 22,13"/></svg>
+        </button>
+        <button aria-label="Download" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <div class="col-span-12 lg:col-span-9 xl:col-span-10 relative">
+      <div class="screens-strip fade-edges flex gap-3.5 overflow-x-auto pb-3 pt-1">
+
+        <!-- Splash -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content justify-center items-center text-center px-4" style="background:radial-gradient(60% 50% at 50% 30%, rgba(245,213,139,.5), transparent 70%), linear-gradient(180deg,#1A1410, #0A0908); color:#F5EBD8;">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-16 h-16" alt=""/>
+            <p class="mt-3 text-[20px] font-extrabold tracking-[-0.02em] gold-text">Triage</p>
+            <p class="text-[10.5px] text-[#A89F8E] mt-1">by Quarry Labs</p>
+          </div>
+        </div>
+
+        <!-- Greeting -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5 justify-between">
+            <div class="mt-12">
+              <p class="text-[10px] font-bold uppercase tracking-[.18em] text-[#8E7740]">Welcome</p>
+              <p class="text-[20px] font-extrabold tracking-[-0.02em] leading-tight mt-1.5">Let's clear the inbox.</p>
+              <p class="text-[10.5px] text-[#5C4F3D] mt-2 leading-[1.6]">
+                We'll learn your tone, your SLAs, and the patterns your team handles best.
+              </p>
+            </div>
+            <div class="space-y-2">
+              <div class="p-btn">Continue</div>
+              <div class="text-[10px] font-semibold text-center text-[#7A6C56]">Skip onboarding</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tone select -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5">
+            <div class="mt-10">
+              <p class="text-[10px] font-bold uppercase tracking-[.18em] text-[#8E7740]">Step 2 of 6</p>
+              <p class="text-[16px] font-extrabold tracking-[-0.02em] leading-tight mt-1.5">Pick a tone</p>
+            </div>
+            <div class="space-y-2 mt-3">
+              <div class="p-2.5 rounded-lg border-2 text-[11px] font-bold" style="border-color:#C6A559;background:rgba(245,213,139,.18);">Crisp & friendly</div>
+              <div class="p-2.5 rounded-lg border border-[#D9CFB6] text-[11px] font-semibold">Formal</div>
+              <div class="p-2.5 rounded-lg border border-[#D9CFB6] text-[11px] font-semibold">Playful</div>
+              <div class="p-2.5 rounded-lg border border-[#D9CFB6] text-[11px] font-semibold">Match my last 50 replies</div>
+            </div>
+            <div class="mt-auto pt-3"><div class="p-btn">Continue</div></div>
+          </div>
+        </div>
+
+        <!-- SLA setup -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5">
+            <div class="mt-10">
+              <p class="text-[10px] font-bold uppercase tracking-[.18em] text-[#8E7740]">Step 3 of 6</p>
+              <p class="text-[16px] font-extrabold tracking-[-0.02em] leading-tight mt-1.5">SLAs</p>
+            </div>
+            <div class="space-y-3 mt-3 text-[10.5px]">
+              <div>
+                <p class="font-bold mb-1">First response</p>
+                <div class="h-1.5 rounded-full bg-[#E5DBC2] relative">
+                  <div class="absolute left-0 top-0 h-full rounded-full" style="width:30%; background:linear-gradient(90deg,#C6A559,#F5D58B);"></div>
+                  <div class="absolute -top-1 w-3.5 h-3.5 rounded-full bg-[#1A1410]" style="left:28%;border:2px solid #F5D58B;"></div>
+                </div>
+                <p class="text-[9.5px] text-[#8E7740] mt-1 font-semibold">~ 15 min</p>
+              </div>
+              <div>
+                <p class="font-bold mb-1">Resolution target</p>
+                <div class="h-1.5 rounded-full bg-[#E5DBC2] relative">
+                  <div class="absolute left-0 top-0 h-full rounded-full" style="width:60%; background:linear-gradient(90deg,#C6A559,#F5D58B);"></div>
+                  <div class="absolute -top-1 w-3.5 h-3.5 rounded-full bg-[#1A1410]" style="left:58%;border:2px solid #F5D58B;"></div>
+                </div>
+                <p class="text-[9.5px] text-[#8E7740] mt-1 font-semibold">~ 6 hours</p>
+              </div>
+            </div>
+            <div class="mt-auto pt-3"><div class="p-btn">Continue</div></div>
+          </div>
+        </div>
+
+        <!-- Inbox view -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-3.5 pb-3.5">
+            <div class="mt-10 flex items-center justify-between">
+              <p class="text-[14px] font-extrabold">Triaged today</p>
+              <span class="text-[9px] font-bold text-[#8E7740] uppercase tracking-[.16em]">42</span>
+            </div>
+            <div class="mt-2.5 space-y-1.5">
+              <div class="p-2 rounded-md bg-white border border-[#E5DBC2]">
+                <p class="text-[10.5px] font-bold leading-tight">Acme Corp · refund #2912</p>
+                <p class="text-[9px] text-[#5C4F3D] mt-0.5">Replied · resolved · 1m</p>
+              </div>
+              <div class="p-2 rounded-md bg-white border border-[#E5DBC2]">
+                <p class="text-[10.5px] font-bold leading-tight">Larkin Studio · onboarding</p>
+                <p class="text-[9px] text-[#5C4F3D] mt-0.5">Escalated to Maya · 2m</p>
+              </div>
+              <div class="p-2 rounded-md bg-white border border-[#E5DBC2]">
+                <p class="text-[10.5px] font-bold leading-tight">Bram & Co · invoice 4421</p>
+                <p class="text-[9px] text-[#5C4F3D] mt-0.5">Replied · resolved · 3m</p>
+              </div>
+              <div class="p-2 rounded-md bg-white border border-[#E5DBC2]">
+                <p class="text-[10.5px] font-bold leading-tight">Halcyon · feature request</p>
+                <p class="text-[9px] text-[#5C4F3D] mt-0.5">Tagged · planning · 5m</p>
+              </div>
+              <div class="p-2 rounded-md bg-white border border-[#E5DBC2]">
+                <p class="text-[10.5px] font-bold leading-tight">Northbound · billing issue</p>
+                <p class="text-[9px] text-[#5C4F3D] mt-0.5">Replied · resolved · 8m</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Locked: pricing -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Plan</p>
+            </div>
+            <div class="mt-3 space-y-2">
+              <div class="h-20 rounded-lg bg-[#E5DBC2]"></div>
+              <div class="h-20 rounded-lg bg-[#E5DBC2]"></div>
+            </div>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+
+        <!-- Locked: settings -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Routes</p>
+            </div>
+            <ul class="mt-3 space-y-2">
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+            </ul>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+
+        <!-- Locked: empty -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Activity</p>
+            </div>
+            <div class="mt-3 h-32 rounded-lg bg-[#E5DBC2]"></div>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- ============================================================== -->
+  <!-- ROW 3 — Browser QA                                              -->
+  <!-- ============================================================== -->
+  <article class="row-card p-5 lg:p-6 grid grid-cols-12 gap-5 lg:gap-6 reveal delay-3">
+
+    <aside class="col-span-12 lg:col-span-3 xl:col-span-2 flex flex-col">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-3">
+          <span class="app-tile">
+            <img src="Brand_assets/Tester%20Logo.png" alt="" />
+          </span>
+          <div>
+            <p class="text-[14px] font-extrabold text-cream leading-tight">Browser QA</p>
+            <p class="text-[11px] text-dim font-medium leading-tight mt-0.5">End-to-end · Headless</p>
+          </div>
+        </div>
+        <button aria-label="Save" class="text-gold-2/70 hover:text-gold-3 transition-colors mt-1">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h14v17l-7-4-7 4V4z"/></svg>
+        </button>
+      </div>
+
+      <dl class="mt-5 space-y-3 text-[12px] border-t border-rule/60 pt-4">
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Rating</dt>
+          <dd class="flex items-center gap-1"><span class="stars">★★★★☆</span><span class="text-cream/60 ml-1">4.6</span></dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Revenue/mo</dt>
+          <dd class="text-cream font-bold">$420k</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Installs/mo</dt>
+          <dd class="text-cream font-bold">5.8k</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Onboarding</dt>
+          <dd class="text-cream font-bold">5 steps</dd>
+        </div>
+        <div class="flex items-center justify-between">
+          <dt class="label-mono">Developer</dt>
+          <dd class="text-gold-2 font-semibold">Halcyon AI</dd>
+        </div>
+      </dl>
+
+      <div class="mt-5 border-t border-rule/60 pt-4">
+        <p class="label-mono mb-2">Onboarding Radar</p>
+        <svg viewBox="0 0 200 200" class="w-full h-auto">
+          <defs>
+            <radialGradient id="radarFill3" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#F5D58B" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="#C6A559" stop-opacity=".15"/>
+            </radialGradient>
+          </defs>
+          <g transform="translate(100,100)">
+            <polygon points="0,-78 67.5,-39 67.5,39 0,78 -67.5,39 -67.5,-39" fill="none" stroke="#3B3127" stroke-width="1"/>
+            <polygon points="0,-58 50,-29 50,29 0,58 -50,29 -50,-29" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <polygon points="0,-38 33,-19 33,19 0,38 -33,19 -33,-19" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <polygon points="0,-18 15.5,-9 15.5,9 0,18 -15.5,9 -15.5,-9" fill="none" stroke="#2C2620" stroke-width="1"/>
+            <line x1="0" y1="-78" x2="0" y2="78" stroke="#2C2620"/>
+            <line x1="-67.5" y1="-39" x2="67.5" y2="39" stroke="#2C2620"/>
+            <line x1="67.5" y1="-39" x2="-67.5" y2="39" stroke="#2C2620"/>
+            <polygon points="0,-40 38,-20 50,20 0,52 -60,28 -45,-30"
+                     fill="url(#radarFill3)" stroke="#F5D58B" stroke-width="1.5"/>
+            <circle cx="0"   cy="-40" r="2.4" fill="#F5D58B"/>
+            <circle cx="38"  cy="-20" r="2.4" fill="#F5D58B"/>
+            <circle cx="50"  cy="20"  r="2.4" fill="#F5D58B"/>
+            <circle cx="0"   cy="52"  r="2.4" fill="#F5D58B"/>
+            <circle cx="-60" cy="28"  r="2.4" fill="#F5D58B"/>
+            <circle cx="-45" cy="-30" r="2.4" fill="#F5D58B"/>
+            <text x="0"   y="-86" text-anchor="middle" class="radar-label">Speed</text>
+            <text x="78"  y="-40" text-anchor="start"  class="radar-label">Trust</text>
+            <text x="78"  y="48"  text-anchor="start"  class="radar-label">Eval</text>
+            <text x="0"   y="92"  text-anchor="middle" class="radar-label">Cost</text>
+            <text x="-78" y="48"  text-anchor="end"    class="radar-label">UX</text>
+            <text x="-78" y="-40" text-anchor="end"    class="radar-label">Tools</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="mt-4 grid grid-cols-2 gap-2">
+        <button class="tab-active inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-[11.5px]">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+          App Video
+        </button>
+        <button class="btn-ghost inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full text-[11.5px] font-semibold">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+          Analysis
+        </button>
+      </div>
+
+      <div class="mt-3 flex items-center justify-end gap-1.5 text-gold-2/70">
+        <button aria-label="Copy" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+        </button>
+        <button aria-label="Layers" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12,3 22,8 12,13 2,8"/><polyline points="2,13 12,18 22,13"/></svg>
+        </button>
+        <button aria-label="Download" class="w-7 h-7 grid place-items-center rounded-md hover:bg-gold/10 hover:text-gold-3 transition-colors">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v12m0 0l-5-5m5 5l5-5M4 20h16"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <div class="col-span-12 lg:col-span-9 xl:col-span-10 relative">
+      <div class="screens-strip fade-edges flex gap-3.5 overflow-x-auto pb-3 pt-1">
+
+        <!-- Splash -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content justify-center items-center text-center px-4">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-16 h-16" alt=""/>
+            <p class="mt-3 text-[20px] font-extrabold tracking-[-0.02em]">Browser QA</p>
+            <p class="text-[10px] text-[#5C4F3D] mt-1 max-w-[150px] leading-[1.6]">Tests that read like tickets. Reports that read like a teammate.</p>
+          </div>
+        </div>
+
+        <!-- Connect repo -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5">
+            <div class="mt-10">
+              <p class="text-[10px] font-bold uppercase tracking-[.18em] text-[#8E7740]">Step 1 of 5</p>
+              <p class="text-[17px] font-extrabold tracking-[-0.02em] leading-tight mt-1.5">Connect a repo</p>
+            </div>
+            <div class="space-y-2 mt-3">
+              <div class="flex items-center gap-2 p-2.5 rounded-lg border border-[#D9CFB6] bg-white/60">
+                <span class="w-7 h-7 rounded bg-[#1A1410] grid place-items-center text-[#F5D58B] text-[10px] font-bold">G</span>
+                <span class="text-[11px] font-semibold flex-1">GitHub</span>
+                <span class="text-[10px] text-[#8E7740] font-bold">Connect</span>
+              </div>
+              <div class="flex items-center gap-2 p-2.5 rounded-lg border border-[#D9CFB6] bg-white/60">
+                <span class="w-7 h-7 rounded bg-[#1A1410] grid place-items-center text-[#F5D58B] text-[10px] font-bold">L</span>
+                <span class="text-[11px] font-semibold flex-1">GitLab</span>
+                <span class="text-[10px] text-[#8E7740] font-bold">Connect</span>
+              </div>
+              <div class="flex items-center gap-2 p-2.5 rounded-lg border border-[#D9CFB6] bg-white/60">
+                <span class="w-7 h-7 rounded bg-[#1A1410] grid place-items-center text-[#F5D58B] text-[10px] font-bold">B</span>
+                <span class="text-[11px] font-semibold flex-1">Bitbucket</span>
+                <span class="text-[10px] text-[#8E7740] font-bold">Connect</span>
+              </div>
+            </div>
+            <div class="mt-auto pt-3"><div class="p-btn">Continue</div></div>
+          </div>
+        </div>
+
+        <!-- Test prompt -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-5 pb-5">
+            <div class="mt-10">
+              <p class="text-[10px] font-bold uppercase tracking-[.18em] text-[#8E7740]">Write a test</p>
+              <p class="text-[15px] font-extrabold tracking-[-0.02em] leading-tight mt-1.5">In plain English.</p>
+            </div>
+            <div class="mt-3 p-3 rounded-lg bg-[#1A1410] text-[#F5EBD8] text-[10px] leading-[1.6] flex-1">
+              <p>"As a new user, sign up with email,</p>
+              <p>verify, then create a project named</p>
+              <p>'Hello'. Confirm it appears in the</p>
+              <p>sidebar within 2 seconds."</p>
+            </div>
+            <div class="mt-3"><div class="p-btn">Run test</div></div>
+          </div>
+        </div>
+
+        <!-- Live run -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10 flex items-center justify-between">
+              <p class="text-[14px] font-extrabold">Run #128</p>
+              <span class="inline-flex items-center gap-1 text-[9px] font-bold text-[#8E7740] uppercase tracking-[.16em]">
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-[#C6A559] pulse-dot"></span>
+                Live
+              </span>
+            </div>
+            <ul class="mt-3 space-y-1.5 text-[10px]">
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">▸ open /signup</span><span class="font-bold text-[#1A1410]">✓ 0.9s</span></li>
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">▸ fill email</span><span class="font-bold text-[#1A1410]">✓ 0.4s</span></li>
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">▸ verify token</span><span class="font-bold text-[#1A1410]">✓ 1.2s</span></li>
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">▸ create project</span><span class="font-bold text-[#1A1410]">✓ 0.6s</span></li>
+              <li class="flex justify-between"><span class="text-[#5C4F3D]">▸ assert sidebar</span><span class="font-bold text-[#8E7740]">~ 1.8s</span></li>
+            </ul>
+            <div class="mt-auto pt-3 grid grid-cols-2 gap-2 text-[9px]">
+              <div class="rounded-md border border-[#D9CFB6] p-2"><p class="text-[#8E7740] uppercase tracking-[.14em] font-bold">cost</p><p class="font-extrabold text-[12px] mt-0.5">$0.04</p></div>
+              <div class="rounded-md border border-[#D9CFB6] p-2"><p class="text-[#8E7740] uppercase tracking-[.14em] font-bold">total</p><p class="font-extrabold text-[12px] mt-0.5">4.9s</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pass -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content justify-center items-center text-center px-5">
+            <div class="w-16 h-16 rounded-full grid place-items-center" style="background:linear-gradient(135deg,#C6A559,#F5D58B);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1A1410" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <p class="mt-4 text-[18px] font-extrabold tracking-[-0.02em]">Test passed</p>
+            <p class="text-[10.5px] text-[#5C4F3D] mt-1">All 5 steps · 4.9s · $0.04</p>
+            <div class="w-full mt-6 space-y-2">
+              <div class="p-btn">View trace</div>
+              <div class="p-btn-ghost">Add to suite</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Locked -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Schedules</p>
+            </div>
+            <ul class="mt-3 space-y-2">
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+              <li class="h-7 rounded-md bg-[#E5DBC2]"></li>
+            </ul>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+
+        <!-- Locked -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Reports</p>
+            </div>
+            <div class="mt-3 h-32 rounded-lg bg-[#E5DBC2]"></div>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+
+        <!-- Locked -->
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="status"><span>9:41</span><span>●●● ▰</span></div>
+          <div class="phone-content px-4 pb-4">
+            <div class="mt-10">
+              <p class="text-[14px] font-extrabold">Plan</p>
+            </div>
+            <div class="mt-3 space-y-2">
+              <div class="h-20 rounded-lg bg-[#E5DBC2]"></div>
+              <div class="h-20 rounded-lg bg-[#E5DBC2]"></div>
+            </div>
+          </div>
+          <div class="pro-lock">
+            <img src="Brand_assets/Tester%20Logo.png" class="w-10 h-10 opacity-95" alt=""/>
+            <p>Pro Members Only</p>
+            <a href="#" class="btn-gold px-5 py-2.5 rounded-full text-[11.5px] font-bold">Unlock Pro</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Bottom CTA -->
+  <div class="row-card p-8 lg:p-10 grid grid-cols-12 gap-6 items-center">
+    <div class="col-span-12 lg:col-span-8">
+      <p class="label-mono mb-2" style="color:#F5D58B;">◆ Become a Pro member</p>
+      <h2 class="text-[28px] md:text-[34px] font-extrabold tracking-[-0.02em] leading-tight text-cream">
+        Unlock <span class="gold-text">200,418</span> screens.<br/>
+        <span class="text-cream/55 font-light italic">Source files. Eval data. Annotated flows.</span>
+      </h2>
+    </div>
+    <div class="col-span-12 lg:col-span-4 flex flex-col gap-3 lg:items-end">
+      <a href="#" class="btn-gold px-6 py-3.5 rounded-full text-[13.5px] font-bold tracking-[.04em] inline-flex items-center gap-3 w-fit">
+        Unlock Pro — $19/mo
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+      </a>
+      <p class="label-mono">7-day free trial · cancel anytime</p>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-rule mt-12">
+  <div class="max-w-[1600px] mx-auto px-5 lg:px-8 py-8 flex flex-wrap items-center justify-between gap-4 label-mono">
+    <div class="flex items-center gap-2.5">
+      <img src="Brand_assets/Tester%20Logo.png" alt="" class="w-7 h-7"/>
+      <span class="text-cream/70">© 2026 Automation Agent Academy · Agent Gallery</span>
+    </div>
+    <div class="flex items-center gap-5">
+      <a href="index.html" class="hover:text-gold-3 transition-colors">Landing</a>
+      <a href="#" class="hover:text-gold-3 transition-colors">Privacy</a>
+      <a href="#" class="hover:text-gold-3 transition-colors">Terms</a>
+      <a href="#" class="hover:text-gold-3 transition-colors">Contact</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
