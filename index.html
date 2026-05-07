@@ -247,20 +247,163 @@
       radial-gradient(70% 80% at 50% 60%, rgba(198,165,89,.18), rgba(198,165,89,0) 70%);
     filter: blur(28px);
   }
+
+  /* Ghost numeral — oversized editorial watermark */
+  .ghost-numeral{
+    font-family:'Montserrat', sans-serif;
+    font-weight: 200;
+    font-size: clamp(280px, 38vw, 620px);
+    line-height: .82;
+    letter-spacing: -0.06em;
+    background: linear-gradient(180deg, rgba(245,213,139,.14) 0%, rgba(198,165,89,.04) 60%, transparent 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(198,165,89,.18);
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* Vertical sidebar text */
+  .vrt-text{
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    letter-spacing: .42em;
+    font-weight: 600;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    color: rgba(198,165,89,.55);
+  }
+
+  /* Word-by-word stagger for hero headline */
+  .word-stagger{
+    display:inline-block;
+    overflow:hidden;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+    vertical-align: bottom;
+  }
+  .word-stagger > span{
+    display:inline-block;
+    transform: translateY(115%);
+    opacity: 0;
+    animation: word-rise 1s cubic-bezier(.2,.7,.2,1) forwards;
+    will-change: transform, opacity;
+  }
+  @keyframes word-rise {
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* Scroll-triggered reveal */
+  .scroll-reveal{
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .scroll-reveal.visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Scroll-triggered reveal — slide from left */
+  .scroll-reveal-l{
+    opacity: 0;
+    transform: translateX(-32px);
+    transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .scroll-reveal-l.visible{
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* Refined spec cell with leading rule */
+  .spec-cell{
+    position: relative;
+    padding-top: 14px;
+  }
+  .spec-cell::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 28px; height: 1px;
+    background: linear-gradient(90deg, var(--gold-bright), transparent);
+  }
+  /* Vertical separator between adjacent cells — desktop only */
+  @media (min-width: 1024px){
+    .spec-cell:not(:first-child)::after{
+      content: "";
+      position: absolute;
+      top: 14px; bottom: 6px;
+      left: -1.25rem;
+      width: 1px;
+      background: linear-gradient(180deg, transparent, rgba(198,165,89,.2) 25%, rgba(198,165,89,.2) 75%, transparent);
+      pointer-events: none;
+    }
+  }
+
+  /* Trust mark — refined logo-text treatment */
+  .trust-mark{
+    position: relative;
+    padding: 2px 0;
+    transition: color .35s ease, transform .45s cubic-bezier(.2,.8,.2,1);
+  }
+  .trust-mark::after{
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -6px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(198,165,89,.6), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .55s cubic-bezier(.2,.8,.2,1);
+  }
+  .trust-mark:hover{
+    color: var(--gold-3);
+    transform: translateY(-1px);
+  }
+  .trust-mark:hover::after{ transform: scaleX(1); }
+
+  /* Hero edge-rule */
+  .edge-rule{
+    position: absolute;
+    background: linear-gradient(180deg, transparent, rgba(198,165,89,.4) 30%, rgba(245,213,139,.6) 50%, rgba(198,165,89,.4) 70%, transparent);
+  }
+
+  /* Reduced-motion guard */
+  @media (prefers-reduced-motion: reduce) {
+    .word-stagger > span{
+      transform: none !important;
+      opacity: 1 !important;
+      animation: none !important;
+    }
+    .scroll-reveal, .scroll-reveal-l{
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .reveal{ animation: none !important; opacity: 1 !important; }
+    .marquee-track{ animation: none !important; }
+    .pulse-dot{ animation: none !important; }
+  }
 </style>
 </head>
 <body class="stage grain">
 
 <!-- ============== TOP STRIP ============== -->
-<div class="border-b border-rule/40" style="background:#08070600;">
+<div class="border-b border-rule/40">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-2.5 flex items-center justify-between text-[11px] tracking-[.2em] uppercase font-medium">
-    <span class="flex items-center gap-3 text-cream/85">
-      <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-3 pulse-dot"></span>
-      <span>Cohort 07 — Applications open through May 24</span>
+    <span class="flex items-center gap-2.5 sm:gap-3 text-cream/85 whitespace-nowrap">
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-3 pulse-dot shrink-0"></span>
+      <span class="text-cream font-semibold">Cohort 07</span>
+      <span class="text-rule" aria-hidden="true">·</span>
+      <span class="hidden sm:inline text-cream/75">Applications close</span>
+      <span class="sm:hidden text-cream/75">Closes</span>
+      <span class="text-gold-3 font-semibold">May 24</span>
     </span>
-    <span class="hidden md:flex items-center gap-7 text-dim">
+    <span class="hidden md:flex items-center gap-3 lg:gap-4 text-dim">
       <span>SF / Remote</span>
-      <span>9 weeks · part-time</span>
+      <span class="text-rule" aria-hidden="true">·</span>
+      <span>9-week part-time</span>
+      <span class="text-rule" aria-hidden="true">·</span>
       <span>32 seats</span>
     </span>
   </div>
@@ -298,76 +441,112 @@
   <!-- Vignette overlay for legibility -->
   <div aria-hidden class="absolute inset-0 pointer-events-none" style="background: radial-gradient(60% 50% at 30% 40%, rgba(10,9,8,0) 0%, rgba(10,9,8,.55) 70%, rgba(10,9,8,.85) 100%);"></div>
 
+  <!-- Ghost numeral — VII watermark (atmospheric, far off-screen) -->
+  <div aria-hidden class="absolute right-[-14vw] bottom-[8vh] hidden lg:block pointer-events-none select-none z-0">
+    <span class="ghost-numeral">VII</span>
+  </div>
+
   <!-- decorative orbs + sparkles -->
   <div aria-hidden class="orb-gold absolute -top-32 -right-40 w-[720px] h-[720px] rounded-full pointer-events-none"></div>
   <div aria-hidden class="absolute inset-0 sparkles opacity-90 pointer-events-none"></div>
   <div aria-hidden class="absolute top-44 left-[42%] w-px h-[55%] hairline hidden lg:block"></div>
 
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 pt-16 lg:pt-24 pb-20 lg:pb-28 relative">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 pt-10 lg:pt-14 pb-16 lg:pb-24 relative">
 
     <div class="grid grid-cols-12 gap-x-6 lg:gap-x-10">
 
       <!-- Eyebrow column -->
-      <div class="col-span-12 lg:col-span-3 mb-10 lg:mb-0 reveal delay-1">
-        <p class="eyebrow mb-4">◆ Vol. 07 — May 2026</p>
-        <p class="text-[15px] leading-[1.7] text-cream/75 max-w-[15rem] font-light">
-          A program for builders who would rather <span class="text-gold-2 font-medium">ship the agent</span>
-          than read another thread about them.
-        </p>
-        <div class="gold-rule mt-8 mb-6 max-w-[12rem]"></div>
-        <p class="label-mono">No. 001 — Brief</p>
+      <div class="col-span-12 lg:col-span-3 mb-12 lg:mb-0 reveal delay-1 lg:flex lg:flex-col">
+        <div>
+          <p class="eyebrow mb-4">◆ Vol. 07 — May 2026</p>
+          <p class="text-[15px] leading-[1.7] text-cream/75 max-w-[15rem] font-light hidden lg:block">
+            A program for builders who would rather <span class="text-gold-2 font-medium">ship the agent</span>
+            than read another thread about them.
+          </p>
+        </div>
+        <div class="hidden lg:block lg:mt-auto lg:pt-12">
+          <div class="gold-rule mb-6 max-w-[12rem]"></div>
+          <div class="flex items-center gap-3">
+            <p class="label-mono">No. 001 — Brief</p>
+            <span class="w-1 h-1 rounded-full bg-gold-3"></span>
+            <p class="label-mono">SF · Remote</p>
+          </div>
+        </div>
       </div>
 
       <!-- Headline column -->
-      <div class="col-span-12 lg:col-span-9 reveal delay-2">
-        <h1 class="display text-[clamp(56px,9vw,148px)] text-cream">
-          Welcome to Levi's Website
+      <div class="relative z-10 col-span-12 lg:col-span-9">
+        <h1 class="display text-[clamp(40px,9vw,148px)] text-cream">
+          <span class="word-stagger"><span style="animation-delay:.05s">Build</span></span>
+          <span class="word-stagger"><span style="animation-delay:.15s">agents</span></span>
+          <span class="word-stagger"><span style="animation-delay:.25s">that</span></span>
+          <span class="hidden lg:inline"><br/></span>
+          <span class="word-stagger"><span class="display-light" style="animation-delay:.40s">actually</span></span>
+          <span class="word-stagger"><span class="gold-text italic" style="animation-delay:.55s">do</span></span>
+          <span class="word-stagger"><span style="animation-delay:.70s">the</span></span>
+          <span class="word-stagger"><span style="animation-delay:.85s">work.</span></span>
         </h1>
 
-        <div class="mt-10 lg:mt-14 grid grid-cols-12 gap-x-6 lg:gap-x-10 items-start">
-          <p class="col-span-12 md:col-span-6 text-[17px] leading-[1.6] text-cream/75 max-w-xl font-light">
-            Nine weeks. Thirty-two seats. A small, opinionated program for engineers and operators
-            learning to design, ship, and operate production-grade automation —
-            <span class="text-gold-2 font-medium italic">the kind that earns its keep on Monday morning.</span>
-          </p>
+        <div class="mt-10 lg:mt-12 grid grid-cols-12 gap-x-6 gap-y-8 md:gap-y-0 lg:gap-x-10 items-start reveal delay-3">
+          <div class="col-span-12 md:col-span-6">
+            <p class="text-[16.5px] leading-[1.65] text-cream/75 max-w-xl font-light">
+              Nine weeks. Thirty-two seats. A small, opinionated program for engineers and operators
+              learning to design, ship, and operate production-grade automation —
+              <span class="text-gold-2 font-medium italic">the kind that earns its keep on Monday morning.</span>
+            </p>
 
-          <div class="col-span-12 md:col-span-6 mt-8 md:mt-0">
-            <div class="flex flex-wrap items-center gap-3">
-              <a href="#apply" class="btn-gold px-7 py-3.5 text-[13.5px] font-bold tracking-[.04em] rounded-full inline-flex items-center gap-3">
+            <!-- Live status line -->
+            <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px] tracking-[.18em] uppercase font-medium text-cream/65 whitespace-nowrap">
+              <span class="inline-flex items-center gap-2.5">
+                <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-3 pulse-dot"></span>
+                <span class="tnum font-bold" style="color:var(--gold-3);">19 / 32</span>
+                <span class="text-dim normal-case tracking-normal text-[12.5px]">seats reserved</span>
+              </span>
+              <span class="text-rule">·</span>
+              <span>Reviewing daily</span>
+            </div>
+          </div>
+
+          <div class="col-span-12 md:col-span-6">
+            <div class="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3">
+              <a href="#apply" class="btn-gold px-7 py-3.5 text-[13.5px] font-bold tracking-[.04em] rounded-full inline-flex items-center justify-center gap-3 w-full sm:w-auto">
                 Get Started
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
               </a>
-              <a href="#curriculum" class="btn-outline px-7 py-3.5 text-[13.5px] font-semibold tracking-[.04em] rounded-full inline-flex items-center gap-2">
+              <a href="#curriculum" class="btn-outline px-7 py-3.5 text-[13.5px] font-semibold tracking-[.04em] rounded-full inline-flex items-center justify-center gap-2 w-full sm:w-auto">
                 Learn More
               </a>
             </div>
-            <p class="mt-5 label-mono">
+            <p class="mt-6 label-mono">
               Next cohort begins <span class="text-gold-2">June 17 · 2026</span>
             </p>
           </div>
         </div>
 
-        <!-- Spec strip -->
-        <div class="mt-16 lg:mt-20 grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8 border-t border-gold/15 pt-8 reveal delay-3">
-          <div>
-            <p class="eyebrow mb-2">◆ Format</p>
-            <p class="num-display text-[28px]">9 weeks</p>
-            <p class="text-[12.5px] text-dim mt-1 font-medium">Part-time · ~10 hrs/wk</p>
-          </div>
-          <div>
-            <p class="eyebrow mb-2">◆ Cohort</p>
-            <p class="num-display text-[28px] tnum">32 seats</p>
-            <p class="text-[12.5px] text-dim mt-1 font-medium">Hand-reviewed admissions</p>
-          </div>
-          <div>
-            <p class="eyebrow mb-2">◆ Mode</p>
-            <p class="num-display text-[28px]">Live + async</p>
-            <p class="text-[12.5px] text-dim mt-1 font-medium">2 live sessions / week</p>
-          </div>
-          <div>
-            <p class="eyebrow mb-2">◆ Outcome</p>
-            <p class="num-display text-[28px]">A shipped agent</p>
-            <p class="text-[12.5px] text-dim mt-1 font-medium">Running in your stack</p>
+        <!-- Spec strip — refined with leading hairlines -->
+        <div class="mt-16 lg:mt-20 relative reveal delay-4">
+          <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/40 to-transparent"></div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 pt-8 items-start">
+            <div class="spec-cell">
+              <p class="label-mono mb-3">Format</p>
+              <p class="num-display text-[24px] md:text-[28px] lg:text-[30px] leading-[1.05]">9 weeks</p>
+              <p class="text-[12px] text-dim mt-2 font-medium tracking-wide">Part-time · ~10 hrs/wk</p>
+            </div>
+            <div class="spec-cell">
+              <p class="label-mono mb-3">Cohort</p>
+              <p class="num-display text-[24px] md:text-[28px] lg:text-[30px] leading-[1.05] tnum">32 <span class="text-[16px] md:text-[18px] text-gold/70">seats</span></p>
+              <p class="text-[12px] text-dim mt-2 font-medium tracking-wide">Hand-reviewed admissions</p>
+            </div>
+            <div class="spec-cell">
+              <p class="label-mono mb-3">Mode</p>
+              <p class="num-display text-[24px] md:text-[28px] lg:text-[30px] leading-[1.05]">Live <span class="text-gold/60">+</span> async</p>
+              <p class="text-[12px] text-dim mt-2 font-medium tracking-wide">2 live sessions / week</p>
+            </div>
+            <div class="spec-cell">
+              <p class="label-mono mb-3">Outcome</p>
+              <p class="num-display text-[24px] md:text-[28px] lg:text-[30px] leading-[1.15]">A shipped <span class="italic gold-text">agent</span></p>
+              <p class="text-[12px] text-dim mt-2 font-medium tracking-wide">Running in your stack</p>
+            </div>
           </div>
         </div>
       </div>
@@ -404,16 +583,19 @@
 </section>
 
 <!-- ============== TRUST STRIP ============== -->
-<section class="border-b border-gold/15">
-  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-10 grid grid-cols-12 items-center gap-6">
-    <p class="col-span-12 md:col-span-3 eyebrow">◆ Builders shipped from</p>
-    <ul class="col-span-12 md:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-3 text-cream/65 font-bold text-[18px] tracking-[-0.01em]">
-      <li>Stripe</li>
-      <li class="italic font-light">Ramp</li>
-      <li>Notion</li>
-      <li class="italic font-light">Vercel</li>
-      <li>Linear</li>
-      <li class="italic font-light">Anthropic</li>
+<section class="border-b border-gold/15 relative scroll-reveal">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-12 grid grid-cols-12 items-center gap-6">
+    <div class="col-span-12 md:col-span-3">
+      <p class="eyebrow">◆ Builders shipped from</p>
+      <p class="text-[12px] text-dim mt-2 font-medium tracking-wide max-w-[14rem]">A non-exhaustive sample of where past graduates work and ship.</p>
+    </div>
+    <ul class="col-span-12 md:col-span-9 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-4 text-cream/70 text-[17px] tracking-[-0.015em]">
+      <li class="trust-mark font-bold">Stripe</li>
+      <li class="trust-mark italic font-light">Ramp</li>
+      <li class="trust-mark font-bold">Notion</li>
+      <li class="trust-mark italic font-light">Vercel</li>
+      <li class="trust-mark font-bold">Linear</li>
+      <li class="trust-mark italic font-light">Anthropic</li>
     </ul>
   </div>
 </section>
@@ -422,7 +604,7 @@
 <section id="manifesto" class="relative">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 grid grid-cols-12 gap-x-6 lg:gap-x-10">
 
-    <div class="col-span-12 lg:col-span-3 mb-12 lg:mb-0">
+    <div class="col-span-12 lg:col-span-3 mb-12 lg:mb-0 scroll-reveal-l">
       <p class="eyebrow mb-4">◆ § 01 — Manifesto</p>
       <div class="gold-rule-thick max-w-[3rem] mb-6"></div>
       <p class="text-[12.5px] leading-[1.8] text-dim max-w-[15rem] font-medium">
@@ -430,10 +612,10 @@
       </p>
     </div>
 
-    <div class="col-span-12 lg:col-span-9">
+    <div class="col-span-12 lg:col-span-9 scroll-reveal">
       <h2 class="display text-[clamp(40px,5.6vw,84px)] text-cream">
         Most "AI agents" are<br/>
-        <span class="gold-text italic font-extrabold">thin wrappers</span> over a chat box.<br/>
+        <span class="display-light italic text-gold-2">thin wrappers</span> over a chat box.<br/>
         We teach the rest.
       </h2>
 
@@ -472,13 +654,13 @@
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 relative">
 
     <div class="grid grid-cols-12 gap-x-6 lg:gap-x-10 mb-16">
-      <div class="col-span-12 lg:col-span-3">
+      <div class="col-span-12 lg:col-span-3 scroll-reveal-l">
         <p class="eyebrow mb-4">◆ § 02 — Curriculum</p>
         <div class="gold-rule-thick max-w-[3rem]"></div>
       </div>
-      <div class="col-span-12 lg:col-span-9">
-        <h2 class="display text-[clamp(40px,5.4vw,80px)] text-cream">
-          Nine weeks. <span class="gold-text italic">Six modules.</span><br/>
+      <div class="col-span-12 lg:col-span-9 scroll-reveal">
+        <h2 class="display text-[clamp(36px,5.4vw,80px)] text-cream">
+          Nine weeks. <span class="gold-text italic">Six modules.</span><span class="hidden md:inline"><br/></span>
           One agent in production.
         </h2>
         <p class="mt-6 max-w-2xl text-cream/70 text-[15.5px] leading-[1.75] font-light">
@@ -492,98 +674,122 @@
     <!-- Modules -->
     <ol class="border-t border-gold/30">
 
-      <li class="grid grid-cols-12 gap-x-6 lg:gap-x-10 py-10 border-b border-rule/60 hover:bg-cream/[.015] transition-colors">
-        <div class="col-span-2 md:col-span-1"><span class="num-display text-[44px] md:text-[56px]">01</span></div>
-        <div class="col-span-10 md:col-span-3">
-          <p class="label-mono mb-2">Weeks 1–2</p>
+      <li class="group relative grid grid-cols-12 gap-x-6 lg:gap-x-10 py-8 lg:py-10 border-b border-rule/60 transition-colors hover:bg-cream/[.025]">
+        <span aria-hidden class="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold-3 to-transparent scale-y-0 group-hover:scale-y-100 origin-center transition-transform duration-500"></span>
+        <div class="col-span-2 md:col-span-1"><span class="num-display text-[36px] md:text-[44px] lg:text-[56px] transition-transform duration-500 group-hover:translate-x-1">01</span></div>
+        <div class="col-span-10 md:col-span-3 lg:col-span-4">
+          <div class="flex items-baseline justify-between gap-3 mb-2">
+            <p class="label-mono">Weeks 1–2</p>
+            <p class="label-mono md:hidden text-cream/45">4 sessions</p>
+          </div>
           <h3 class="text-[22px] md:text-[26px] tracking-[-0.015em] text-cream leading-tight font-bold">Foundations & failure modes</h3>
         </div>
-        <p class="col-span-12 md:col-span-6 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
+        <p class="col-span-12 md:col-span-6 lg:col-span-5 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
           What an agent really is — a control loop with vibes. Tool calling, planning patterns,
           ReAct vs. graphs, when not to use an agent at all. We dissect five real, failed
           deployments before writing a line of code.
         </p>
-        <div class="col-span-12 md:col-span-2 mt-4 md:mt-0 md:text-right">
+        <div class="hidden md:block md:col-span-2 md:text-right">
           <span class="label-mono">4 sessions</span>
         </div>
       </li>
 
-      <li class="grid grid-cols-12 gap-x-6 lg:gap-x-10 py-10 border-b border-rule/60 hover:bg-cream/[.015] transition-colors">
-        <div class="col-span-2 md:col-span-1"><span class="num-display text-[44px] md:text-[56px]">02</span></div>
-        <div class="col-span-10 md:col-span-3">
-          <p class="label-mono mb-2">Week 3</p>
+      <li class="group relative grid grid-cols-12 gap-x-6 lg:gap-x-10 py-8 lg:py-10 border-b border-rule/60 transition-colors hover:bg-cream/[.025]">
+        <span aria-hidden class="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold-3 to-transparent scale-y-0 group-hover:scale-y-100 origin-center transition-transform duration-500"></span>
+        <div class="col-span-2 md:col-span-1"><span class="num-display text-[36px] md:text-[44px] lg:text-[56px] transition-transform duration-500 group-hover:translate-x-1">02</span></div>
+        <div class="col-span-10 md:col-span-3 lg:col-span-4">
+          <div class="flex items-baseline justify-between gap-3 mb-2">
+            <p class="label-mono">Week 3</p>
+            <p class="label-mono md:hidden text-cream/45">2 sessions</p>
+          </div>
           <h3 class="text-[22px] md:text-[26px] tracking-[-0.015em] text-cream leading-tight font-bold">Tool design as product design</h3>
         </div>
-        <p class="col-span-12 md:col-span-6 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
+        <p class="col-span-12 md:col-span-6 lg:col-span-5 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
           The schema is the prompt. We treat tool surfaces like product APIs —
           naming, argument shapes, returned context, idempotency. You'll redesign
           the tools of an agent that's already half-broken.
         </p>
-        <div class="col-span-12 md:col-span-2 mt-4 md:mt-0 md:text-right">
+        <div class="hidden md:block md:col-span-2 md:text-right">
           <span class="label-mono">2 sessions</span>
         </div>
       </li>
 
-      <li class="grid grid-cols-12 gap-x-6 lg:gap-x-10 py-10 border-b border-rule/60 hover:bg-cream/[.015] transition-colors">
-        <div class="col-span-2 md:col-span-1"><span class="num-display text-[44px] md:text-[56px]">03</span></div>
-        <div class="col-span-10 md:col-span-3">
-          <p class="label-mono mb-2">Week 4</p>
+      <li class="group relative grid grid-cols-12 gap-x-6 lg:gap-x-10 py-8 lg:py-10 border-b border-rule/60 transition-colors hover:bg-cream/[.025]">
+        <span aria-hidden class="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold-3 to-transparent scale-y-0 group-hover:scale-y-100 origin-center transition-transform duration-500"></span>
+        <div class="col-span-2 md:col-span-1"><span class="num-display text-[36px] md:text-[44px] lg:text-[56px] transition-transform duration-500 group-hover:translate-x-1">03</span></div>
+        <div class="col-span-10 md:col-span-3 lg:col-span-4">
+          <div class="flex items-baseline justify-between gap-3 mb-2">
+            <p class="label-mono">Week 4</p>
+            <p class="label-mono md:hidden text-cream/45">2 sessions</p>
+          </div>
           <h3 class="text-[22px] md:text-[26px] tracking-[-0.015em] text-cream leading-tight font-bold">Memory, context, retrieval</h3>
         </div>
-        <p class="col-span-12 md:col-span-6 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
+        <p class="col-span-12 md:col-span-6 lg:col-span-5 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
           Working memory, episodic logs, retrieval that doesn't lie.
           Hybrid search, reranking, summarization budgets — and the
           unglamorous truth that good context wins more bake-offs than bigger models.
         </p>
-        <div class="col-span-12 md:col-span-2 mt-4 md:mt-0 md:text-right">
+        <div class="hidden md:block md:col-span-2 md:text-right">
           <span class="label-mono">2 sessions</span>
         </div>
       </li>
 
-      <li class="grid grid-cols-12 gap-x-6 lg:gap-x-10 py-10 border-b border-rule/60 hover:bg-cream/[.015] transition-colors">
-        <div class="col-span-2 md:col-span-1"><span class="num-display text-[44px] md:text-[56px]">04</span></div>
-        <div class="col-span-10 md:col-span-3">
-          <p class="label-mono mb-2">Weeks 5–6</p>
+      <li class="group relative grid grid-cols-12 gap-x-6 lg:gap-x-10 py-8 lg:py-10 border-b border-rule/60 transition-colors hover:bg-cream/[.025]">
+        <span aria-hidden class="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold-3 to-transparent scale-y-0 group-hover:scale-y-100 origin-center transition-transform duration-500"></span>
+        <div class="col-span-2 md:col-span-1"><span class="num-display text-[36px] md:text-[44px] lg:text-[56px] transition-transform duration-500 group-hover:translate-x-1">04</span></div>
+        <div class="col-span-10 md:col-span-3 lg:col-span-4">
+          <div class="flex items-baseline justify-between gap-3 mb-2">
+            <p class="label-mono">Weeks 5–6</p>
+            <p class="label-mono md:hidden text-cream/45">4 sessions</p>
+          </div>
           <h3 class="text-[22px] md:text-[26px] tracking-[-0.015em] text-cream leading-tight font-bold">Evals, traces & observability</h3>
         </div>
-        <p class="col-span-12 md:col-span-6 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
+        <p class="col-span-12 md:col-span-6 lg:col-span-5 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
           The work that separates a demo from a deployment.
           You'll build an eval harness with golden traces,
           regression gates, and dashboards an on-call engineer can read at 3am.
         </p>
-        <div class="col-span-12 md:col-span-2 mt-4 md:mt-0 md:text-right">
+        <div class="hidden md:block md:col-span-2 md:text-right">
           <span class="label-mono">4 sessions</span>
         </div>
       </li>
 
-      <li class="grid grid-cols-12 gap-x-6 lg:gap-x-10 py-10 border-b border-rule/60 hover:bg-cream/[.015] transition-colors">
-        <div class="col-span-2 md:col-span-1"><span class="num-display text-[44px] md:text-[56px]">05</span></div>
-        <div class="col-span-10 md:col-span-3">
-          <p class="label-mono mb-2">Week 7</p>
+      <li class="group relative grid grid-cols-12 gap-x-6 lg:gap-x-10 py-8 lg:py-10 border-b border-rule/60 transition-colors hover:bg-cream/[.025]">
+        <span aria-hidden class="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold-3 to-transparent scale-y-0 group-hover:scale-y-100 origin-center transition-transform duration-500"></span>
+        <div class="col-span-2 md:col-span-1"><span class="num-display text-[36px] md:text-[44px] lg:text-[56px] transition-transform duration-500 group-hover:translate-x-1">05</span></div>
+        <div class="col-span-10 md:col-span-3 lg:col-span-4">
+          <div class="flex items-baseline justify-between gap-3 mb-2">
+            <p class="label-mono">Week 7</p>
+            <p class="label-mono md:hidden text-cream/45">2 sessions</p>
+          </div>
           <h3 class="text-[22px] md:text-[26px] tracking-[-0.015em] text-cream leading-tight font-bold">Multi-agent orchestration</h3>
         </div>
-        <p class="col-span-12 md:col-span-6 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
+        <p class="col-span-12 md:col-span-6 lg:col-span-5 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
           Supervisor patterns, hand-offs, queues, durable workflows.
           When a graph beats a swarm, when a single agent with patience beats both.
           We write less code than you'd think.
         </p>
-        <div class="col-span-12 md:col-span-2 mt-4 md:mt-0 md:text-right">
+        <div class="hidden md:block md:col-span-2 md:text-right">
           <span class="label-mono">2 sessions</span>
         </div>
       </li>
 
-      <li class="grid grid-cols-12 gap-x-6 lg:gap-x-10 py-10 border-b border-gold/30 hover:bg-cream/[.015] transition-colors">
-        <div class="col-span-2 md:col-span-1"><span class="num-display text-[44px] md:text-[56px]">06</span></div>
-        <div class="col-span-10 md:col-span-3">
-          <p class="label-mono mb-2">Weeks 8–9</p>
+      <li class="group relative grid grid-cols-12 gap-x-6 lg:gap-x-10 py-8 lg:py-10 border-b border-gold/30 transition-colors hover:bg-cream/[.025]">
+        <span aria-hidden class="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gold-3 to-transparent scale-y-0 group-hover:scale-y-100 origin-center transition-transform duration-500"></span>
+        <div class="col-span-2 md:col-span-1"><span class="num-display gold-text text-[36px] md:text-[44px] lg:text-[56px] transition-transform duration-500 group-hover:translate-x-1">06</span></div>
+        <div class="col-span-10 md:col-span-3 lg:col-span-4">
+          <div class="flex items-baseline justify-between gap-3 mb-2">
+            <p class="label-mono" style="color:var(--gold-3);">Weeks 8–9</p>
+            <p class="label-mono md:hidden text-cream/45">4 sessions</p>
+          </div>
           <h3 class="text-[22px] md:text-[26px] tracking-[-0.015em] text-cream leading-tight font-bold">Ship week & teardown</h3>
         </div>
-        <p class="col-span-12 md:col-span-6 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
+        <p class="col-span-12 md:col-span-6 lg:col-span-5 text-[14.5px] leading-[1.75] text-cream/70 mt-4 md:mt-0 font-light">
           Roll-out, guardrails, cost ceilings, kill switches.
           Each builder presents their agent in a 12-minute teardown
           to mentors and an invited room of operators. Some get hired in the room.
         </p>
-        <div class="col-span-12 md:col-span-2 mt-4 md:mt-0 md:text-right">
+        <div class="hidden md:block md:col-span-2 md:text-right">
           <span class="label-mono">4 sessions</span>
         </div>
       </li>
@@ -595,7 +801,7 @@
 <section class="relative overflow-hidden">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 grid grid-cols-12 gap-x-6 lg:gap-x-10 items-center">
 
-    <div class="col-span-12 lg:col-span-5">
+    <div class="col-span-12 lg:col-span-5 scroll-reveal-l">
       <p class="eyebrow mb-4">◆ § 03 — A real artifact</p>
       <div class="gold-rule-thick max-w-[3rem] mb-8"></div>
       <h2 class="display text-[clamp(36px,4.6vw,68px)] text-cream">
@@ -688,11 +894,11 @@
 
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 relative">
     <div class="grid grid-cols-12 gap-x-6 lg:gap-x-10 mb-12">
-      <div class="col-span-12 lg:col-span-3">
+      <div class="col-span-12 lg:col-span-3 scroll-reveal-l">
         <p class="eyebrow mb-4">◆ The plumbing</p>
         <div class="gold-rule-thick max-w-[3rem]"></div>
       </div>
-      <div class="col-span-12 lg:col-span-9">
+      <div class="col-span-12 lg:col-span-9 scroll-reveal">
         <h2 class="display text-[clamp(40px,5.4vw,80px)] text-cream">
           Your stack speaks.<br/>
           <span class="gold-text italic">The agent listens.</span>
@@ -709,6 +915,10 @@
     <div class="relative mt-8">
       <div aria-hidden class="orb-gold absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full pointer-events-none opacity-80"></div>
 
+      <!-- Horizontal-scroll wrapper for narrow viewports; SVG stays full-width md+ -->
+      <div class="overflow-x-auto md:overflow-visible -mx-6 px-6 md:mx-0 md:px-0 pb-4 md:pb-0">
+        <p class="md:hidden text-[10.5px] tracking-[.2em] uppercase font-medium text-dim mb-3">↔ Swipe to view full diagram</p>
+        <div class="min-w-[760px] md:min-w-0">
       <svg id="pulse-beams" viewBox="0 0 858 434" class="w-full h-auto relative" preserveAspectRatio="xMidYMid meet">
         <defs>
           <!-- Per-beam animated gradients (gold tones) -->
@@ -830,6 +1040,8 @@
           <text x="429" y="226" text-anchor="middle" fill="#A89F8E" font-family="Montserrat" font-size="8.5" font-weight="500" letter-spacing="1.5">your codebase</text>
         </g>
       </svg>
+        </div>
+      </div>
     </div>
 
     <!-- Bottom integrations grid -->
@@ -875,14 +1087,14 @@
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 relative">
 
     <div class="grid grid-cols-12 gap-x-6 lg:gap-x-10 mb-14">
-      <div class="col-span-12 lg:col-span-3">
+      <div class="col-span-12 lg:col-span-3 scroll-reveal-l">
         <p class="eyebrow mb-4">◆ § 04 — Mentors</p>
         <div class="gold-rule-thick max-w-[3rem]"></div>
       </div>
-      <div class="col-span-12 lg:col-span-9">
+      <div class="col-span-12 lg:col-span-9 scroll-reveal">
         <h2 class="display text-[clamp(40px,5.4vw,80px)] text-cream">
           Operators who have<br/>
-          <span class="gold-text italic">shipped the thing</span><br/>
+          <span class="display-light italic text-gold-2">shipped the thing</span><br/>
           you're trying to ship.
         </h2>
         <p class="mt-6 max-w-2xl text-cream/70 text-[15.5px] leading-[1.75] font-light">
@@ -999,11 +1211,11 @@
 
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 relative">
     <div class="grid grid-cols-12 gap-x-6 lg:gap-x-10 mb-14">
-      <div class="col-span-12 lg:col-span-3">
+      <div class="col-span-12 lg:col-span-3 scroll-reveal-l">
         <p class="eyebrow mb-4">◆ § 06 — Cohorts</p>
         <div class="gold-rule-thick max-w-[3rem]"></div>
       </div>
-      <div class="col-span-12 lg:col-span-9">
+      <div class="col-span-12 lg:col-span-9 scroll-reveal">
         <h2 class="display text-[clamp(40px,5.4vw,80px)] text-cream">
           Two tracks.<br/>
           <span class="gold-text italic">One standard.</span>
@@ -1018,23 +1230,24 @@
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
       <!-- Builder -->
-      <article class="card rounded-[14px] p-8 lg:p-10 flex flex-col">
-        <div class="flex items-baseline justify-between">
+      <article class="card rounded-[14px] p-8 lg:p-10 flex flex-col relative overflow-hidden scroll-reveal">
+        <div aria-hidden class="absolute -top-2 -left-1 num-display text-[110px] md:text-[140px] leading-none opacity-[0.06] select-none">A</div>
+        <div class="flex items-baseline justify-between relative">
           <p class="eyebrow">◆ Track A</p>
-          <p class="label-mono">22 seats</p>
+          <p class="label-mono">22 / 32 seats</p>
         </div>
-        <h3 class="text-[40px] tracking-[-0.02em] text-cream mt-3 font-bold">Builder</h3>
-        <p class="mt-2 text-cream/70 text-[14.5px] leading-[1.7] max-w-md font-light">
+        <h3 class="text-[44px] tracking-[-0.025em] text-cream mt-4 font-bold leading-[0.95]">Builder</h3>
+        <p class="mt-4 text-cream/70 text-[14.5px] leading-[1.7] max-w-md font-light">
           For engineers who already write production code. You'll go deep on
           orchestration, evals, and observability.
         </p>
 
-        <div class="mt-8 flex items-end gap-3">
-          <span class="display text-[60px] tnum gold-text">$4,800</span>
-          <span class="label-mono mb-3">USD · or 3× $1,650</span>
+        <div class="mt-10 flex items-baseline gap-3">
+          <span class="display text-[56px] tnum text-cream leading-none">$4,800</span>
+          <span class="label-mono">USD · or 3× $1,650</span>
         </div>
 
-        <ul class="mt-8 space-y-3 text-[14px] text-cream/80 border-t border-gold/15 pt-6 font-light">
+        <ul class="mt-10 space-y-3.5 text-[14px] text-cream/80 border-t border-gold/15 pt-6 font-light">
           <li class="flex gap-3"><span class="gold-text font-bold">✦</span> 18 live sessions · 9 weeks</li>
           <li class="flex gap-3"><span class="gold-text font-bold">✦</span> Two 1:1 reviews with mentors</li>
           <li class="flex gap-3"><span class="gold-text font-bold">✦</span> Weekly small-group critique</li>
@@ -1046,25 +1259,26 @@
       </article>
 
       <!-- Operator (featured) -->
-      <article class="relative card rounded-[14px] p-8 lg:p-10 flex flex-col overflow-hidden" style="border-color: rgba(245,213,139,0.45); background: linear-gradient(180deg, rgba(34,28,22,.92) 0%, rgba(20,16,12,.96) 100%);">
+      <article class="relative card rounded-[14px] p-8 lg:p-10 flex flex-col overflow-hidden scroll-reveal" style="border-color: rgba(245,213,139,0.45); background: linear-gradient(180deg, rgba(34,28,22,.92) 0%, rgba(20,16,12,.96) 100%);">
         <div class="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none orb-gold opacity-80"></div>
+        <div aria-hidden class="absolute -top-2 -left-1 num-display text-[110px] md:text-[140px] leading-none opacity-[0.10] select-none" style="color:var(--gold-bright);">B</div>
 
         <div class="flex items-baseline justify-between relative">
-          <p class="eyebrow gold-text" style="background:none; -webkit-background-clip:initial; color:var(--gold-3);">◆ Track B · Most popular</p>
-          <p class="label-mono">10 seats</p>
+          <p class="eyebrow" style="color:var(--gold-3);">◆ Track B · Most popular</p>
+          <p class="label-mono">10 / 32 seats</p>
         </div>
-        <h3 class="text-[40px] tracking-[-0.02em] mt-3 font-bold gold-text">Operator</h3>
-        <p class="mt-2 text-cream/75 text-[14.5px] leading-[1.7] max-w-md font-light">
+        <h3 class="text-[44px] tracking-[-0.025em] mt-4 font-bold gold-text leading-[0.95]">Operator</h3>
+        <p class="mt-4 text-cream/75 text-[14.5px] leading-[1.7] max-w-md font-light">
           For team leads, PMs, and ops folks who'll commission, scope, and ship agents
           without writing the bulk of the code. Same rigor, different lens.
         </p>
 
-        <div class="mt-8 flex items-end gap-3">
-          <span class="display text-[60px] tnum gold-text">$5,400</span>
-          <span class="label-mono mb-3">USD · or 3× $1,850</span>
+        <div class="mt-10 flex items-baseline gap-3">
+          <span class="display text-[56px] tnum gold-text leading-none">$5,400</span>
+          <span class="label-mono">USD · or 3× $1,850</span>
         </div>
 
-        <ul class="mt-8 space-y-3 text-[14px] text-cream/85 border-t border-gold/25 pt-6 font-light">
+        <ul class="mt-10 space-y-3.5 text-[14px] text-cream/85 border-t border-gold/25 pt-6 font-light">
           <li class="flex gap-3"><span class="gold-text font-bold">✦</span> Everything in Builder</li>
           <li class="flex gap-3"><span class="gold-text font-bold">✦</span> Three 1:1s with operator-track mentors</li>
           <li class="flex gap-3"><span class="gold-text font-bold">✦</span> Workshop: writing an agent RFC</li>
@@ -1181,7 +1395,7 @@
     <div class="grid grid-cols-12 gap-x-6 lg:gap-x-10 items-end">
       <div class="col-span-12 lg:col-span-8">
         <p class="eyebrow mb-6" style="color:var(--gold-3);">◆ § 08 — Apply</p>
-        <h2 class="display text-[clamp(56px,9vw,160px)] text-cream">
+        <h2 class="display text-[clamp(44px,9vw,160px)] text-cream">
           Build the <span class="gold-text italic">thing</span>.<br/>
           Not another deck.
         </h2>
@@ -1268,6 +1482,26 @@
 
 <!-- =================== ANIMATION SCRIPTS =================== -->
 <script>
+/* ----------------------------------------------------------
+   Scroll-triggered reveals
+   ---------------------------------------------------------- */
+(() => {
+  const targets = document.querySelectorAll('.scroll-reveal, .scroll-reveal-l');
+  if (!('IntersectionObserver' in window) || !targets.length) {
+    targets.forEach(t => t.classList.add('visible'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  targets.forEach(t => io.observe(t));
+})();
+
 /* ----------------------------------------------------------
    Spiral animation (ported from use client.docx — vanilla JS)
    ---------------------------------------------------------- */
