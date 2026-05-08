@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Anything — Field Notes Vol. 01</title>
+<title>Anything — Field Notes Vol. 01 · Adaptive Armor</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -243,6 +243,125 @@
   }
   @media (max-width: 879px){ .issue{ display:none; } }
 
+  /* Sequence (video) */
+  .sequence{
+    position:relative;
+    margin-top:24px;
+    padding-top:36px;
+    border-top:1px solid rgba(198,165,89,.18);
+  }
+  .sequence-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:22px;
+    flex-wrap:wrap;
+  }
+  .sequence-head h2{
+    font-family:'Montserrat', sans-serif;
+    font-weight:800;
+    letter-spacing:-0.024em;
+    line-height:0.98;
+    margin:0;
+    font-size:clamp(28px, 4vw, 52px);
+    color: var(--cream);
+  }
+  .sequence-head h2 em{
+    font-style:italic; font-weight:300;
+    background: linear-gradient(135deg, var(--gold-start) 0%, var(--gold-bright) 50%, var(--gold-end) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .sequence-meta{
+    font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--dim); font-weight:500;
+    text-align:right;
+  }
+  .sequence-meta .gold{ color: var(--gold-2); }
+  .video-frame{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    border:1px solid rgba(198,165,89,.28);
+    background:#000;
+    box-shadow:
+      0 1px 0 rgba(245,213,139,.06) inset,
+      0 60px 120px -50px rgba(0,0,0,.95),
+      0 0 0 1px rgba(198,165,89,.10);
+  }
+  .video-frame video{
+    display:block;
+    width:100%;
+    height:auto;
+    aspect-ratio: 16/9;
+    object-fit:cover;
+    background:#000;
+  }
+  /* Subtle gold rim overlay so the video blends into the page */
+  .video-frame::after{
+    content:"";
+    position:absolute; inset:0;
+    pointer-events:none;
+    background:
+      radial-gradient(60% 60% at 50% 50%, transparent 0%, transparent 70%, rgba(0,0,0,.35) 100%),
+      linear-gradient(180deg, rgba(0,0,0,.18) 0%, transparent 18%, transparent 82%, rgba(0,0,0,.45) 100%);
+    border-radius:18px;
+  }
+  .video-frame .frame-tag{
+    position:absolute;
+    top:14px; left:14px;
+    z-index:2;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:6px 10px;
+    font-size:10.5px; letter-spacing:.32em; text-transform:uppercase; font-weight:600;
+    background: rgba(0,0,0,.55);
+    border:1px solid rgba(198,165,89,.30);
+    border-radius:999px;
+    color: rgba(245,235,216,.85);
+    backdrop-filter: blur(6px);
+  }
+  .video-frame .frame-tag .dot{
+    width:6px; height:6px; border-radius:50%;
+    background: var(--gold-bright);
+  }
+  .video-frame .frame-counter{
+    position:absolute;
+    top:14px; right:14px;
+    z-index:2;
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:10.5px; letter-spacing:.32em; text-transform:uppercase; font-weight:500;
+    color: rgba(245,235,216,.65);
+  }
+  .video-frame .frame-counter .bar{
+    display:inline-block; width:22px; height:1px; background: var(--gold-2); opacity:.7;
+  }
+  .video-controls{
+    position:absolute;
+    bottom:14px; right:14px;
+    z-index:2;
+    display:flex; gap:8px;
+  }
+  .vbtn{
+    appearance:none; cursor:pointer;
+    border:1px solid rgba(198,165,89,.45);
+    background: rgba(0,0,0,.55);
+    color: var(--gold-2);
+    font-family:inherit;
+    font-size:10.5px; font-weight:600; letter-spacing:.22em; text-transform:uppercase;
+    padding:8px 14px;
+    border-radius:999px;
+    backdrop-filter: blur(6px);
+    transition: background .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+  }
+  .vbtn:hover{ color: var(--gold-bright); border-color: var(--gold-bright); background: rgba(198,165,89,.12); transform: translateY(-1px); }
+  .vbtn:focus-visible{ outline: 2px solid var(--gold-bright); outline-offset:3px; }
+  .video-caption{
+    margin-top:18px;
+    display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;
+    font-size:11.5px; letter-spacing:.18em; text-transform:uppercase;
+    color: var(--dim); font-weight:500;
+  }
+  .video-caption .gold{ color: var(--gold-2); }
+
   /* Card row */
   .grid{
     display:grid;
@@ -359,6 +478,7 @@
     <header class="mast anim d1">
       <span class="mark"><span class="dot pulse-dot"></span> Field Notes</span>
       <nav>
+        <a class="ulink" href="#sequence">Sequence</a>
         <a class="ulink" href="#index">Index</a>
         <a class="ulink" href="#archive">Archive</a>
         <a class="ulink" href="#colophon">Colophon</a>
@@ -371,52 +491,191 @@
       <div class="anim d2" style="position:relative; z-index:1;">
         <p class="eyebrow eyebrow-row">
           <span class="gold-rule-thick" style="width:28px; display:inline-block;"></span>
-          ◆ § 01 — Volume One · A Quiet Beginning
+          ◆ § 01 — Volume One · Adaptive Armor
         </p>
         <div class="gold-rule-thick" style="max-width:3rem; margin-bottom:28px;"></div>
 
         <h1 class="display-hero">
-          Anything<span class="ampersand">&amp;</span><br />
-          <em>everything</em><br />
-          in&nbsp;between.
+          Adaptive<span class="ampersand">&amp;</span><br />
+          <em>armor.</em><br />
+          Any&nbsp;shape.
         </h1>
 
         <p class="lede">
-          A loose journal of <em>small ideas</em>, half-finished sketches, and the
-          occasional stubborn thought that refused to leave the page.
+          A wearable lattice of <em>programmable matter</em> — billions of magnetically-bonded
+          nano-cells that recognise intent, redistribute mass, and re-form into whatever
+          tool the moment is asking for. Worn close. Answers fast.
         </p>
       </div>
 
       <aside class="meta anim d3">
         <div class="meta-row"><span>Issue</span><span>No. 01</span></div>
-        <div class="meta-row"><span>Filed</span><span>May 2026</span></div>
-        <div class="meta-row"><span>Pages</span><span>032</span></div>
+        <div class="meta-row"><span>Subject</span><span>Adaptive armor</span></div>
+        <div class="meta-row"><span>Cell count</span><span>4.2 B</span></div>
+        <div class="meta-row"><span>Reform time</span><span>0.34 s</span></div>
         <div class="meta-row"><span>Edition</span><span>Black / Gold</span></div>
-        <div class="meta-row"><span>Mood</span><span class="gold-text" style="-webkit-text-fill-color: transparent;">Unhurried</span></div>
+        <div class="meta-row"><span>State</span><span class="gold-text" style="-webkit-text-fill-color: transparent;">Listening</span></div>
       </aside>
+    </section>
+
+    <section id="sequence" class="sequence anim d3">
+      <div class="sequence-head">
+        <div>
+          <p class="eyebrow eyebrow-row" style="margin-bottom:14px;">
+            <span class="gold-rule-thick" style="width:28px; display:inline-block;"></span>
+            ◆ § 02 — Sequence · 001
+          </p>
+          <h2>Adaptive armor, <em>in motion.</em></h2>
+        </div>
+        <div class="sequence-meta">
+          <div>Capture · 2026-05-08</div>
+          <div class="gold">5s · 720p · 16:9</div>
+        </div>
+      </div>
+
+      <figure class="video-frame" style="margin:0;">
+        <span class="frame-tag"><span class="dot pulse-dot"></span> Sequence · 001</span>
+        <span class="frame-counter"><span class="bar"></span> Frame · 001 / 120</span>
+
+        <video id="seq-video" autoplay muted loop playsinline preload="auto" aria-label="Adaptive nano-armor concept sequence">
+          <source src="anything-video.mp4" type="video/mp4" />
+        </video>
+
+        <div class="video-controls">
+          <button class="vbtn" id="seq-play" type="button" aria-label="Play or pause sequence">Pause</button>
+          <button class="vbtn" id="seq-mute" type="button" aria-label="Mute or unmute sequence">Unmute</button>
+        </div>
+      </figure>
+
+      <figcaption class="video-caption">
+        <span>Crimson · Gold · Cyan · Black</span>
+        <span class="gold">Programmable matter · adaptive geometry</span>
+        <span>Field Notes · Vol. 01</span>
+      </figcaption>
+    </section>
+
+    <section class="sequence-head" style="margin-top:56px; padding-top:36px; border-top:1px solid rgba(198,165,89,.18); align-items:flex-end;">
+      <div>
+        <p class="eyebrow eyebrow-row" style="margin-bottom:14px;">
+          <span class="gold-rule-thick" style="width:28px; display:inline-block;"></span>
+          ◆ § 03 — Function · what it can do
+        </p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:800; letter-spacing:-0.024em; line-height:0.98; margin:0; font-size:clamp(28px,4vw,52px); color:var(--cream);">
+          Six things the lattice <em style="font-style:italic; font-weight:300; background: linear-gradient(135deg, var(--gold-start) 0%, var(--gold-bright) 50%, var(--gold-end) 100%); -webkit-background-clip:text; background-clip:text; color:transparent;">does for you.</em>
+        </h2>
+      </div>
+      <div class="sequence-meta">
+        <div>Capabilities · v01</div>
+        <div class="gold">On-wrist · sub-second</div>
+      </div>
     </section>
 
     <section id="index" class="grid">
       <article class="card anim d3">
-        <span class="num">01 — Note</span>
-        <h3>On the <em>shape</em> of small ideas.</h3>
-        <p>The good ones arrive bent — a little crooked, a little stubborn, never quite the size they pretended to be on the way in.</p>
+        <span class="num">01 — Reform</span>
+        <h3>Becomes <em>any tool</em> on demand.</h3>
+        <p>Plates separate, swirl, and re-bond into a blade, a thruster, a curved shield — any shape the lattice has been taught. Average reform time, surface to silhouette: 0.34 seconds.</p>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </article>
+
+      <article class="card anim d3">
+        <span class="num">02 — Self-repair</span>
+        <h3>Closes its <em>own wounds.</em></h3>
+        <p>Damaged cells signal their neighbours. The lattice redistributes mass into the breach, reseals the surface, and continues operating without dropping a frame. Up to 9 cm² per second.</p>
         <span class="arrow" aria-hidden="true">↗</span>
       </article>
 
       <article class="card anim d4">
-        <span class="num">02 — Sketch</span>
-        <h3>A page that <em>breathes</em>.</h3>
-        <p>Margin is not empty. Margin is the part of the page that's still listening, holding the door open in case more shows up.</p>
+        <span class="num">03 — Modular</span>
+        <h3>Coverage to fit the <em>moment.</em></h3>
+        <p>Worn as a wristband, it spreads on cue: bracer, gauntlet, half-sleeve, full plate. Mass stays constant — the cells just choose where to be. No stowage, no swap-outs, no hand-off.</p>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </article>
+
+      <article class="card anim d4">
+        <span class="num">04 — Intent-read</span>
+        <h3>Reads the <em>nerve,</em> not the button.</h3>
+        <p>A skin-side neural cuff samples motor intent at 1.6 kHz. The lattice anticipates a posture before the muscle finishes the move — so the tool is in your hand at the bottom of the gesture.</p>
         <span class="arrow" aria-hidden="true">↗</span>
       </article>
 
       <article class="card anim d5">
-        <span class="num">03 — Margin</span>
-        <h3>Begin <em>anywhere.</em></h3>
-        <p>The first line is rarely the right one, but it is always the one that earns the second. Start poorly. Continue anyway.</p>
+        <span class="num">05 — Kinetic dampening</span>
+        <h3>Absorbs the hit, <em>returns the heat.</em></h3>
+        <p>Incoming force is dispersed across the lattice and routed into a thermal sink. Energy that would have bruised the wrist comes back out as a controlled pulse — or stored against the next reform.</p>
         <span class="arrow" aria-hidden="true">↗</span>
       </article>
+
+      <article class="card anim d5">
+        <span class="num">06 — Camouflage</span>
+        <h3>Dresses for the <em>room.</em></h3>
+        <p>Surface micro-cells re-pigment in 80 ms. The same lattice that becomes a shield can settle back into a matte black bracelet under a sleeve. Loud when it has to be, quiet by default.</p>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </article>
+    </section>
+
+    <section id="archive" style="margin-top:56px; padding-top:36px; border-top:1px solid rgba(198,165,89,.18);">
+      <p class="eyebrow eyebrow-row" style="margin-bottom:14px;">
+        <span class="gold-rule-thick" style="width:28px; display:inline-block;"></span>
+        ◆ § 04 — Function ledger
+      </p>
+
+      <dl style="display:grid; grid-template-columns:1fr; gap:0; margin:24px 0 0; padding:0;">
+        <div style="display:grid; grid-template-columns:140px 1fr auto; gap:24px; align-items:baseline; padding:18px 0; border-bottom:1px solid rgba(198,165,89,.14);">
+          <dt class="label-mono" style="margin:0;">Reform time</dt>
+          <dd style="margin:0; font-size:14px; line-height:1.6; color:rgba(245,235,216,.78); font-weight:300;">Surface to fully-formed silhouette, 4.2&nbsp;billion cells, ambient temp.</dd>
+          <dd style="margin:0; font-family:'Montserrat',sans-serif; font-weight:200; font-size:28px; letter-spacing:-0.04em; color:var(--gold-2); font-variant-numeric:tabular-nums;">0.34<span style="font-size:13px; vertical-align:top; margin-left:2px;">s</span></dd>
+        </div>
+        <div style="display:grid; grid-template-columns:140px 1fr auto; gap:24px; align-items:baseline; padding:18px 0; border-bottom:1px solid rgba(198,165,89,.14);">
+          <dt class="label-mono" style="margin:0;">Repair rate</dt>
+          <dd style="margin:0; font-size:14px; line-height:1.6; color:rgba(245,235,216,.78); font-weight:300;">Surface area resealed per second, single contiguous breach.</dd>
+          <dd style="margin:0; font-family:'Montserrat',sans-serif; font-weight:200; font-size:28px; letter-spacing:-0.04em; color:var(--gold-2); font-variant-numeric:tabular-nums;">9.0<span style="font-size:13px; vertical-align:top; margin-left:2px;">cm²/s</span></dd>
+        </div>
+        <div style="display:grid; grid-template-columns:140px 1fr auto; gap:24px; align-items:baseline; padding:18px 0; border-bottom:1px solid rgba(198,165,89,.14);">
+          <dt class="label-mono" style="margin:0;">Tool library</dt>
+          <dd style="margin:0; font-size:14px; line-height:1.6; color:rgba(245,235,216,.78); font-weight:300;">Pre-trained shapes ready at the wrist. Custom shapes can be added in the workbench.</dd>
+          <dd style="margin:0; font-family:'Montserrat',sans-serif; font-weight:200; font-size:28px; letter-spacing:-0.04em; color:var(--gold-2); font-variant-numeric:tabular-nums;">128</dd>
+        </div>
+        <div style="display:grid; grid-template-columns:140px 1fr auto; gap:24px; align-items:baseline; padding:18px 0; border-bottom:1px solid rgba(198,165,89,.14);">
+          <dt class="label-mono" style="margin:0;">Intent latency</dt>
+          <dd style="margin:0; font-size:14px; line-height:1.6; color:rgba(245,235,216,.78); font-weight:300;">From neural-cuff signal to first cell movement.</dd>
+          <dd style="margin:0; font-family:'Montserrat',sans-serif; font-weight:200; font-size:28px; letter-spacing:-0.04em; color:var(--gold-2); font-variant-numeric:tabular-nums;">8<span style="font-size:13px; vertical-align:top; margin-left:2px;">ms</span></dd>
+        </div>
+        <div style="display:grid; grid-template-columns:140px 1fr auto; gap:24px; align-items:baseline; padding:18px 0; border-bottom:1px solid rgba(198,165,89,.14);">
+          <dt class="label-mono" style="margin:0;">Idle draw</dt>
+          <dd style="margin:0; font-size:14px; line-height:1.6; color:rgba(245,235,216,.78); font-weight:300;">Power required to hold the bracelet shape and remain responsive.</dd>
+          <dd style="margin:0; font-family:'Montserrat',sans-serif; font-weight:200; font-size:28px; letter-spacing:-0.04em; color:var(--gold-2); font-variant-numeric:tabular-nums;">0.6<span style="font-size:13px; vertical-align:top; margin-left:2px;">W</span></dd>
+        </div>
+        <div style="display:grid; grid-template-columns:140px 1fr auto; gap:24px; align-items:baseline; padding:18px 0;">
+          <dt class="label-mono" style="margin:0;">Mass</dt>
+          <dd style="margin:0; font-size:14px; line-height:1.6; color:rgba(245,235,216,.78); font-weight:300;">Total lattice. Constant across every shape — the cells redistribute, they do not multiply.</dd>
+          <dd style="margin:0; font-family:'Montserrat',sans-serif; font-weight:200; font-size:28px; letter-spacing:-0.04em; color:var(--gold-2); font-variant-numeric:tabular-nums;">412<span style="font-size:13px; vertical-align:top; margin-left:2px;">g</span></dd>
+        </div>
+      </dl>
+    </section>
+
+    <section id="back-to-product" class="anim d5" style="margin-top:64px; padding:36px 0; border-top:1px solid rgba(198,165,89,.18); display:grid; grid-template-columns:1fr; gap:22px; align-items:center;">
+      <div>
+        <p class="eyebrow eyebrow-row" style="margin-bottom:14px;">
+          <span class="gold-rule-thick" style="width:28px; display:inline-block;"></span>
+          ◆ § 05 — Back to Product
+        </p>
+        <h2 style="font-family:'Montserrat',sans-serif; font-weight:800; letter-spacing:-0.024em; line-height:0.98; margin:0 0 12px; font-size:clamp(28px,4vw,52px); color:var(--cream);">
+          Return to the <em style="font-style:italic; font-weight:300; background: linear-gradient(135deg, var(--gold-start) 0%, var(--gold-bright) 50%, var(--gold-end) 100%); -webkit-background-clip:text; background-clip:text; color:transparent;">watch.</em>
+        </h2>
+        <p style="margin:0; font-weight:300; font-size:15.5px; line-height:1.65; color: rgba(245,235,216,.72); max-width:52ch;">
+          The lattice was designed wrist-first. Head back to the product page for the full
+          spec, the dissection, and the pre-order.
+        </p>
+      </div>
+      <div>
+        <a href="product.html" style="display:inline-flex; align-items:center; gap:12px; padding:14px 28px; background: linear-gradient(135deg, var(--gold-start) 0%, var(--gold-bright) 50%, var(--gold-end) 100%); color:#1A1410; font-weight:700; font-size:13.5px; letter-spacing:.05em; border-radius:999px; text-decoration:none; box-shadow: 0 1px 0 rgba(255,220,150,.4) inset, 0 8px 24px -8px rgba(198,165,89,.55); transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, filter .35s ease;"
+           onmouseover="this.style.transform='translateY(-2px) scale(1.02)'; this.style.filter='brightness(1.08)'; this.style.boxShadow='0 1px 0 rgba(255,220,150,.55) inset, 0 18px 40px -12px rgba(245,213,139,.6), 0 0 0 1px rgba(245,213,139,.3)';"
+           onmouseout="this.style.transform=''; this.style.filter=''; this.style.boxShadow='0 1px 0 rgba(255,220,150,.4) inset, 0 8px 24px -8px rgba(198,165,89,.55)';">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 3L3 11M3 11H9M3 11V5"/></svg>
+          Back to Product
+        </a>
+      </div>
     </section>
 
     <footer id="colophon" class="anim d5">
@@ -426,5 +685,40 @@
     </footer>
 
   </div>
+
+  <script>
+    (function(){
+      const v = document.getElementById('seq-video');
+      const playBtn = document.getElementById('seq-play');
+      const muteBtn = document.getElementById('seq-mute');
+      if (!v || !playBtn || !muteBtn) return;
+
+      const sync = () => {
+        playBtn.textContent = v.paused ? 'Play' : 'Pause';
+        muteBtn.textContent = v.muted ? 'Unmute' : 'Mute';
+      };
+      v.addEventListener('play', sync);
+      v.addEventListener('pause', sync);
+      v.addEventListener('volumechange', sync);
+
+      playBtn.addEventListener('click', () => { v.paused ? v.play() : v.pause(); });
+      muteBtn.addEventListener('click', () => { v.muted = !v.muted; });
+
+      // Smooth-scroll polish for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', (e) => {
+          const id = a.getAttribute('href');
+          if (id.length < 2) return;
+          const el = document.querySelector(id);
+          if (!el) return;
+          e.preventDefault();
+          const y = el.getBoundingClientRect().top + window.pageYOffset - 20;
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        });
+      });
+
+      sync();
+    })();
+  </script>
 </body>
 </html>
