@@ -1,0 +1,1103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tester Smart Watch Pro — Engineered to be inevitable.</title>
+<meta name="description" content="Tester Smart Watch Pro. A precision instrument for the people who actually ship the work. Titanium, sapphire, sub-second sensors." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:        '#000000',
+          coal:       '#070605',
+          char:       '#0E0C0A',
+          smoke:      '#15110D',
+          rule:       '#2C241B',
+          gold:       '#C6A559',
+          'gold-2':   '#E6B979',
+          'gold-3':   '#F5D58B',
+          'gold-dim': '#8E7740',
+          cream:      '#F5EBD8',
+          dim:        '#A89F8E',
+        },
+        fontFamily: {
+          sans: ['Montserrat', 'system-ui', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#000000;
+    --coal:#070605;
+    --char:#0E0C0A;
+    --gold-start:#C6A559;
+    --gold-end:#E6B979;
+    --gold-bright:#F5D58B;
+    --cream:#F5EBD8;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html, body{
+    background: #000;
+    color: var(--cream);
+    margin:0;
+  }
+  body{
+    font-family:'Montserrat', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+
+  /* Pure black stage with very subtle gold ambient — keeps blend with video */
+  .stage{
+    background:
+      radial-gradient(55% 40% at 80% -10%, rgba(230,185,121,0.10), transparent 60%),
+      radial-gradient(40% 60% at -10% 30%, rgba(198,165,89,0.06), transparent 65%),
+      #000;
+  }
+
+  /* Warm grain — very low opacity to keep blacks black */
+  .grain::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.65  0 0 0 0 0.35  0 0 0 0.30 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity:.10;
+    mix-blend-mode:overlay;
+    pointer-events:none;
+    z-index:90;
+  }
+
+  /* Gold gradient text */
+  .gold-text{
+    background: linear-gradient(135deg, var(--gold-start) 0%, var(--gold-bright) 50%, var(--gold-end) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Buttons (brand gradient) */
+  .btn-gold{
+    background: linear-gradient(135deg, var(--gold-start) 0%, var(--gold-bright) 50%, var(--gold-end) 100%);
+    color:#1A1410;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, filter .35s ease;
+    box-shadow: 0 1px 0 rgba(255,220,150,.4) inset, 0 8px 24px -8px rgba(198,165,89,.55);
+    will-change: transform;
+  }
+  .btn-gold:hover{ transform: translateY(-2px) scale(1.02); filter: brightness(1.08); box-shadow: 0 1px 0 rgba(255,220,150,.55) inset, 0 18px 40px -12px rgba(245,213,139,.6), 0 0 0 1px rgba(245,213,139,.3); }
+  .btn-gold:active{ transform: translateY(0) scale(1); }
+  .btn-gold:focus-visible{ outline: 2px solid var(--gold-bright); outline-offset:3px; }
+
+  .btn-outline{
+    border:1px solid rgba(198,165,89,.55);
+    color: var(--gold-2);
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .25s ease;
+    background: transparent;
+  }
+  .btn-outline:hover{ background: rgba(198,165,89,.08); color: var(--gold-bright); border-color: var(--gold-bright); transform: translateY(-1px); }
+  .btn-outline:focus-visible{ outline: 2px solid var(--gold-bright); outline-offset:3px; }
+
+  .gold-rule{
+    height:1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(198,165,89,.55) 30%, rgba(245,213,139,.7) 50%, rgba(198,165,89,.55) 70%, transparent 100%);
+  }
+  .gold-rule-thick{
+    height:2px;
+    background: linear-gradient(90deg, var(--gold-start), var(--gold-bright), var(--gold-end));
+  }
+
+  .eyebrow{
+    font-weight:600;
+    font-size:11px;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color: var(--gold-2);
+  }
+  .label-mono{
+    font-weight:500;
+    font-size:11px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:#A89F8E;
+  }
+
+  /* Display heading */
+  .display{
+    font-weight: 800;
+    letter-spacing:-0.028em;
+    line-height:.94;
+  }
+  .display-light{
+    font-weight: 300;
+    letter-spacing:-0.02em;
+    line-height: 1.02;
+  }
+  .num-display{
+    font-weight: 200;
+    letter-spacing:-0.04em;
+    color: var(--gold-2);
+  }
+  .tnum{ font-variant-numeric: tabular-nums; }
+
+  /* Logo glow */
+  .logo-glow{
+    filter:
+      drop-shadow(0 1px 2px rgba(245,213,139,.35))
+      drop-shadow(0 4px 22px rgba(198,165,89,.35));
+  }
+
+  /* Selection */
+  ::selection{ background: var(--gold-bright); color:#1A1410; }
+
+  /* Underline link */
+  .ulink{ position:relative; padding-bottom:2px; display:inline-block; }
+  .ulink::after{
+    content:""; position:absolute; left:0; right:0; bottom:0;
+    height:1px; background: currentColor; transform-origin: right;
+    transform: scaleX(1); transition: transform .45s cubic-bezier(.7,0,.2,1);
+  }
+  .ulink:hover{ color: var(--gold-bright); }
+  .ulink:hover::after{ transform: scaleX(0); transform-origin: left; }
+
+  /* Hero video & overlays */
+  .hero-video{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:0;
+    /* Watch dissection footage tends to be on dark bg — keep blend mode soft to preserve blacks */
+    opacity:.55;
+    filter: contrast(1.05) saturate(.85);
+  }
+  .hero-vignette{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:
+      radial-gradient(60% 50% at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,.55) 60%, rgba(0,0,0,.92) 100%),
+      linear-gradient(180deg, rgba(0,0,0,.35) 0%, transparent 30%, transparent 70%, rgba(0,0,0,.85) 100%);
+  }
+  .hero-edge-glow{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:
+      radial-gradient(40% 30% at 80% 20%, rgba(230,185,121,.18), transparent 70%),
+      radial-gradient(35% 30% at 20% 80%, rgba(198,165,89,.10), transparent 70%);
+    mix-blend-mode: screen;
+  }
+
+  /* Word-by-word stagger for hero headline */
+  .word-stagger{
+    display:inline-block;
+    overflow:hidden;
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+    vertical-align: bottom;
+  }
+  .word-stagger > span{
+    display:inline-block;
+    transform: translateY(115%);
+    opacity: 0;
+    animation: word-rise 1s cubic-bezier(.2,.7,.2,1) forwards;
+    will-change: transform, opacity;
+  }
+  @keyframes word-rise {
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  /* Generic fade-up reveal */
+  @keyframes reveal {
+    0%   { opacity:0; transform: translateY(16px); }
+    100% { opacity:1; transform: translateY(0); }
+  }
+  .reveal{ opacity:0; animation: reveal .9s cubic-bezier(.2,.7,.2,1) forwards; }
+  .delay-1{ animation-delay:.18s } .delay-2{ animation-delay:.34s }
+  .delay-3{ animation-delay:.50s } .delay-4{ animation-delay:.66s }
+  .delay-5{ animation-delay:.82s } .delay-6{ animation-delay:.98s }
+
+  /* Pulse dot */
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(245,213,139,0.6); }
+    50%      { box-shadow: 0 0 0 6px rgba(245,213,139,0); }
+  }
+  .pulse-dot{ animation: pulse-dot 2.4s ease-out infinite; }
+
+  /* Scroll-driven reveal (set by IntersectionObserver) */
+  .scroll-reveal{
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .scroll-reveal.visible{ opacity:1; transform: translateY(0); }
+
+  .scroll-reveal-l{
+    opacity:0;
+    transform: translateX(-28px);
+    transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .scroll-reveal-l.visible{ opacity:1; transform: translateX(0); }
+
+  .scroll-reveal-r{
+    opacity:0;
+    transform: translateX(28px);
+    transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .scroll-reveal-r.visible{ opacity:1; transform: translateX(0); }
+
+  /* Card with gold border-glow (for features/specs) */
+  .card{
+    background: linear-gradient(180deg, rgba(14,12,10,.85) 0%, rgba(7,6,5,.85) 100%);
+    border:1px solid rgba(198,165,89,0.18);
+    backdrop-filter: blur(6px);
+    transition: border-color .35s ease, transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease;
+  }
+  .card:hover{
+    border-color: rgba(245,213,139,0.42);
+    transform: translateY(-3px);
+    box-shadow: 0 1px 0 rgba(245,213,139,.08) inset, 0 24px 48px -22px rgba(0,0,0,.85), 0 0 0 1px rgba(198,165,89,0.18);
+  }
+
+  /* Icon tile */
+  .icon-tile{
+    width:46px; height:46px; border-radius:11px;
+    background: linear-gradient(180deg, #2A2218 0%, #14100B 100%);
+    border:1px solid rgba(198,165,89,.28);
+    color: var(--gold-2);
+    display:grid; place-items:center;
+    box-shadow: 0 1px 0 rgba(245,213,139,.06) inset;
+  }
+
+  /* Marquee */
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .marquee-track{ animation: marquee 50s linear infinite; will-change: transform; }
+
+  /* Vertical sidebar text */
+  .vrt-text{
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    letter-spacing: .42em;
+    font-weight: 600;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    color: rgba(198,165,89,.55);
+  }
+
+  /* Refined spec cell with leading rule */
+  .spec-cell{
+    position: relative;
+    padding-top: 14px;
+  }
+  .spec-cell::before{
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 28px; height: 1px;
+    background: linear-gradient(90deg, var(--gold-bright), transparent);
+  }
+
+  /* Dissection callouts */
+  .dissection-stage{
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    background:#000;
+    border:1px solid rgba(198,165,89,.22);
+    box-shadow: 0 1px 0 rgba(245,213,139,.06) inset, 0 60px 120px -50px rgba(0,0,0,.95), 0 0 0 1px rgba(198,165,89,.10);
+  }
+  .dissection-video{
+    width:100%; height:auto; display:block;
+    background:#000;
+  }
+  .callout{
+    position: absolute;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);
+  }
+  .callout.visible{ opacity:1; transform: translateY(0); pointer-events:auto; }
+  .callout-pin{
+    width:14px; height:14px; border-radius:50%;
+    background: radial-gradient(circle, var(--gold-bright) 0%, var(--gold-start) 60%, transparent 100%);
+    box-shadow: 0 0 0 2px rgba(245,213,139,.35), 0 0 22px rgba(245,213,139,.55);
+    position: relative;
+  }
+  .callout-pin::after{
+    content:"";
+    position:absolute; inset:-8px;
+    border-radius:50%;
+    border:1px solid rgba(245,213,139,.45);
+    animation: pulse-ring 2.6s ease-out infinite;
+  }
+  @keyframes pulse-ring{
+    0%   { transform: scale(.6); opacity:.9; }
+    100% { transform: scale(1.9); opacity:0; }
+  }
+  .callout-line{
+    position:absolute;
+    height:1px;
+    background: linear-gradient(90deg, rgba(245,213,139,.85), rgba(245,213,139,.15));
+    top: 6px;
+  }
+  .callout-card{
+    position:absolute;
+    min-width: 220px;
+    background: linear-gradient(180deg, rgba(14,12,10,.92) 0%, rgba(0,0,0,.92) 100%);
+    border:1px solid rgba(198,165,89,.35);
+    border-radius: 10px;
+    padding: 10px 14px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 1px 0 rgba(245,213,139,.08) inset, 0 18px 40px -14px rgba(0,0,0,.85);
+  }
+  .callout-card .label-mono{ color: var(--gold-2); }
+  .callout-card .title{
+    font-weight:700; font-size:13.5px; color: var(--cream); letter-spacing:-0.005em; margin-top:3px;
+  }
+  .callout-card .meta{
+    font-size:11.5px; color: rgba(245,235,216,.65); font-weight:400; margin-top:2px;
+  }
+
+  /* Specific callout placements (responsive on desktop) */
+  .co-1 .callout-pin{ position:absolute; top:18%; left:32%; }
+  .co-1 .callout-line{ top: calc(18% + 6px); left: calc(32% + 14px); width: 16%; }
+  .co-1 .callout-card{ top: calc(18% - 6px); left: calc(32% + 14% + 16% + 4px); transform: translateY(-50%); }
+
+  .co-2 .callout-pin{ position:absolute; top:54%; left:62%; }
+  .co-2 .callout-line{ top: calc(54% + 6px); left: calc(62% + 14px); width: 14%; }
+  .co-2 .callout-card{ top: calc(54% - 6px); left: calc(62% + 14% + 14px + 4px); transform: translateY(-50%); }
+
+  .co-3 .callout-pin{ position:absolute; top:74%; left:30%; }
+  .co-3 .callout-line{ top: calc(74% + 6px); left: 16%; width: 14%; }
+  .co-3 .callout-card{ top: calc(74% - 6px); left: 0; transform: translate(-2%, -50%); }
+
+  /* Hide callouts on smaller screens (would crowd) */
+  @media (max-width: 900px){
+    .callouts-overlay{ display:none; }
+  }
+
+  /* CTA "live preorder" pulse */
+  .cta-glow::before{
+    content:"";
+    position:absolute; inset:-30%;
+    background: radial-gradient(closest-side, rgba(245,213,139,.22), transparent 70%);
+    z-index:-1;
+    filter: blur(40px);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .word-stagger > span{ transform:none !important; opacity:1 !important; animation:none !important; }
+    .scroll-reveal, .scroll-reveal-l, .scroll-reveal-r{ opacity:1 !important; transform:none !important; }
+    .reveal{ animation:none !important; opacity:1 !important; }
+    .marquee-track{ animation:none !important; }
+    .pulse-dot, .callout-pin::after{ animation:none !important; }
+  }
+</style>
+</head>
+<body class="stage grain">
+
+<!-- ============== TOP STRIP ============== -->
+<div class="border-b border-rule/40 relative z-30">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-2.5 flex items-center justify-between text-[11px] tracking-[.2em] uppercase font-medium">
+    <span class="flex items-center gap-2.5 sm:gap-3 text-cream/85 whitespace-nowrap">
+      <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-3 pulse-dot shrink-0"></span>
+      <span class="text-cream font-semibold">Series 02</span>
+      <span class="text-rule" aria-hidden="true">·</span>
+      <span class="hidden sm:inline text-cream/75">Pre-orders ship</span>
+      <span class="sm:hidden text-cream/75">Ships</span>
+      <span class="text-gold-3 font-semibold">June 14</span>
+    </span>
+    <span class="hidden md:flex items-center gap-3 lg:gap-4 text-dim">
+      <span>Titanium · Sapphire</span>
+      <span class="text-rule" aria-hidden="true">·</span>
+      <span>Free engraving</span>
+      <span class="text-rule" aria-hidden="true">·</span>
+      <span>Lifetime calibration</span>
+    </span>
+  </div>
+</div>
+
+<!-- ============== NAV ============== -->
+<header class="relative z-30">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3 group">
+      <img src="Brand_assets/Tester%20Logo.png" alt="Tester" class="w-10 h-10 logo-glow" />
+      <span class="leading-tight">
+        <span class="block font-bold text-[16px] tracking-[-0.01em] text-cream">Tester Smart Watch <span class="gold-text italic">Pro</span></span>
+        <span class="block text-[10px] font-medium tracking-[.26em] uppercase text-gold-2/80 mt-0.5">Series · 02</span>
+      </span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-9 text-[13.5px] font-medium text-cream/85">
+      <a class="ulink" href="#features">Features</a>
+      <a class="ulink" href="#dissection">Dissection</a>
+      <a class="ulink" href="#ambassador">In the Wild</a>
+      <a class="ulink" href="#specs">Specs</a>
+      <a class="ulink" href="#preorder">Pre-order</a>
+      <a class="ulink" href="index.html">Academy</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="hidden sm:inline-block btn-outline px-4 py-2.5 text-[12.5px] font-semibold tracking-[.05em] rounded-full">Back to Academy</a>
+      <a href="#preorder" class="btn-gold px-5 py-2.5 text-[12.5px] font-bold tracking-[.05em] rounded-full">Pre-order</a>
+    </div>
+  </div>
+  <div class="gold-rule max-w-[1400px] mx-auto"></div>
+</header>
+
+<!-- ============== HERO ============== -->
+<section class="relative overflow-hidden" style="min-height: 92vh;">
+  <video class="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="Smart%20Watch%20Dissection.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-vignette"></div>
+  <div class="hero-edge-glow"></div>
+
+  <!-- Side rails -->
+  <div class="hidden lg:block absolute left-6 top-1/2 -translate-y-1/2 z-10">
+    <span class="vrt-text">Tester · Series 02 · Smart Watch Pro</span>
+  </div>
+  <div class="hidden lg:block absolute right-6 top-1/2 -translate-y-1/2 z-10">
+    <span class="vrt-text">Engineered in Brooklyn · Assembled in Tokyo</span>
+  </div>
+
+  <div class="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-10 pt-16 lg:pt-24 pb-16 lg:pb-24 grid grid-cols-12 gap-x-6 gap-y-10 items-center" style="min-height: 78vh;">
+
+    <div class="col-span-12 lg:col-span-8">
+      <p class="eyebrow mb-6 reveal">◆ § 01 — The Watch</p>
+      <div class="gold-rule-thick max-w-[3rem] mb-7 reveal delay-1"></div>
+
+      <h1 class="display text-[clamp(48px,8.4vw,128px)] text-cream">
+        <span class="word-stagger" style="animation-delay:0s"><span style="animation-delay:.05s">Engineered</span></span>
+        <span class="word-stagger"><span style="animation-delay:.18s">to</span></span>
+        <span class="word-stagger"><span style="animation-delay:.30s">be</span></span>
+        <br/>
+        <span class="word-stagger"><span class="gold-text italic" style="animation-delay:.46s">inevitable.</span></span>
+      </h1>
+
+      <p class="mt-8 max-w-[58ch] text-[17px] lg:text-[19px] leading-[1.65] font-light text-cream/80 reveal delay-3">
+        The <span class="text-cream font-medium">Tester Smart Watch Pro</span> is a precision instrument for people
+        who actually ship the work. Grade-5 titanium, sapphire crystal,
+        sub-second sensors, and an agentic OS that anticipates your day before you do.
+      </p>
+
+      <div class="mt-10 flex flex-wrap items-center gap-4 reveal delay-4">
+        <a href="#preorder" class="btn-gold inline-flex items-center justify-center gap-3 px-7 py-4 text-[13.5px] font-bold tracking-[.05em] rounded-full">
+          Pre-order from $649
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+        </a>
+        <a href="#dissection" class="btn-outline inline-flex items-center gap-2 px-6 py-4 text-[12.5px] font-semibold tracking-[.05em] rounded-full">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M3 1.5L10 6L3 10.5V1.5Z"/></svg>
+          Watch the dissection
+        </a>
+      </div>
+
+      <div class="mt-12 grid grid-cols-3 gap-6 max-w-[640px] reveal delay-5">
+        <div class="spec-cell">
+          <p class="label-mono mb-2">Movement</p>
+          <p class="num-display text-[28px] leading-none tnum">0.4<span class="text-[14px] align-top ml-0.5">ms</span></p>
+          <p class="text-[12px] text-cream/55 mt-1.5 font-light">sensor latency</p>
+        </div>
+        <div class="spec-cell">
+          <p class="label-mono mb-2">Battery</p>
+          <p class="num-display text-[28px] leading-none tnum">14<span class="text-[14px] align-top ml-0.5">d</span></p>
+          <p class="text-[12px] text-cream/55 mt-1.5 font-light">ambient mode</p>
+        </div>
+        <div class="spec-cell">
+          <p class="label-mono mb-2">Weight</p>
+          <p class="num-display text-[28px] leading-none tnum">38<span class="text-[14px] align-top ml-0.5">g</span></p>
+          <p class="text-[12px] text-cream/55 mt-1.5 font-light">titanium case</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: floating "live" telemetry chip -->
+    <div class="col-span-12 lg:col-span-4 lg:pl-6 reveal delay-4">
+      <div class="card rounded-[18px] p-5 lg:p-6 max-w-md mx-auto lg:ml-auto">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-3 pulse-dot"></span>
+            <span class="label-mono text-gold-2/90">live · paired</span>
+          </div>
+          <span class="text-[10.5px] font-medium tracking-[.22em] uppercase text-cream/50">06:42 AM</span>
+        </div>
+        <div class="space-y-3 text-[13px] font-medium tnum">
+          <div class="flex items-center gap-3">
+            <span class="text-gold-2/80 w-7">HR</span>
+            <span class="flex-1 text-cream/85">heart rate · resting</span>
+            <span class="text-cream/65">52&nbsp;bpm</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-gold-2/80 w-7">VO₂</span>
+            <span class="flex-1 text-cream/85">aerobic capacity</span>
+            <span class="text-cream/65">58.4</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-gold-2/80 w-7">SpO</span>
+            <span class="flex-1 text-cream/85">blood oxygen</span>
+            <span class="text-gold-3">98%</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-gold-2/80 w-7">REM</span>
+            <span class="flex-1 text-cream/85">sleep cycles · last 8h</span>
+            <span class="text-cream/65">4 / 5</span>
+          </div>
+        </div>
+        <div class="mt-5 pt-4 border-t border-gold/10 flex items-center justify-between">
+          <span class="label-mono text-cream/55">readiness</span>
+          <span class="text-[13px] font-bold text-gold-3 tnum">94 / 100</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div class="absolute left-1/2 -translate-x-1/2 bottom-7 z-10 reveal delay-5">
+    <a href="#features" aria-label="Scroll to features" class="flex flex-col items-center gap-2 text-[10.5px] tracking-[.32em] uppercase text-gold-2/75 hover:text-gold-3 transition-colors">
+      <span>Scroll</span>
+      <span class="block w-px h-12 bg-gradient-to-b from-gold-2/70 to-transparent"></span>
+    </a>
+  </div>
+</section>
+
+<!-- ============== MARQUEE STRIP ============== -->
+<section class="border-y border-gold/15 relative overflow-hidden bg-black">
+  <div class="marquee-track flex whitespace-nowrap py-5 text-[clamp(28px,4vw,56px)] font-extrabold tracking-[-0.03em] text-cream/15">
+    <span class="px-8">Tester · Smart Watch Pro</span>
+    <span class="px-8 gold-text">— Engineered to be inevitable —</span>
+    <span class="px-8">Titanium · Sapphire · Sub-second</span>
+    <span class="px-8 gold-text">— 14-day battery —</span>
+    <span class="px-8">Tester · Smart Watch Pro</span>
+    <span class="px-8 gold-text">— Engineered to be inevitable —</span>
+    <span class="px-8">Titanium · Sapphire · Sub-second</span>
+    <span class="px-8 gold-text">— 14-day battery —</span>
+  </div>
+</section>
+
+<!-- ============== FEATURES ============== -->
+<section id="features" class="relative">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 grid grid-cols-12 gap-x-6 gap-y-12">
+
+    <div class="col-span-12 lg:col-span-4 lg:sticky lg:top-24 self-start scroll-reveal-l">
+      <p class="eyebrow mb-5">◆ § 02 — Features</p>
+      <div class="gold-rule-thick max-w-[3rem] mb-8"></div>
+      <h2 class="display text-[clamp(40px,5.4vw,76px)] text-cream">
+        Restless <span class="gold-text italic">precision.</span>
+      </h2>
+      <p class="mt-7 text-[16.5px] leading-[1.65] text-cream/75 font-light max-w-[40ch]">
+        Every component earns its place. Six things we obsess over so you don't have to.
+      </p>
+    </div>
+
+    <div class="col-span-12 lg:col-span-8">
+      <ul class="grid sm:grid-cols-2 gap-5 lg:gap-6">
+
+        <li class="card rounded-[16px] p-6 scroll-reveal">
+          <div class="icon-tile mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <p class="label-mono mb-2">01 — Movement</p>
+          <h3 class="font-bold text-[17px] tracking-[-0.005em] text-cream mb-2">Sub-millisecond sensing.</h3>
+          <p class="text-[13.5px] leading-[1.62] text-cream/70 font-light">9-axis IMU sampled at 1.6 kHz. Catches a wrist tremor before you do.</p>
+        </li>
+
+        <li class="card rounded-[16px] p-6 scroll-reveal" style="transition-delay:.08s">
+          <div class="icon-tile mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L4 7v6c0 5 4 8 8 9 4-1 8-4 8-9V7l-8-5z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <p class="label-mono mb-2">02 — Material</p>
+          <h3 class="font-bold text-[17px] tracking-[-0.005em] text-cream mb-2">Grade-5 titanium, end to end.</h3>
+          <p class="text-[13.5px] leading-[1.62] text-cream/70 font-light">CNC-machined in a single pass. Sapphire crystal, no plastics anywhere on the body.</p>
+        </li>
+
+        <li class="card rounded-[16px] p-6 scroll-reveal" style="transition-delay:.16s">
+          <div class="icon-tile mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="16" height="12" rx="2"/><path d="M19 10v4"/><path d="M22 11v2"/></svg>
+          </div>
+          <p class="label-mono mb-2">03 — Endurance</p>
+          <h3 class="font-bold text-[17px] tracking-[-0.005em] text-cream mb-2">14-day ambient battery.</h3>
+          <p class="text-[13.5px] leading-[1.62] text-cream/70 font-light">Solid-state cell. 36 hours under continuous workout telemetry. Wireless charge in 25 minutes.</p>
+        </li>
+
+        <li class="card rounded-[16px] p-6 scroll-reveal" style="transition-delay:.24s">
+          <div class="icon-tile mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+          </div>
+          <p class="label-mono mb-2">04 — Navigation</p>
+          <h3 class="font-bold text-[17px] tracking-[-0.005em] text-cream mb-2">Dual-band L1/L5 GPS.</h3>
+          <p class="text-[13.5px] leading-[1.62] text-cream/70 font-light">Locks in 1.8 seconds. Holds position inside subway tunnels, parking decks, and Manhattan canyons.</p>
+        </li>
+
+        <li class="card rounded-[16px] p-6 scroll-reveal" style="transition-delay:.32s">
+          <div class="icon-tile mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12c0-4.4 3.6-8 8-8s8 3.6 8 8"/><path d="M4 12c0 4.4 3.6 8 8 8"/><path d="M16 16l4 4"/></svg>
+          </div>
+          <p class="label-mono mb-2">05 — Agentic OS</p>
+          <h3 class="font-bold text-[17px] tracking-[-0.005em] text-cream mb-2">Anticipates your day.</h3>
+          <p class="text-[13.5px] leading-[1.62] text-cream/70 font-light">An on-device agent reads context, surfaces what matters, and silences what doesn't. No cloud dependency.</p>
+        </li>
+
+        <li class="card rounded-[16px] p-6 scroll-reveal" style="transition-delay:.40s">
+          <div class="icon-tile mb-5">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c2.5 0 2.5 -4 5 -4s2.5 4 5 4 2.5 -4 5 -4 2.5 4 5 4"/><path d="M3 18c2.5 0 2.5 -4 5 -4s2.5 4 5 4 2.5 -4 5 -4 2.5 4 5 4"/></svg>
+          </div>
+          <p class="label-mono mb-2">06 — Water</p>
+          <h3 class="font-bold text-[17px] tracking-[-0.005em] text-cream mb-2">200m WR — actually.</h3>
+          <p class="text-[13.5px] leading-[1.62] text-cream/70 font-light">ISO 22810 certified. Swim, dive, and shower without the mental overhead.</p>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============== DISSECTION ============== -->
+<section id="dissection" class="relative border-y border-gold/20" style="background:linear-gradient(180deg,#000 0%, #050403 50%, #000 100%);">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32">
+    <div class="grid grid-cols-12 gap-x-6 gap-y-8 mb-12 lg:mb-16 items-end">
+      <div class="col-span-12 lg:col-span-4 scroll-reveal-l">
+        <p class="eyebrow mb-5">◆ § 03 — Dissection</p>
+        <div class="gold-rule-thick max-w-[3rem] mb-7"></div>
+      </div>
+      <div class="col-span-12 lg:col-span-8 scroll-reveal">
+        <h2 class="display text-[clamp(40px,5.4vw,80px)] text-cream leading-[0.96]">
+          Every layer, <span class="gold-text italic">accounted for.</span>
+        </h2>
+        <p class="mt-6 text-[17px] leading-[1.65] text-cream/75 font-light max-w-[60ch]">
+          We took the watch apart so you don't have to. Hover the pins to see what each component
+          actually does — and what it cost us to get there.
+        </p>
+      </div>
+    </div>
+
+    <!-- Video stage with callouts -->
+    <div class="dissection-stage scroll-reveal" id="dissection-stage">
+      <video id="dissection-video" class="dissection-video" muted loop playsinline preload="auto" controls poster="">
+        <source src="Smart%20Watch%20Dissection.mp4" type="video/mp4" />
+      </video>
+
+      <!-- Callouts overlay (hidden on small screens) -->
+      <div class="callouts-overlay absolute inset-0 z-10 pointer-events-none">
+
+        <div class="callout co-1" data-delay="0">
+          <span class="callout-pin"></span>
+          <span class="callout-line"></span>
+          <div class="callout-card">
+            <p class="label-mono">A — Display</p>
+            <p class="title">Sapphire LTPO 2.0</p>
+            <p class="meta">1 Hz idle · 120 Hz active · 3,000 nits peak</p>
+          </div>
+        </div>
+
+        <div class="callout co-2" data-delay="220">
+          <span class="callout-pin"></span>
+          <span class="callout-line"></span>
+          <div class="callout-card">
+            <p class="label-mono">B — Sensor stack</p>
+            <p class="title">9-axis IMU · PPG · ECG</p>
+            <p class="meta">Sampled at 1,600 Hz · medical-grade leads</p>
+          </div>
+        </div>
+
+        <div class="callout co-3" data-delay="440">
+          <span class="callout-pin"></span>
+          <span class="callout-line"></span>
+          <div class="callout-card">
+            <p class="label-mono">C — Power cell</p>
+            <p class="title">Solid-state 410 mAh</p>
+            <p class="meta">14-day ambient · 36 hr workout · 25 min charge</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Mobile-only callout list (since absolute pins are hidden) -->
+      <div class="lg:hidden absolute bottom-3 left-3 right-3 z-10 grid grid-cols-1 gap-2">
+        <!-- intentionally empty — replicated below -->
+      </div>
+    </div>
+
+    <!-- Mobile callout list outside the video stage for readability -->
+    <div class="lg:hidden mt-8 grid grid-cols-1 gap-4">
+      <div class="card rounded-[14px] p-5 scroll-reveal">
+        <p class="label-mono mb-1.5 text-gold-2">A — Display</p>
+        <p class="font-bold text-[15.5px] text-cream">Sapphire LTPO 2.0</p>
+        <p class="text-[12.5px] text-cream/65 mt-1">1 Hz idle · 120 Hz active · 3,000 nits peak</p>
+      </div>
+      <div class="card rounded-[14px] p-5 scroll-reveal" style="transition-delay:.08s">
+        <p class="label-mono mb-1.5 text-gold-2">B — Sensor stack</p>
+        <p class="font-bold text-[15.5px] text-cream">9-axis IMU · PPG · ECG</p>
+        <p class="text-[12.5px] text-cream/65 mt-1">Sampled at 1,600 Hz · medical-grade leads</p>
+      </div>
+      <div class="card rounded-[14px] p-5 scroll-reveal" style="transition-delay:.16s">
+        <p class="label-mono mb-1.5 text-gold-2">C — Power cell</p>
+        <p class="font-bold text-[15.5px] text-cream">Solid-state 410 mAh</p>
+        <p class="text-[12.5px] text-cream/65 mt-1">14-day ambient · 36 hr workout · 25 min charge</p>
+      </div>
+    </div>
+
+    <!-- Video controls hint -->
+    <div class="mt-6 flex flex-wrap items-center justify-between gap-3 text-[11px] tracking-[.22em] uppercase text-cream/50 font-medium">
+      <span class="flex items-center gap-2">
+        <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-3 pulse-dot"></span>
+        Tester · Engineering Capture · 4K
+      </span>
+      <button id="play-toggle" class="btn-outline px-4 py-2 rounded-full text-[10.5px] tracking-[.22em] font-semibold uppercase">Play / Pause</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============== AMBASSADOR / IN THE WILD ============== -->
+<section id="ambassador" class="relative border-t border-gold/20 overflow-hidden" style="background:linear-gradient(180deg,#000 0%, #050403 50%, #000 100%);">
+  <div aria-hidden class="absolute -top-24 -left-24 w-[420px] h-[420px] pointer-events-none" style="background:radial-gradient(closest-side, rgba(245,213,139,.10), transparent 70%); filter: blur(50px);"></div>
+
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 grid grid-cols-12 gap-x-6 gap-y-12 lg:gap-x-12 items-center">
+
+    <!-- Portrait — Iron Helm + Mark VII watch composition -->
+    <div class="col-span-12 lg:col-span-6 scroll-reveal-l">
+      <div class="relative">
+        <!-- Frame label -->
+        <p class="vrt-text absolute -left-8 top-0 hidden lg:block">Ambassador · Frame 014</p>
+
+        <div class="relative rounded-[18px] overflow-hidden border border-gold/25" style="aspect-ratio: 4 / 5; box-shadow: 0 1px 0 rgba(245,213,139,.06) inset, 0 60px 120px -50px rgba(0,0,0,.95); background:#000;">
+
+          <!-- Background atmosphere: red + gold radial accents (Stark palette) -->
+          <div aria-hidden class="absolute inset-0 pointer-events-none" style="background:
+            radial-gradient(55% 45% at 30% 25%, rgba(196, 30, 30, .22), transparent 65%),
+            radial-gradient(50% 50% at 80% 70%, rgba(230,185,121,.18), transparent 70%),
+            #000;"></div>
+
+          <!-- Subtle scan-line / grid texture for tech feel -->
+          <div aria-hidden class="absolute inset-0 pointer-events-none opacity-[0.18]" style="background-image:
+            linear-gradient(0deg, rgba(245,213,139,.25) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(245,213,139,.25) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(70% 70% at 50% 50%, #000 0%, transparent 90%);"></div>
+
+          <!--
+            Lead subject: Iron Helm (uses local asset images/iron-helmet.png).
+            This is your existing in-project Stark-coded render — no external IP fetched.
+          -->
+          <img
+            src="images/iron-helmet.png"
+            alt="Tester ambassador — Iron Helm subject wearing the Smart Watch Pro"
+            class="absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 w-[78%] object-contain"
+            style="filter: drop-shadow(0 30px 50px rgba(0,0,0,.85)) drop-shadow(0 0 28px rgba(245,213,139,.18));"
+            loading="lazy"
+          />
+
+          <!-- Floating Mark VII watch chip + tether line -->
+          <div class="absolute left-[8%] bottom-[14%] w-[42%] max-w-[220px]">
+            <div class="relative">
+              <!-- tether (line + pulse dot) -->
+              <span aria-hidden class="absolute -top-3 left-[78%] w-[60%] h-px" style="background: linear-gradient(90deg, rgba(245,213,139,.85), rgba(245,213,139,.10));"></span>
+              <span aria-hidden class="absolute -top-[6px] left-[136%] w-2 h-2 rounded-full pulse-dot" style="background: radial-gradient(circle, #F5D58B 0%, #C6A559 70%, transparent 100%); box-shadow: 0 0 0 2px rgba(245,213,139,.35), 0 0 18px rgba(245,213,139,.5);"></span>
+
+              <div class="rounded-[12px] p-3 backdrop-blur" style="background: linear-gradient(180deg, rgba(14,12,10,.85) 0%, rgba(0,0,0,.85) 100%); border:1px solid rgba(198,165,89,.40); box-shadow: 0 18px 40px -14px rgba(0,0,0,.9);">
+                <div class="flex items-center gap-3">
+                  <img src="images/mark-vii-watch.png" alt="" class="w-12 h-12 object-contain" loading="lazy" />
+                  <div class="leading-tight">
+                    <p class="label-mono text-gold-2/90">Worn unit</p>
+                    <p class="font-bold text-cream text-[12.5px] tracking-[-0.005em]">Mark VII · Pro</p>
+                    <p class="text-[10.5px] text-cream/60 mt-0.5">Wrist · left · paired</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Gradient overlay (top + bottom fade for legibility) -->
+          <div aria-hidden class="absolute inset-0 pointer-events-none" style="background: linear-gradient(180deg, rgba(0,0,0,.45) 0%, transparent 22%, transparent 62%, rgba(0,0,0,.88) 100%);"></div>
+
+          <!-- Gold color-treatment layer -->
+          <div aria-hidden class="absolute inset-0 pointer-events-none" style="background: radial-gradient(60% 60% at 50% 40%, rgba(230,185,121,.10), transparent 75%); mix-blend-mode: screen;"></div>
+
+          <!-- Lower-left badge -->
+          <div class="absolute left-5 bottom-5 right-5 flex items-end justify-between gap-4">
+            <div>
+              <p class="label-mono text-gold-2/90 mb-1.5">Series 02 · Founders' Edition</p>
+              <p class="font-bold text-cream text-[15.5px] tracking-[-0.005em]">In the wild — March, 2026</p>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 text-[10.5px] tracking-[.22em] uppercase text-cream/65 font-medium">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-3 pulse-dot"></span>
+              <span>Worn 24/7</span>
+            </div>
+          </div>
+
+          <!-- Top-right caliper marks -->
+          <div class="absolute top-4 right-4 flex items-center gap-2 text-[10.5px] tracking-[.32em] uppercase text-cream/65 font-medium">
+            <span class="block w-6 h-px bg-gold-2/70"></span>
+            <span>014 / 042</span>
+          </div>
+
+          <!-- Top-left codename -->
+          <div class="absolute top-4 left-4 flex items-center gap-2 text-[10.5px] tracking-[.32em] uppercase text-gold-2/85 font-semibold">
+            <span class="inline-block w-1.5 h-1.5 rounded-full bg-gold-3"></span>
+            <span>Codename · Helm</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copy -->
+    <div class="col-span-12 lg:col-span-6 lg:pl-6 scroll-reveal-r">
+      <p class="eyebrow mb-5">◆ § 04 — In the Wild</p>
+      <div class="gold-rule-thick max-w-[3rem] mb-8"></div>
+
+      <h2 class="display text-[clamp(36px,4.8vw,72px)] text-cream leading-[0.96]">
+        Worn by the people <span class="gold-text italic">already shipping it.</span>
+      </h2>
+
+      <blockquote class="mt-10 pl-6 border-l-2 border-gold-2/70 max-w-[52ch]">
+        <p class="text-[18px] lg:text-[20px] leading-[1.55] text-cream/90 font-light italic">
+          "It disappears on the wrist until the moment you need it — then it's the only
+          thing in the room. That's the whole brief."
+        </p>
+        <footer class="mt-5 flex items-center gap-3">
+          <span class="block w-8 h-px bg-gold-2/70"></span>
+          <span class="text-[12px] tracking-[.22em] uppercase text-gold-2/85 font-semibold">Founders' Edition wearer · NYC</span>
+        </footer>
+      </blockquote>
+
+      <ul class="mt-10 grid grid-cols-3 gap-x-6 gap-y-7 max-w-[560px]">
+        <li class="spec-cell">
+          <p class="label-mono mb-2">Worn</p>
+          <p class="num-display text-[28px] leading-none tnum">24<span class="text-[14px] align-top ml-0.5">/7</span></p>
+          <p class="text-[12px] text-cream/55 mt-1.5 font-light">Including sleep & swim</p>
+        </li>
+        <li class="spec-cell">
+          <p class="label-mono mb-2">Field test</p>
+          <p class="num-display text-[28px] leading-none tnum">90<span class="text-[14px] align-top ml-0.5">d</span></p>
+          <p class="text-[12px] text-cream/55 mt-1.5 font-light">Pre-launch wearers</p>
+        </li>
+        <li class="spec-cell">
+          <p class="label-mono mb-2">Returned</p>
+          <p class="num-display text-[28px] leading-none tnum">0</p>
+          <p class="text-[12px] text-cream/55 mt-1.5 font-light">In 90 days · n=42</p>
+        </li>
+      </ul>
+
+      <div class="mt-10">
+        <a href="#preorder" class="btn-outline inline-flex items-center gap-2 px-6 py-3.5 text-[12.5px] font-semibold tracking-[.05em] rounded-full">
+          Join the founders' edition
+          <svg width="12" height="12" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== SPECS ============== -->
+<section id="specs" class="relative">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 grid grid-cols-12 gap-x-6 gap-y-10">
+    <div class="col-span-12 lg:col-span-4 scroll-reveal-l">
+      <p class="eyebrow mb-5">◆ § 05 — The Numbers</p>
+      <div class="gold-rule-thick max-w-[3rem] mb-7"></div>
+      <h2 class="display text-[clamp(36px,4.8vw,68px)] text-cream leading-[0.98]">
+        On paper, <span class="gold-text italic">undeniable.</span>
+      </h2>
+    </div>
+    <div class="col-span-12 lg:col-span-8 grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-10 scroll-reveal-r">
+      <div class="spec-cell">
+        <p class="label-mono mb-2">Case</p>
+        <p class="num-display text-[44px] leading-none tnum">42<span class="text-[18px] align-top ml-1">mm</span></p>
+        <p class="text-[12.5px] text-cream/60 mt-2 font-light">Grade-5 titanium</p>
+      </div>
+      <div class="spec-cell">
+        <p class="label-mono mb-2">Crystal</p>
+        <p class="num-display text-[44px] leading-none tnum">9H</p>
+        <p class="text-[12.5px] text-cream/60 mt-2 font-light">Sapphire, anti-reflective</p>
+      </div>
+      <div class="spec-cell">
+        <p class="label-mono mb-2">Display</p>
+        <p class="num-display text-[44px] leading-none tnum">3,000<span class="text-[18px] align-top ml-1">nits</span></p>
+        <p class="text-[12.5px] text-cream/60 mt-2 font-light">LTPO 2.0 · 120 Hz</p>
+      </div>
+      <div class="spec-cell">
+        <p class="label-mono mb-2">Water</p>
+        <p class="num-display text-[44px] leading-none tnum">200<span class="text-[18px] align-top ml-1">m</span></p>
+        <p class="text-[12.5px] text-cream/60 mt-2 font-light">ISO 22810</p>
+      </div>
+      <div class="spec-cell">
+        <p class="label-mono mb-2">GPS</p>
+        <p class="num-display text-[44px] leading-none tnum">L1 / L5</p>
+        <p class="text-[12.5px] text-cream/60 mt-2 font-light">Dual-band, 1.8s lock</p>
+      </div>
+      <div class="spec-cell">
+        <p class="label-mono mb-2">Battery</p>
+        <p class="num-display text-[44px] leading-none tnum">410<span class="text-[18px] align-top ml-1">mAh</span></p>
+        <p class="text-[12.5px] text-cream/60 mt-2 font-light">Solid-state cell</p>
+      </div>
+      <div class="spec-cell">
+        <p class="label-mono mb-2">Weight</p>
+        <p class="num-display text-[44px] leading-none tnum">38<span class="text-[18px] align-top ml-1">g</span></p>
+        <p class="text-[12.5px] text-cream/60 mt-2 font-light">Without strap</p>
+      </div>
+      <div class="spec-cell">
+        <p class="label-mono mb-2">Connectivity</p>
+        <p class="num-display text-[44px] leading-none tnum">5.4</p>
+        <p class="text-[12.5px] text-cream/60 mt-2 font-light">Bluetooth · Wi-Fi 6E · LTE</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============== CTA ============== -->
+<section id="preorder" class="relative overflow-hidden border-t border-gold/20" style="background:linear-gradient(180deg,#000 0%, #0A0805 50%, #000 100%);">
+  <div aria-hidden class="absolute -top-40 -right-40 w-[640px] h-[640px] pointer-events-none" style="background:radial-gradient(closest-side, rgba(245,213,139,.18), transparent 70%); filter: blur(50px);"></div>
+  <div aria-hidden class="absolute -bottom-40 -left-40 w-[560px] h-[560px] pointer-events-none" style="background:radial-gradient(closest-side, rgba(198,165,89,.14), transparent 70%); filter: blur(50px);"></div>
+
+  <div class="relative max-w-[1100px] mx-auto px-6 lg:px-10 py-28 lg:py-40 text-center">
+    <p class="eyebrow mb-6 scroll-reveal">◆ § 06 — Reservation</p>
+    <h2 class="display text-[clamp(44px,7vw,108px)] text-cream leading-[0.94] scroll-reveal" style="transition-delay:.08s">
+      Wear the <span class="gold-text italic">inevitable.</span>
+    </h2>
+    <p class="mt-7 text-[17px] lg:text-[19px] leading-[1.65] text-cream/75 font-light max-w-[58ch] mx-auto scroll-reveal" style="transition-delay:.16s">
+      Series 02 ships June 14. Reserve yours with $1 today — refundable any time before launch.
+      Free engraving and lifetime calibration included for founders' edition.
+    </p>
+
+    <div class="mt-12 flex flex-wrap items-center justify-center gap-4 scroll-reveal cta-glow relative" style="transition-delay:.24s">
+      <a href="#preorder" class="btn-gold inline-flex items-center justify-center gap-3 px-9 py-5 text-[14px] font-bold tracking-[.05em] rounded-full">
+        Reserve for $1
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+      </a>
+      <a href="#dissection" class="btn-outline inline-flex items-center gap-2 px-7 py-5 text-[12.5px] font-semibold tracking-[.05em] rounded-full">
+        Watch the dissection again
+      </a>
+    </div>
+
+    <p class="mt-8 text-[11px] tracking-[.22em] uppercase text-cream/45 font-medium scroll-reveal" style="transition-delay:.32s">
+      Ships worldwide · 30-day returns · 2-year warranty
+    </p>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="border-t border-gold/15 bg-black">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-12 grid grid-cols-12 gap-x-6 gap-y-8 items-center">
+
+    <div class="col-span-12 md:col-span-5">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="Brand_assets/Tester%20Logo.png" alt="" class="w-9 h-9 logo-glow" />
+        <span class="leading-tight">
+          <span class="block text-[15px] font-bold text-cream tracking-[-0.005em]">Tester Smart Watch <span class="gold-text italic">Pro</span></span>
+          <span class="block text-[10px] tracking-[.26em] uppercase text-gold-2/75 mt-0.5 font-medium">A Tester.io product</span>
+        </span>
+      </a>
+    </div>
+
+    <nav class="col-span-12 md:col-span-4 flex flex-wrap gap-x-6 gap-y-2 md:justify-center text-[12.5px] font-medium text-cream/75">
+      <a class="ulink" href="#features">Features</a>
+      <a class="ulink" href="#dissection">Dissection</a>
+      <a class="ulink" href="#ambassador">In the Wild</a>
+      <a class="ulink" href="#specs">Specs</a>
+      <a class="ulink" href="#preorder">Pre-order</a>
+      <a class="ulink" href="index.html">Academy</a>
+    </nav>
+
+    <div class="col-span-12 md:col-span-3 flex md:justify-end gap-3">
+      <a aria-label="X / Twitter" href="#" class="icon-tile hover:border-gold-2 transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2H21l-6.51 7.44L22 22h-6.84l-4.76-6.22L4.8 22H2.04l6.96-7.96L2 2h6.96l4.3 5.69L18.244 2zm-2.4 18h1.86L8.32 4H6.36l9.484 16z"/></svg>
+      </a>
+      <a aria-label="Instagram" href="#" class="icon-tile hover:border-gold-2 transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+      </a>
+      <a aria-label="YouTube" href="#" class="icon-tile hover:border-gold-2 transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12c0-2.6-.2-4.4-.5-5.5-.3-1-1.1-1.8-2.2-2.1C17.6 4 12 4 12 4s-5.6 0-7.3.4c-1.1.3-1.9 1-2.2 2.1C2.2 7.6 2 9.4 2 12s.2 4.4.5 5.5c.3 1.1 1.1 1.8 2.2 2.1C6.4 20 12 20 12 20s5.6 0 7.3-.4c1.1-.3 1.9-1 2.2-2.1.3-1.1.5-2.9.5-5.5zM10 15.5v-7l6 3.5-6 3.5z"/></svg>
+      </a>
+      <a aria-label="LinkedIn" href="#" class="icon-tile hover:border-gold-2 transition-colors">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5C0 2.12 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.22 8h4.56v14H.22V8zM8.5 8h4.37v1.91h.06c.61-1.16 2.1-2.39 4.32-2.39 4.62 0 5.47 3.04 5.47 7v7.48H18.16v-6.63c0-1.58-.03-3.61-2.2-3.61-2.2 0-2.54 1.72-2.54 3.5V22H8.5V8z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="border-t border-rule/40">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex flex-wrap items-center justify-between gap-2 text-[10.5px] tracking-[.22em] uppercase text-cream/45 font-medium">
+      <span>© 2026 Tester.io · All rights reserved</span>
+      <span>Crafted for the people who actually <span class="gold-text">ship the work.</span></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============== SCRIPTS ============== -->
+<script>
+  // Smooth-scroll polish for anchor links (CSS handles the smooth, JS adjusts for sticky header)
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href');
+      if (id.length < 2) return;
+      const el = document.querySelector(id);
+      if (!el) return;
+      e.preventDefault();
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 20;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    });
+  });
+
+  // IntersectionObserver: fade-in for [.scroll-reveal*]
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.14, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.scroll-reveal, .scroll-reveal-l, .scroll-reveal-r').forEach(el => io.observe(el));
+
+  // Callouts: stagger reveal when dissection enters viewport
+  const stage = document.getElementById('dissection-stage');
+  if (stage) {
+    const callouts = stage.querySelectorAll('.callout');
+    const co = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          callouts.forEach(c => {
+            const delay = parseInt(c.getAttribute('data-delay') || '0', 10);
+            setTimeout(() => c.classList.add('visible'), 600 + delay);
+          });
+          co.unobserve(stage);
+        }
+      });
+    }, { threshold: 0.35 });
+    co.observe(stage);
+  }
+
+  // Dissection video play/pause toggle (autoplay-friendly, muted)
+  const video = document.getElementById('dissection-video');
+  const toggle = document.getElementById('play-toggle');
+  if (video && toggle) {
+    // Try to autoplay (muted) once visible
+    const vio = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          video.muted = true;
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
+    }, { threshold: 0.4 });
+    vio.observe(video);
+
+    toggle.addEventListener('click', () => {
+      if (video.paused) { video.play(); } else { video.pause(); }
+    });
+  }
+</script>
+
+</body>
+</html>
