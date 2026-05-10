@@ -1,2 +1,9 @@
 .claude/
 .env
+
+# Node tooling
+node_modules/
+
+# Local dev artifacts
+temporary screenshots/
+*.log

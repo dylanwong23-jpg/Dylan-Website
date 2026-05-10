@@ -1,11 +1,1000 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sights</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mont Saint-Michel — A Rock Reaching to Heaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root {
+    --night-0: #06090f;
+    --night-1: #0a0e15;
+    --night-2: #11161f;
+    --night-3: #1a1f2c;
+    --night-4: #232a38;
+    --paper:   #ece6d4;
+    --paper-dim: #c8c2b1;
+    --muted:   #8a92a6;
+    --blueprint: #6ba8d9;
+    --blueprint-dim: #3d6c8e;
+    --gold-1: #C6A559;
+    --gold-2: #E6B979;
+    --gold-3: #f3d8a3;
+  }
+
+  html { scroll-behavior: auto; }
+  body {
+    background: var(--night-1);
+    color: var(--paper);
+    font-family: 'Montserrat', system-ui, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.01em;
+    overflow-x: hidden;
+  }
+
+  /* Background atmosphere — layered radial gradients + grain */
+  .atmosphere::before {
+    content: "";
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% 10%, rgba(107,168,217,0.08), transparent 60%),
+      radial-gradient(ellipse 70% 60% at 90% 90%, rgba(198,165,89,0.06), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 50% 50%, rgba(26,31,44,0.4), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .atmosphere::after {
+    content: "";
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+    opacity: 0.18;
+    mix-blend-mode: overlay;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* Display type */
+  .display {
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .editorial {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+  .mono {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+  }
+
+  /* Gold gradient text */
+  .gold-text {
+    background: linear-gradient(120deg, var(--gold-1) 0%, var(--gold-3) 50%, var(--gold-1) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .gold-button {
+    background: linear-gradient(135deg, var(--gold-1), var(--gold-2));
+    color: #1a120a;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.25) inset,
+      0 -1px 0 rgba(120,80,20,0.3) inset,
+      0 8px 24px -8px rgba(198,165,89,0.45),
+      0 2px 6px -2px rgba(198,165,89,0.25);
+    transition: transform 320ms cubic-bezier(.2,.9,.2,1.2), box-shadow 320ms ease, filter 320ms ease;
+  }
+  .gold-button:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 1px 0 rgba(255,255,255,0.3) inset, 0 -1px 0 rgba(120,80,20,0.3) inset, 0 14px 30px -10px rgba(198,165,89,0.6), 0 4px 10px -2px rgba(198,165,89,0.35); }
+  .gold-button:active { transform: translateY(0); }
+  .gold-button:focus-visible { outline: 1px solid var(--gold-2); outline-offset: 4px; }
+
+  /* Hairline blueprint divider */
+  .hairline { border-color: rgba(107,168,217,0.18); }
+  .hairline-strong { border-color: rgba(107,168,217,0.36); }
+
+  /* Loading screen */
+  #loader {
+    position: fixed; inset: 0;
+    background: var(--night-0);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 100;
+    transition: opacity 700ms ease;
+  }
+  #loader.gone { opacity: 0; pointer-events: none; }
+  .loader-bar {
+    width: min(360px, 60vw);
+    height: 1px;
+    background: rgba(236,230,212,0.12);
+    overflow: hidden;
+  }
+  .loader-bar > span {
+    display: block; height: 100%; width: 0;
+    background: linear-gradient(90deg, var(--blueprint), var(--gold-2));
+    transition: width 200ms ease;
+  }
+
+  /* Scroll-driven canvas */
+  .scroll-runway { height: 500vh; position: relative; }
+  .sticky-stage {
+    position: sticky; top: 0;
+    height: 100vh; width: 100%;
+    overflow: hidden;
+    background: radial-gradient(ellipse 70% 60% at 50% 55%, #0d1422 0%, #06090f 70%);
+  }
+  #frame-canvas {
+    position: absolute;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 96vw;
+    max-width: 1400px;
+    height: auto;
+    aspect-ratio: 16/9;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 38%, transparent 78%);
+    mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 38%, transparent 78%);
+    will-change: transform;
+  }
+
+  /* Phase overlays */
+  .phase {
+    position: absolute;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 520ms ease, transform 520ms cubic-bezier(.2,.7,.2,1);
+    pointer-events: none;
+    max-width: 380px;
+  }
+  .phase.visible { opacity: 1; transform: translateY(0); }
+  .phase-card {
+    background: linear-gradient(180deg, rgba(17,22,31,0.78) 0%, rgba(10,14,21,0.85) 100%);
+    border: 1px solid rgba(107,168,217,0.18);
+    backdrop-filter: blur(14px) saturate(1.2);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+    box-shadow:
+      0 1px 0 rgba(107,168,217,0.08) inset,
+      0 24px 60px -20px rgba(0,0,0,0.6),
+      0 0 0 1px rgba(0,0,0,0.4);
+    padding: 22px 24px;
+  }
+  .phase-mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--blueprint);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  .phase-title { font-family: 'Cinzel', serif; font-size: 22px; color: var(--paper); letter-spacing: 0.04em; margin-top: 8px; }
+  .phase-body { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--paper-dim); line-height: 1.55; margin-top: 10px; font-weight: 300; }
+
+  /* Crosshair corners on phase cards */
+  .crosshair { position: relative; }
+  .crosshair::before, .crosshair::after {
+    content: ""; position: absolute; width: 10px; height: 10px;
+    border: 1px solid var(--blueprint);
+    opacity: 0.6;
+  }
+  .crosshair::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .crosshair::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+  /* Scroll progress bar */
+  #progress {
+    position: fixed; left: 0; top: 0;
+    height: 1px; width: 100%;
+    background: rgba(236,230,212,0.06);
+    z-index: 60;
+  }
+  #progress > span {
+    display: block; height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--gold-1), var(--gold-3));
+  }
+
+  /* Section reveals */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 800ms ease, transform 800ms cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  /* Timeline */
+  .timeline-rail {
+    position: relative;
+  }
+  .timeline-rail::before {
+    content: ""; position: absolute; left: 11px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, rgba(107,168,217,0.4) 12%, rgba(107,168,217,0.2) 88%, transparent 100%);
+  }
+  .timeline-dot {
+    width: 11px; height: 11px;
+    border: 1px solid var(--blueprint);
+    border-radius: 50%;
+    background: var(--night-1);
+    position: relative;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .timeline-dot::after {
+    content: ""; position: absolute; inset: 2px;
+    background: var(--blueprint);
+    border-radius: 50%;
+    opacity: 0.55;
+  }
+
+  /* Stat card */
+  .stat-card {
+    border: 1px solid rgba(107,168,217,0.14);
+    background: linear-gradient(180deg, rgba(17,22,31,0.6), rgba(10,14,21,0.6));
+    padding: 28px 26px;
+    position: relative;
+    transition: transform 380ms cubic-bezier(.2,.7,.2,1), border-color 380ms ease;
+  }
+  .stat-card:hover { transform: translateY(-3px); border-color: rgba(198,165,89,0.4); }
+  .stat-card::before, .stat-card::after {
+    content: ""; position: absolute; width: 14px; height: 14px;
+    border: 1px solid var(--gold-1);
+    opacity: 0.5;
+  }
+  .stat-card::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+  .stat-card::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+
+  /* Blueprint grid background */
+  .blueprint-grid {
+    background-image:
+      linear-gradient(rgba(107,168,217,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(107,168,217,0.05) 1px, transparent 1px);
+    background-size: 60px 60px, 60px 60px;
+  }
+
+  /* Tide chart */
+  .tide-curve {
+    width: 100%; height: 180px;
+    position: relative;
+    overflow: hidden;
+  }
+  .tide-curve svg { width: 100%; height: 100%; display: block; }
+
+  /* Nav */
+  nav.top {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 50;
+    transition: backdrop-filter 300ms, background 300ms;
+  }
+  nav.top.scrolled {
+    background: rgba(6,9,15,0.7);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    border-bottom: 1px solid rgba(107,168,217,0.1);
+  }
+  nav .nav-link { position: relative; }
+  nav .nav-link::after {
+    content: ""; position: absolute; left: 0; bottom: -4px; height: 1px; width: 0;
+    background: var(--gold-2);
+    transition: width 300ms cubic-bezier(.2,.9,.2,1.2);
+  }
+  nav .nav-link:hover::after { width: 100%; }
+  nav .nav-link:focus-visible { outline: 1px dashed var(--gold-2); outline-offset: 4px; }
+
+  /* Hero */
+  .hero-aspect {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 96vw; max-width: 1400px;
+    aspect-ratio: 16/9;
+    pointer-events: none;
+  }
+
+  /* Breath / pulse */
+  @keyframes breath {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .breath { animation: breath 3.6s ease-in-out infinite; }
+
+  @keyframes draw-in {
+    from { stroke-dashoffset: var(--len, 1000); }
+    to { stroke-dashoffset: 0; }
+  }
+
+  /* Responsive phase positions */
+  @media (max-width: 768px) {
+    .phase { max-width: 86vw; left: 7vw !important; right: auto !important; }
+    .phase-title { font-size: 18px; }
+    .phase-body { font-size: 15px; }
+    #frame-canvas { width: 110vw; }
+  }
+</style>
 </head>
-<body>
-    <h1>Sights</h1>
+<body class="atmosphere">
+
+<!-- Loading -->
+<div id="loader">
+  <div class="mono text-[10px] tracking-[0.4em] text-[color:var(--blueprint)] mb-6 uppercase">Surveying the Mount</div>
+  <div class="display text-[color:var(--paper)] text-2xl mb-8">Loading 192 frames</div>
+  <div class="loader-bar"><span id="loader-fill"></span></div>
+  <div id="loader-pct" class="mono text-[11px] text-[color:var(--muted)] mt-4 tracking-[0.3em]">0%</div>
+</div>
+
+<!-- Scroll progress bar -->
+<div id="progress"><span></span></div>
+
+<!-- Top nav -->
+<nav class="top">
+  <div class="max-w-[1500px] mx-auto px-8 py-5 flex items-center justify-between relative z-10">
+    <a href="#" class="flex items-center gap-3 group">
+      <span class="display text-[color:var(--paper)] text-base tracking-[0.18em]">MONT&nbsp;SAINT-MICHEL</span>
+    </a>
+    <div class="hidden md:flex items-center gap-10">
+      <a href="#chronicle" class="nav-link mono text-[11px] tracking-[0.24em] uppercase text-[color:var(--paper-dim)] hover:text-[color:var(--paper)]">Chronicle</a>
+      <a href="#anatomy"   class="nav-link mono text-[11px] tracking-[0.24em] uppercase text-[color:var(--paper-dim)] hover:text-[color:var(--paper)]">Anatomy</a>
+      <a href="#tides"     class="nav-link mono text-[11px] tracking-[0.24em] uppercase text-[color:var(--paper-dim)] hover:text-[color:var(--paper)]">The Tides</a>
+      <a href="#visit"     class="nav-link mono text-[11px] tracking-[0.24em] uppercase text-[color:var(--paper-dim)] hover:text-[color:var(--paper)]">Visit</a>
+    </div>
+    <a href="#visit" class="gold-button hidden md:inline-block px-5 py-2.5 text-[11px] tracking-[0.2em] uppercase font-semibold rounded-none">Plan Pilgrimage</a>
+  </div>
+</nav>
+
+<!-- Scroll runway with sticky canvas + phases -->
+<section class="scroll-runway relative z-10">
+  <div class="sticky-stage">
+
+    <!-- Coordinates badge top-left -->
+    <div class="absolute top-24 left-8 md:left-12 mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] opacity-80 z-20">
+      <div>48°38'10" N</div>
+      <div>01°30'40" W</div>
+      <div class="mt-2 text-[color:var(--muted)]">Normandy &middot; FR</div>
+    </div>
+
+    <!-- Title overlay top-right -->
+    <div class="absolute top-24 right-8 md:right-12 text-right z-20 max-w-[280px]">
+      <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] mb-2 uppercase">File 01 — Site Survey</div>
+      <div class="display text-[color:var(--paper)] text-xs tracking-[0.22em] uppercase opacity-80">Fig. 1.0</div>
+    </div>
+
+    <!-- Hero title — appears at the very start, fades as canvas reveals -->
+    <div id="hero-title" class="hero-aspect z-10 flex flex-col items-center justify-end pb-16 md:pb-24" style="transition: opacity 600ms ease;">
+      <div class="text-center" style="text-shadow: 0 2px 28px rgba(0,0,0,0.85), 0 0 80px rgba(0,0,0,0.6);">
+        <div class="mono text-[10px] tracking-[0.4em] text-[color:var(--blueprint)] mb-5 breath">SCROLL TO CONSTRUCT</div>
+        <h1 class="display text-[color:var(--paper)] text-[clamp(34px,7vw,84px)] leading-[0.95] tracking-[0.04em]">
+          A ROCK<br/>
+          <span class="editorial italic text-[color:var(--gold-2)] text-[clamp(28px,6vw,72px)] tracking-tight" style="font-weight: 500;">reaching to</span><br/>
+          HEAVEN
+        </h1>
+        <div class="mt-6 mono text-[11px] tracking-[0.3em] text-[color:var(--paper-dim)]">
+          708&nbsp;&middot;&nbsp;A.D.&nbsp;&mdash;&nbsp;PRESENT
+        </div>
+      </div>
+    </div>
+
+    <!-- The canvas where frames render -->
+    <canvas id="frame-canvas"></canvas>
+
+    <!-- Bottom hint -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 opacity-60">
+      <div class="mono text-[9px] tracking-[0.35em] uppercase text-[color:var(--paper-dim)]">Scroll</div>
+      <div class="w-px h-8 bg-gradient-to-b from-[color:var(--paper-dim)] to-transparent"></div>
+    </div>
+
+    <!-- Phase overlays -->
+    <div id="phase-1" class="phase" style="left: 8%; top: 42%;">
+      <div class="phase-card crosshair">
+        <div class="phase-mono">Phase 01 &middot; The Drawing</div>
+        <div class="phase-title">A LINE BECOMES STONE</div>
+        <div class="phase-body">In 708 A.D. the bishop Aubert of Avranches saw the Archangel Michael in a dream — three times — pressing a finger to his skull until the order was clear. Build here. On a tidal granite outcrop where the sea forgets the land.</div>
+      </div>
+    </div>
+
+    <div id="phase-2" class="phase" style="right: 8%; top: 22%;">
+      <div class="phase-card crosshair">
+        <div class="phase-mono">Phase 02 &middot; Founded</div>
+        <div class="phase-title">966 — THE ABBEY</div>
+        <div class="phase-body">Benedictine monks arrive under Duke Richard&nbsp;I of Normandy. The first Romanesque church rises — built directly atop the bedrock, the choir cantilevered into thin air. The mount becomes a beacon for pilgrims of all of Christendom.</div>
+      </div>
+    </div>
+
+    <div id="phase-3" class="phase" style="left: 8%; top: 28%;">
+      <div class="phase-card crosshair">
+        <div class="phase-mono">Phase 03 &middot; La Merveille</div>
+        <div class="phase-title">VERTICAL MONASTERY</div>
+        <div class="phase-body">Between 1211 and 1228, the abbey is reborn in flamboyant Gothic. <em>La Merveille</em> — "the Marvel" — stacks refectory, cloister, scriptorium and almonry across three floors clinging to the north flank. A miracle of medieval engineering.</div>
+      </div>
+    </div>
+
+    <div id="phase-4" class="phase" style="right: 8%; top: 38%;">
+      <div class="phase-card crosshair">
+        <div class="phase-mono">Phase 04 &middot; Living Marvel</div>
+        <div class="phase-title">EIGHT CENTURIES LATER</div>
+        <div class="phase-body">Today the silhouette is unchanged. Gold-leaf Saint Michael crowns the spire, 157&nbsp;m above the bay. Tides still rise <em>at the speed of a galloping horse</em>. Three million pilgrims a year. Thirty&nbsp;permanent residents.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= CHRONICLE / TIMELINE ================= -->
+<section id="chronicle" class="relative z-10 px-6 md:px-12 py-32 md:py-44 blueprint-grid">
+  <div class="max-w-[1280px] mx-auto">
+
+    <!-- Section header -->
+    <div class="grid md:grid-cols-12 gap-8 mb-20 reveal">
+      <div class="md:col-span-4">
+        <div class="mono text-[11px] tracking-[0.32em] text-[color:var(--blueprint)] uppercase mb-4">§ II — Chronicle</div>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-px bg-[color:var(--gold-2)]"></div>
+          <span class="mono text-[10px] tracking-[0.3em] text-[color:var(--paper-dim)]">1,317&nbsp;YEARS</span>
+        </div>
+      </div>
+      <div class="md:col-span-8">
+        <h2 class="display text-[clamp(34px,5.5vw,68px)] leading-[0.98] tracking-[0.02em]">
+          A history written<br/>
+          <span class="editorial italic font-light text-[color:var(--gold-2)]">in stone, salt, and silence.</span>
+        </h2>
+        <p class="editorial text-[20px] md:text-[22px] leading-[1.55] text-[color:var(--paper-dim)] mt-8 max-w-[680px] font-light">
+          Mont Saint-Michel has been a beacon, a monastery, a fortress, a prison, and finally — a monument.
+          Each century left its layer of stone, and each tide carries it back.
+        </p>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="grid md:grid-cols-12 gap-8 mt-24">
+      <div class="md:col-span-4 sticky top-24 self-start hidden md:block">
+        <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase mb-3">Pivots</div>
+        <div class="display text-2xl text-[color:var(--paper)] leading-tight tracking-[0.05em]">
+          Twelve moments<br/>that built<br/>the marvel.
+        </div>
+      </div>
+
+      <div class="md:col-span-8 timeline-rail pl-2">
+        <!-- Timeline items -->
+        <div class="space-y-12">
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">708 A.D.</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">Bishop Aubert's vision</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">After three apparitions of the Archangel Michael, Aubert of Avranches consecrates the first oratory on Mont Tombe. A skull bearing the alleged finger-mark of the angel is still preserved in Avranches today.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">966</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">Benedictine abbey founded</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">Duke Richard I of Normandy installs Benedictine monks. The mount is renamed Mont Saint-Michel-au-péril-de-la-Mer — Saint Michael at the peril of the sea.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">1023 — 1085</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">The Romanesque abbey</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">Abbot Hildebert II builds a cruciform church directly on the granite summit. The transept is balanced over four crypts that distribute its weight across the rock.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">1211 — 1228</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">La Merveille</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">After a fire in 1204 razes the north flank, Philip&nbsp;II of France funds a new Gothic monastic complex stacked three storeys high. Refectory, knights' hall, cloister, almonry, scriptorium — all clinging to the cliff.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">1337 — 1453</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">Hundred Years' War</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">The mount becomes a fortress. Despite repeated English sieges — including a 30-year blockade — it never falls. The ramparts and the Tour Boucle are added; two cannons abandoned by the English in 1434, the <em>Michelettes</em>, still stand at the gate.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">1469</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">Order of Saint Michael</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">Louis XI founds France's highest order of chivalry here. The mount becomes the spiritual home of French royal honor — knights are dubbed before the abbey altar.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">1789 — 1863</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">The Bastille of the Seas</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">The Revolution disbands the abbey. For seventy-four years the cloisters become a state prison — political dissidents and clergy are held within walls they once consecrated. Victor Hugo writes that "to demolish it would be to mutilate France."</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">1874</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">Restoration begins</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">Declared a historic monument. Architect Édouard Corroyer leads a forty-year restoration. In 1897, Emmanuel Frémiet's gilded bronze Saint Michael is installed atop the new neo-Gothic spire.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">1966</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">A return to prayer</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">On the 1,000-year anniversary of the abbey's founding, Benedictine monks return. Today, the Monastic Fraternities of Jerusalem maintain a small permanent community of contemplatives.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">1979</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">UNESCO World Heritage</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">The bay, the village, and the abbey are inscribed together — a rare triple listing — recognising not just the architecture but the entire ecosystem of tide, salt-marsh and silt.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">2014</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">The island restored</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">After 134 years, the silt-trapping causeway is replaced by a stilted bridge. The Couesnon flushes the bay free. Mont Saint-Michel becomes an island again — exactly as the monks first found it.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-6 reveal">
+            <div class="timeline-dot"></div>
+            <div>
+              <div class="mono text-[11px] tracking-[0.28em] text-[color:var(--gold-2)]">Today</div>
+              <div class="display text-xl text-[color:var(--paper)] mt-2 tracking-[0.03em]">~3 million visitors / year</div>
+              <p class="editorial text-[18px] leading-[1.6] text-[color:var(--paper-dim)] mt-2 font-light">Second-most-visited site in France after Versailles. Thirty permanent inhabitants. One archangel watching the horizon.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ANATOMY ================= -->
+<section id="anatomy" class="relative z-10 px-6 md:px-12 py-32 md:py-44 border-t border-b hairline">
+  <div class="max-w-[1280px] mx-auto">
+
+    <div class="grid md:grid-cols-12 gap-8 mb-20 reveal">
+      <div class="md:col-span-4">
+        <div class="mono text-[11px] tracking-[0.32em] text-[color:var(--blueprint)] uppercase mb-4">§ III — Anatomy</div>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-px bg-[color:var(--gold-2)]"></div>
+          <span class="mono text-[10px] tracking-[0.3em] text-[color:var(--paper-dim)]">SEVEN&nbsp;LEVELS</span>
+        </div>
+      </div>
+      <div class="md:col-span-8">
+        <h2 class="display text-[clamp(34px,5.5vw,68px)] leading-[0.98] tracking-[0.02em]">
+          A vertical city,<br/>
+          <span class="editorial italic font-light text-[color:var(--gold-2)]">stitched to a granite cone.</span>
+        </h2>
+      </div>
+    </div>
+
+    <!-- Stats grid -->
+    <div class="grid md:grid-cols-4 gap-px bg-[color:var(--blueprint-dim)]/20">
+      <div class="stat-card reveal">
+        <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase">Height</div>
+        <div class="display text-[44px] md:text-[56px] mt-3 gold-text leading-none">157<span class="text-[22px] align-top ml-1 text-[color:var(--paper-dim)]">m</span></div>
+        <div class="editorial text-[16px] text-[color:var(--paper-dim)] mt-2 italic font-light">spire above sea level</div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay: 60ms;">
+        <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase">Footprint</div>
+        <div class="display text-[44px] md:text-[56px] mt-3 gold-text leading-none">7<span class="text-[22px] align-top ml-1 text-[color:var(--paper-dim)]">ha</span></div>
+        <div class="editorial text-[16px] text-[color:var(--paper-dim)] mt-2 italic font-light">island circumference 960&nbsp;m</div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay: 120ms;">
+        <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase">Population</div>
+        <div class="display text-[44px] md:text-[56px] mt-3 gold-text leading-none">30</div>
+        <div class="editorial text-[16px] text-[color:var(--paper-dim)] mt-2 italic font-light">permanent residents incl. monks</div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay: 180ms;">
+        <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase">Pilgrims / yr</div>
+        <div class="display text-[44px] md:text-[56px] mt-3 gold-text leading-none">3<span class="text-[22px] align-top ml-1 text-[color:var(--paper-dim)]">M</span></div>
+        <div class="editorial text-[16px] text-[color:var(--paper-dim)] mt-2 italic font-light">2nd most-visited site in France</div>
+      </div>
+    </div>
+
+    <!-- Three-column anatomy -->
+    <div class="grid md:grid-cols-3 gap-12 mt-24">
+      <div class="reveal">
+        <div class="mono text-[11px] tracking-[0.3em] text-[color:var(--gold-2)] uppercase">A &middot; The Crown</div>
+        <div class="display text-2xl mt-3 tracking-[0.04em]">Abbey Church</div>
+        <p class="editorial text-[18px] leading-[1.65] text-[color:var(--paper-dim)] mt-3 font-light">
+          A Romanesque nave (1080) and flamboyant Gothic choir (1450) meet at the transept — built directly on the bedrock summit, with four supporting crypts wedged into the rock to bear the load.
+        </p>
+        <div class="mt-4 flex items-center gap-3">
+          <span class="mono text-[10px] text-[color:var(--blueprint)]">↑ Saint Michael</span>
+          <span class="mono text-[10px] text-[color:var(--paper-dim)]">4.5&nbsp;m gilt-bronze, 1897</span>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay: 100ms;">
+        <div class="mono text-[11px] tracking-[0.3em] text-[color:var(--gold-2)] uppercase">B &middot; The Marvel</div>
+        <div class="display text-2xl mt-3 tracking-[0.04em]">La Merveille</div>
+        <p class="editorial text-[18px] leading-[1.65] text-[color:var(--paper-dim)] mt-3 font-light">
+          Three storeys of pure Gothic engineering on the north flank: almonry &amp; cellar at the base, scriptorium &amp; knights' hall above, and at the very top — the cloister, suspended between the sky and the granite, with 220 columns of pink Cumbria stone.
+        </p>
+        <div class="mt-4 flex items-center gap-3">
+          <span class="mono text-[10px] text-[color:var(--blueprint)]">→ Built 1211–1228</span>
+          <span class="mono text-[10px] text-[color:var(--paper-dim)]">17 years, 3 floors</span>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay: 200ms;">
+        <div class="mono text-[11px] tracking-[0.3em] text-[color:var(--gold-2)] uppercase">C &middot; The Base</div>
+        <div class="display text-2xl mt-3 tracking-[0.04em]">Village &amp; Ramparts</div>
+        <p class="editorial text-[18px] leading-[1.65] text-[color:var(--paper-dim)] mt-3 font-light">
+          A single climbing street, the <em>Grande Rue</em>, spirals upward past timbered houses, the parish church of Saint-Pierre, and the cemetery. Outside, the 13th–15th-century ramparts trace the foot of the rock with seven defensive towers.
+        </p>
+        <div class="mt-4 flex items-center gap-3">
+          <span class="mono text-[10px] text-[color:var(--blueprint)]">↻ Grande Rue</span>
+          <span class="mono text-[10px] text-[color:var(--paper-dim)]">350&nbsp;m, 250 steps</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TIDES ================= -->
+<section id="tides" class="relative z-10 px-6 md:px-12 py-32 md:py-44">
+  <div class="max-w-[1280px] mx-auto">
+    <div class="grid md:grid-cols-12 gap-8">
+
+      <div class="md:col-span-5 reveal">
+        <div class="mono text-[11px] tracking-[0.32em] text-[color:var(--blueprint)] uppercase mb-4">§ IV — Hydrography</div>
+        <h2 class="display text-[clamp(32px,4.8vw,56px)] leading-[0.98] tracking-[0.02em] mt-2">
+          The fastest tides<br/>
+          <span class="editorial italic font-light text-[color:var(--gold-2)]">in continental Europe.</span>
+        </h2>
+        <p class="editorial text-[19px] leading-[1.65] text-[color:var(--paper-dim)] mt-8 font-light">
+          The bay's funnel-shaped geometry compresses the Atlantic surge into a 14-metre swing — the most extreme range on the European mainland. At equinox, the leading edge can travel at the pace of a galloping horse, racing across 15&nbsp;km of sand in a single hour.
+        </p>
+        <p class="editorial text-[19px] leading-[1.65] text-[color:var(--paper-dim)] mt-4 font-light">
+          For a few days each year, around the spring equinox, the rising water encircles the mount entirely. The island returns. The causeway disappears. The pilgrimage becomes — once again — a crossing.
+        </p>
+      </div>
+
+      <div class="md:col-span-7 reveal" style="transition-delay: 120ms;">
+        <!-- Tide curve SVG -->
+        <div class="border hairline-strong p-6 md:p-10 relative">
+          <div class="absolute top-0 left-0 mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase p-3">Coefficient 119 — Equinoctial High</div>
+          <div class="absolute top-0 right-0 mono text-[10px] tracking-[0.3em] text-[color:var(--paper-dim)] uppercase p-3">06 hr 12 min</div>
+          <div class="tide-curve mt-6">
+            <svg viewBox="0 0 600 180" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="tideFill" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#6ba8d9" stop-opacity="0.35"/>
+                  <stop offset="100%" stop-color="#6ba8d9" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="tideStroke" x1="0" x2="1" y1="0" y2="0">
+                  <stop offset="0%" stop-color="#6ba8d9"/>
+                  <stop offset="60%" stop-color="#E6B979"/>
+                  <stop offset="100%" stop-color="#6ba8d9"/>
+                </linearGradient>
+              </defs>
+              <!-- grid -->
+              <g stroke="#6ba8d9" stroke-opacity="0.1" stroke-dasharray="2 4">
+                <line x1="0" y1="45" x2="600" y2="45"/>
+                <line x1="0" y1="90" x2="600" y2="90"/>
+                <line x1="0" y1="135" x2="600" y2="135"/>
+                <line x1="120" y1="0" x2="120" y2="180"/>
+                <line x1="240" y1="0" x2="240" y2="180"/>
+                <line x1="360" y1="0" x2="360" y2="180"/>
+                <line x1="480" y1="0" x2="480" y2="180"/>
+              </g>
+              <!-- tide curve -->
+              <path d="M0,140 C80,140 100,30 200,30 S320,150 400,150 S520,30 600,30 L600,180 L0,180 Z" fill="url(#tideFill)"/>
+              <path id="tide-line" d="M0,140 C80,140 100,30 200,30 S320,150 400,150 S520,30 600,30" fill="none" stroke="url(#tideStroke)" stroke-width="1.5"/>
+              <!-- markers -->
+              <circle cx="200" cy="30" r="3" fill="#E6B979"/>
+              <circle cx="400" cy="150" r="3" fill="#6ba8d9"/>
+            </svg>
+          </div>
+          <div class="grid grid-cols-3 gap-4 mt-6 mono text-[10px] tracking-[0.25em] uppercase text-[color:var(--paper-dim)]">
+            <div><span class="text-[color:var(--gold-2)]">●</span>&nbsp;HIGH&nbsp;14&nbsp;m</div>
+            <div class="text-center">RANGE&nbsp;15&nbsp;km</div>
+            <div class="text-right"><span class="text-[color:var(--blueprint)]">●</span>&nbsp;LOW&nbsp;0.4&nbsp;m</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-4 mt-6">
+          <div class="border-l hairline-strong pl-4">
+            <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase">Speed</div>
+            <div class="display text-2xl mt-2">~10&nbsp;km/h</div>
+            <div class="editorial text-[14px] italic text-[color:var(--paper-dim)] mt-1 font-light">a galloping horse</div>
+          </div>
+          <div class="border-l hairline-strong pl-4">
+            <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase">Range</div>
+            <div class="display text-2xl mt-2">14&nbsp;m</div>
+            <div class="editorial text-[14px] italic text-[color:var(--paper-dim)] mt-1 font-light">vertical swing</div>
+          </div>
+          <div class="border-l hairline-strong pl-4">
+            <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--blueprint)] uppercase">Cycles / day</div>
+            <div class="display text-2xl mt-2">2</div>
+            <div class="editorial text-[14px] italic text-[color:var(--paper-dim)] mt-1 font-light">12&nbsp;hr 25&nbsp;min apart</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= VISIT ================= -->
+<section id="visit" class="relative z-10 px-6 md:px-12 py-32 md:py-44 border-t hairline">
+  <div class="max-w-[1280px] mx-auto">
+    <div class="grid md:grid-cols-12 gap-8 mb-16 reveal">
+      <div class="md:col-span-4">
+        <div class="mono text-[11px] tracking-[0.32em] text-[color:var(--blueprint)] uppercase mb-4">§ V — Pilgrimage</div>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-px bg-[color:var(--gold-2)]"></div>
+          <span class="mono text-[10px] tracking-[0.3em] text-[color:var(--paper-dim)]">PRACTICAL&nbsp;NOTES</span>
+        </div>
+      </div>
+      <div class="md:col-span-8">
+        <h2 class="display text-[clamp(32px,5vw,60px)] leading-[0.98] tracking-[0.02em]">
+          Plan the crossing.<br/>
+          <span class="editorial italic font-light text-[color:var(--gold-2)]">Time it with the tide.</span>
+        </h2>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-px bg-[color:var(--blueprint-dim)]/15">
+      <!-- card -->
+      <div class="bg-[color:var(--night-1)] p-8 md:p-10 reveal">
+        <div class="mono text-[11px] tracking-[0.3em] text-[color:var(--gold-2)] uppercase">Getting there</div>
+        <div class="display text-xl mt-3 tracking-[0.04em]">From Paris</div>
+        <ul class="mt-5 space-y-3 editorial text-[17px] text-[color:var(--paper-dim)] leading-[1.6] font-light">
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">01</span> TGV to Rennes &middot; 1&nbsp;hr 30</li>
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">02</span> Coach Rennes → Mt-St-Michel &middot; 1&nbsp;hr 15</li>
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">03</span> Free shuttle (or 35&nbsp;min walk) to the Mount</li>
+        </ul>
+      </div>
+
+      <div class="bg-[color:var(--night-1)] p-8 md:p-10 reveal" style="transition-delay: 80ms;">
+        <div class="mono text-[11px] tracking-[0.3em] text-[color:var(--gold-2)] uppercase">When to come</div>
+        <div class="display text-xl mt-3 tracking-[0.04em]">Equinox &amp; dawn</div>
+        <ul class="mt-5 space-y-3 editorial text-[17px] text-[color:var(--paper-dim)] leading-[1.6] font-light">
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">▲</span> March &amp; September: highest tides surround the mount</li>
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">◐</span> Sunrise: silhouette in mist, no crowds</li>
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">★</span> Nocturne: abbey open until midnight in summer</li>
+        </ul>
+      </div>
+
+      <div class="bg-[color:var(--night-1)] p-8 md:p-10 reveal" style="transition-delay: 160ms;">
+        <div class="mono text-[11px] tracking-[0.3em] text-[color:var(--gold-2)] uppercase">Inside</div>
+        <div class="display text-xl mt-3 tracking-[0.04em]">What to see</div>
+        <ul class="mt-5 space-y-3 editorial text-[17px] text-[color:var(--paper-dim)] leading-[1.6] font-light">
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">†</span> Abbey Church &middot; Romanesque + Gothic</li>
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">▣</span> Cloister &amp; Refectory of La Merveille</li>
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">⛧</span> Saint-Pierre church &amp; Grande Rue</li>
+          <li class="flex gap-3"><span class="mono text-[color:var(--blueprint)] text-[11px] mt-1">⌖</span> Ramparts walk &middot; 7 watchtowers</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- CTA strip -->
+    <div class="mt-20 grid md:grid-cols-12 gap-8 items-center reveal">
+      <div class="md:col-span-7">
+        <div class="display text-[clamp(28px,3.4vw,42px)] leading-[1.05] tracking-[0.03em]">
+          Begin the ascent —
+          <span class="editorial italic font-light text-[color:var(--gold-2)]">tide tables in hand.</span>
+        </div>
+        <p class="editorial text-[17px] leading-[1.6] text-[color:var(--paper-dim)] mt-3 font-light max-w-[600px]">
+          The mount opens daily; the tide does not wait. Reserve abbey access in advance and check the bay's tide coefficient before you cross.
+        </p>
+      </div>
+      <div class="md:col-span-5 flex flex-wrap gap-4 md:justify-end">
+        <a href="#" class="gold-button px-7 py-4 text-[12px] tracking-[0.22em] uppercase font-semibold rounded-none">Reserve Abbey Tickets</a>
+        <a href="#" class="px-7 py-4 text-[12px] tracking-[0.22em] uppercase font-medium rounded-none border hairline-strong text-[color:var(--paper)] hover:text-[color:var(--gold-2)] hover:border-[color:var(--gold-2)] transition-colors">Tide Tables</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="relative z-10 border-t hairline px-6 md:px-12 py-14">
+  <div class="max-w-[1280px] mx-auto grid md:grid-cols-12 gap-8 items-end">
+    <div class="md:col-span-6">
+      <div class="display text-base tracking-[0.18em] text-[color:var(--paper)]">MONT&nbsp;SAINT-MICHEL</div>
+      <div class="mono text-[10px] tracking-[0.3em] text-[color:var(--paper-dim)] mt-2 uppercase">A site survey by Tester.io · MMXXVI</div>
+    </div>
+    <div class="md:col-span-6 md:text-right mono text-[10px] tracking-[0.3em] uppercase text-[color:var(--muted)] flex md:justify-end gap-8">
+      <span>48°38'10"&nbsp;N</span>
+      <span>01°30'40"&nbsp;W</span>
+      <span class="text-[color:var(--blueprint)]">UNESCO 1979</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // ============================================================
+  // 1. Frame preloading (batched)
+  // ============================================================
+  const TOTAL = 192;
+  const BATCH = 16;
+  const FRAME_PATH = i => `frames_blueprint_monti_carlo/frame-${String(i + 1).padStart(4, '0')}.webp`;
+
+  const frames = new Array(TOTAL);
+  let loaded = 0;
+
+  const loaderFill = document.getElementById('loader-fill');
+  const loaderPct = document.getElementById('loader-pct');
+  const loaderEl = document.getElementById('loader');
+
+  function loadFrame(i) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.onload = () => { frames[i] = img; loaded++; updateLoader(); resolve(); };
+      img.onerror = () => { loaded++; updateLoader(); resolve(); };
+      img.src = FRAME_PATH(i);
+    });
+  }
+
+  function updateLoader() {
+    const pct = Math.round((loaded / TOTAL) * 100);
+    loaderFill.style.width = pct + '%';
+    loaderPct.textContent = pct + '%';
+  }
+
+  async function preloadAll() {
+    for (let i = 0; i < TOTAL; i += BATCH) {
+      const batch = [];
+      for (let j = i; j < Math.min(i + BATCH, TOTAL); j++) batch.push(loadFrame(j));
+      await Promise.all(batch);
+    }
+    // wait one more frame so first paint is ready
+    requestAnimationFrame(() => {
+      drawFrame(0);
+      loaderEl.classList.add('gone');
+      setTimeout(() => loaderEl.remove(), 800);
+    });
+  }
+
+  // ============================================================
+  // 2. Canvas setup
+  // ============================================================
+  const canvas = document.getElementById('frame-canvas');
+  const ctx = canvas.getContext('2d', { alpha: true });
+  const FW = 1600; // source width
+  const FH = 900;  // source height (16:9)
+
+  function sizeCanvas() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = Math.round(rect.width * dpr);
+    canvas.height = Math.round(rect.height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (frames[drawnFrame]) drawFrame(drawnFrame);
+  }
+
+  // ============================================================
+  // 3. Scroll calculation (separate from drawing)
+  // ============================================================
+  const runway = document.querySelector('.scroll-runway');
+  const heroTitle = document.getElementById('hero-title');
+
+  let currentFrame = 0;
+  let drawnFrame = -1;
+  let scrollProgress = 0;
+
+  const phases = [
+    { el: document.getElementById('phase-1'), start: 0.04, end: 0.20 },
+    { el: document.getElementById('phase-2'), start: 0.26, end: 0.44 },
+    { el: document.getElementById('phase-3'), start: 0.50, end: 0.68 },
+    { el: document.getElementById('phase-4'), start: 0.76, end: 0.96 },
+  ];
+
+  function getScrollProgress() {
+    const rect = runway.getBoundingClientRect();
+    const total = rect.height - window.innerHeight;
+    if (total <= 0) return 0;
+    const p = -rect.top / total;
+    return Math.max(0, Math.min(1, p));
+  }
+
+  function onScroll() {
+    scrollProgress = getScrollProgress();
+    const idx = Math.min(Math.floor(scrollProgress * TOTAL), TOTAL - 1);
+    currentFrame = idx;
+
+    // Phase visibility
+    for (const phase of phases) {
+      if (!phase.el) continue;
+      if (scrollProgress >= phase.start && scrollProgress <= phase.end) {
+        phase.el.classList.add('visible');
+      } else {
+        phase.el.classList.remove('visible');
+      }
+    }
+
+    // Hero title fades out as canvas reveals (first 8% of runway)
+    if (heroTitle) {
+      const fade = Math.max(0, 1 - scrollProgress / 0.08);
+      heroTitle.style.opacity = fade;
+    }
+
+    // Page progress bar
+    const pageRect = document.documentElement.getBoundingClientRect();
+    const pageScroll = -pageRect.top;
+    const pageMax = pageRect.height - window.innerHeight;
+    const pagePct = pageMax > 0 ? Math.min(100, (pageScroll / pageMax) * 100) : 0;
+    progressFill.style.width = pagePct + '%';
+  }
+
+  const progressFill = document.querySelector('#progress > span');
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { sizeCanvas(); onScroll(); });
+
+  // ============================================================
+  // 4. rAF render loop
+  // ============================================================
+  function drawFrame(i) {
+    const img = frames[i];
+    if (!img) return;
+    const rect = canvas.getBoundingClientRect();
+    ctx.clearRect(0, 0, rect.width, rect.height);
+    ctx.drawImage(img, 0, 0, rect.width, rect.height);
+    drawnFrame = i;
+  }
+
+  function tick() {
+    if (currentFrame !== drawnFrame && frames[currentFrame]) {
+      drawFrame(currentFrame);
+
+      // Subtle rotation tied to scroll position for added depth
+      const rotation = -2 + scrollProgress * 4; // -2deg → +2deg
+      const scale = 1 + scrollProgress * 0.04;
+      canvas.style.transform = `translate(-50%, -50%) rotate(${rotation}deg) scale(${scale})`;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  // ============================================================
+  // 5. Section reveal observer
+  // ============================================================
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    }
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ============================================================
+  // 6. Nav scrolled state
+  // ============================================================
+  const nav = document.querySelector('nav.top');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }, { passive: true });
+
+  // ============================================================
+  // Boot
+  // ============================================================
+  sizeCanvas();
+  onScroll();
+  tick();
+  preloadAll();
+})();
+</script>
 </body>
 </html>
