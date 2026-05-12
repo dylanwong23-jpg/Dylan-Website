@@ -585,6 +585,103 @@
   </div>
 </section>
 
+<!-- ============== CONTACT FORM ============== -->
+<section id="contact" class="relative overflow-hidden border-y border-gold/15 scroll-reveal">
+  <div aria-hidden class="absolute -top-32 -right-24 w-[520px] h-[520px] rounded-full opacity-60 pointer-events-none" style="background:radial-gradient(closest-side, rgba(230,185,121,.18), transparent 70%);"></div>
+  <div aria-hidden class="absolute -bottom-40 -left-20 w-[420px] h-[420px] rounded-full opacity-50 pointer-events-none" style="background:radial-gradient(closest-side, rgba(198,165,89,.14), transparent 70%);"></div>
+
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-24 lg:py-32 relative">
+    <div class="grid grid-cols-12 gap-x-6 lg:gap-x-12 items-start">
+
+      <!-- Left column: intro -->
+      <div class="col-span-12 lg:col-span-5">
+        <p class="eyebrow mb-6" style="color:var(--gold-3);">◆ § 01.5 — Get in touch</p>
+        <h2 class="display text-[clamp(40px,6.5vw,84px)] text-cream leading-[0.95] tracking-[-0.03em]">
+          Have a <span class="gold-text italic">question</span>?<br/>
+          Drop us a line.
+        </h2>
+        <p class="mt-8 max-w-md text-cream/75 text-[15.5px] leading-[1.75] font-light">
+          Cohort logistics, partnership inquiries, curriculum questions — send anything. A real person reads every message.
+        </p>
+
+        <div class="mt-10 space-y-4">
+          <div class="flex items-center gap-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold-3 pulse-dot inline-block"></span>
+            <span class="label-mono" style="color:var(--cream);opacity:.72;">Reviewed within 3 business days</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-gold-dim inline-block"></span>
+            <span class="label-mono" style="color:var(--cream);opacity:.72;">No drip funnels · No auto-responders</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column: form -->
+      <div class="col-span-12 lg:col-span-7 mt-14 lg:mt-0">
+        <form
+          id="contact-form"
+          class="card rounded-[18px] p-7 lg:p-10 relative"
+          onsubmit="submitForm(event)"
+        >
+          <div class="flex items-center justify-between mb-8 pb-5 border-b border-gold/15">
+            <p class="label-mono">Send a message</p>
+            <p class="label-mono" style="color:var(--gold-3);">3 fields · ~60s</p>
+          </div>
+
+          <div class="space-y-7">
+            <label class="block group">
+              <span class="label-mono block mb-2.5">Name <span class="text-gold-3 not-italic">*</span></span>
+              <input
+                type="text"
+                name="name"
+                required
+                autocomplete="name"
+                placeholder="Ada Lovelace"
+                class="w-full bg-transparent border-0 border-b border-cream/15 px-0 py-3 text-cream text-[16px] placeholder:text-cream/25 focus:outline-none focus:border-gold-2 transition-colors duration-300"
+              />
+            </label>
+
+            <label class="block group">
+              <span class="label-mono block mb-2.5">Email <span class="text-gold-3 not-italic">*</span></span>
+              <input
+                type="email"
+                name="email"
+                required
+                autocomplete="email"
+                placeholder="ada@example.com"
+                class="w-full bg-transparent border-0 border-b border-cream/15 px-0 py-3 text-cream text-[16px] placeholder:text-cream/25 focus:outline-none focus:border-gold-2 transition-colors duration-300"
+              />
+            </label>
+
+            <label class="block group">
+              <span class="label-mono block mb-2.5">Message <span class="text-gold-3 not-italic">*</span></span>
+              <textarea
+                name="message"
+                required
+                rows="5"
+                placeholder="What's on your mind?"
+                class="w-full bg-transparent border-0 border-b border-cream/15 px-0 py-3 text-cream text-[16px] placeholder:text-cream/25 focus:outline-none focus:border-gold-2 transition-colors duration-300 resize-none leading-[1.6]"
+              ></textarea>
+            </label>
+          </div>
+
+          <div class="mt-10 flex items-center justify-between gap-4 flex-wrap">
+            <p class="label-mono" style="opacity:.55;">All fields required · We never share your details.</p>
+            <button
+              type="submit"
+              class="btn-gold inline-flex items-center gap-3 px-7 py-4 rounded-full text-[13px] font-bold tracking-[.06em] uppercase"
+            >
+              Submit
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ============== TRUST STRIP ============== -->
 <section class="border-b border-gold/15 relative scroll-reveal">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-12 grid grid-cols-12 items-center gap-6">
@@ -1897,6 +1994,22 @@
   requestAnimationFrame(tick);
 })();
 </script>
+<script>
+ var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyyi4l11Zny4Zw5p5N5MgQNswNyJXkluS0hn13zJTVsnPM52gbDkM_itBhyqePtha26nA/exec';
 
+    function submitForm(e) {
+      e.preventDefault();
+      var f = e.target;
+      fetch(SHEETS_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify({
+          name:    f.name.value,
+          email:   f.email.value,
+          message: f.message.value
+        })
+      }).then(() => alert('Thanks! Message sent.'));
+    }
+    </script>
 </body>
 </html>
