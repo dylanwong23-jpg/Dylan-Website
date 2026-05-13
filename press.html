@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Press — Automation Agent Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root{ --ink:#0A0908; --gold-start:#C6A559; --gold-bright:#F5D58B; --gold-end:#E6B979; --cream:#F5EBD8; }
+  html, body{ background: var(--ink); color: var(--cream); }
+  body{
+    font-family:'Montserrat', system-ui, sans-serif; -webkit-font-smoothing: antialiased;
+    background:
+      radial-gradient(60% 40% at 80% -10%, rgba(230,185,121,0.16), transparent 60%),
+      radial-gradient(50% 60% at -10% 30%, rgba(198,165,89,0.10), transparent 65%),
+      var(--ink);
+    min-height: 100vh; display:flex; flex-direction:column;
+  }
+  .gold-text{ background: linear-gradient(135deg, var(--gold-start), var(--gold-bright) 50%, var(--gold-end)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .gold-rule{ height:1px; background: linear-gradient(90deg, transparent, rgba(198,165,89,.55) 20%, rgba(245,213,139,.7) 50%, rgba(198,165,89,.55) 80%, transparent); }
+  .btn-outline{ border:1px solid var(--gold-start); color:#E6B979; transition: background-color .25s ease, color .25s ease, border-color .25s ease; }
+  .btn-outline:hover{ background: rgba(198,165,89,.08); color: var(--gold-bright); border-color: var(--gold-bright); }
+  .btn-outline:focus-visible{ outline: 2px solid var(--gold-bright); outline-offset:3px; }
+  .eyebrow{ font-weight:600; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#E6B979; }
+  .label-mono{ font-weight:500; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#A89F8E; }
+  .display{ font-weight:800; letter-spacing:-0.025em; line-height:.96; }
+  .logo-glow{ filter: drop-shadow(0 1px 2px rgba(245,213,139,.35)) drop-shadow(0 4px 22px rgba(198,165,89,.35)); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="max-w-[1100px] mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
+    <a href="index.html" aria-label="Automation Agent Academy — home" class="flex items-center gap-3">
+      <img src="Brand_assets/Tester%20Logo.png" alt="" class="w-10 h-10 logo-glow" />
+      <span class="block font-bold text-[16px] tracking-[-0.01em] text-cream">Automation Agent Academy</span>
+    </a>
+    <a href="index.html" class="btn-outline px-5 py-2.5 text-[12.5px] font-semibold tracking-[.05em] rounded-full">← Back</a>
+  </div>
+  <div class="gold-rule max-w-[1100px] mx-auto"></div>
+</header>
+
+<main class="flex-1 grid place-items-center">
+  <div class="max-w-[680px] px-6 py-24 text-center">
+    <p class="eyebrow mb-6">◆ Press</p>
+    <h1 class="display text-[clamp(40px,7vw,84px)] text-cream"><span class="gold-text italic">Press</span></h1>
+    <p class="mt-8 text-cream/70 text-[15.5px] leading-[1.75] font-light">
+      Press inquiries and media kit — <span class="text-gold-2">coming soon</span>.
+    </p>
+    <a href="index.html" class="mt-10 inline-block btn-outline px-6 py-3 text-[12.5px] font-semibold tracking-[.05em] rounded-full">Return home</a>
+  </div>
+</main>
+
+<footer class="border-t border-gold/20">
+  <div class="max-w-[1100px] mx-auto px-6 lg:px-10 py-8 label-mono">© 2026 Automation Agent Academy · San Francisco</div>
+</footer>
+</body>
+</html>

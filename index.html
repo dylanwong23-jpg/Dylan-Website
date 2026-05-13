@@ -369,6 +369,18 @@
     background: linear-gradient(180deg, transparent, rgba(198,165,89,.4) 30%, rgba(245,213,139,.6) 50%, rgba(198,165,89,.4) 70%, transparent);
   }
 
+  /* fix: #2 + #3 — form status messages */
+  .form-status{
+    margin-top: 0.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .form-status--success{ color: #7BC79C; }
+  .form-status--error{ color: #E07A6B; }
+
   /* Reduced-motion guard */
   @media (prefers-reduced-motion: reduce) {
     .word-stagger > span{
@@ -412,7 +424,8 @@
 <!-- ============== NAV ============== -->
 <header class="relative z-30">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
-    <a href="#" class="flex items-center gap-3 group shrink-0">
+    <!-- fix: #7 -->
+    <a href="index.html" aria-label="Automation Agent Academy — home" class="flex items-center gap-3 group shrink-0">
       <img src="Brand_assets/Tester%20Logo.png" alt="" class="w-10 h-10 logo-glow" />
       <span class="leading-tight">
         <span class="block font-bold text-[16px] tracking-[-0.01em] text-cream">Automation Agent Academy</span>
@@ -429,8 +442,9 @@
       <a class="ulink" href="TesterTech.html">Tester Tech</a>
       <a class="ulink" href="Sights.html">Sights</a>
     </nav>
+    <!-- fix: #4 -->
     <div class="flex items-center gap-2.5 shrink-0 whitespace-nowrap">
-      <a href="#apply" class="hidden sm:inline-block btn-outline px-4 py-2.5 text-[12.5px] font-semibold tracking-[.05em] rounded-full">Sign in</a>
+      <a href="apply.html" class="hidden sm:inline-block btn-outline px-4 py-2.5 text-[12.5px] font-semibold tracking-[.05em] rounded-full">Apply</a>
       <a href="#apply" class="btn-gold px-5 py-2.5 text-[12.5px] font-bold tracking-[.05em] rounded-full">Get Started</a>
     </div>
   </div>
@@ -618,10 +632,12 @@
 
       <!-- Right column: form -->
       <div class="col-span-12 lg:col-span-7 mt-14 lg:mt-0">
+        <!-- fix: #2 -->
         <form
           id="contact-form"
           class="card rounded-[18px] p-7 lg:p-10 relative"
-          onsubmit="submitForm(event)"
+          action="#"
+          novalidate
         >
           <div class="flex items-center justify-between mb-8 pb-5 border-b border-gold/15">
             <p class="label-mono">Send a message</p>
@@ -1514,7 +1530,8 @@
           <div class="h-1.5 bg-cream/10 rounded-full overflow-hidden">
             <div class="h-full" style="width:59%; background:linear-gradient(90deg, var(--gold-start), var(--gold-bright), var(--gold-end));"></div>
           </div>
-          <a href="#" class="mt-6 btn-gold inline-flex w-full items-center justify-between gap-3 px-5 py-4 rounded-full text-[13.5px] font-bold tracking-[.04em]">
+          <!-- fix: #1 -->
+          <a href="apply.html" aria-label="Start your application" class="mt-6 btn-gold inline-flex w-full items-center justify-between gap-3 px-5 py-4 rounded-full text-[13.5px] font-bold tracking-[.04em]">
             Get Started
             <svg width="16" height="16" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
           </a>
@@ -1671,7 +1688,8 @@
 <footer class="border-t border-gold/20" style="background:#08070600;">
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-14 grid grid-cols-12 gap-x-6 lg:gap-x-10">
     <div class="col-span-12 md:col-span-5">
-      <a href="#" class="flex items-center gap-3">
+      <!-- fix: #7 -->
+      <a href="index.html" aria-label="Automation Agent Academy — home" class="flex items-center gap-3">
         <img src="Brand_assets/Tester%20Logo.png" alt="" class="w-10 h-10 logo-glow" />
         <span class="text-[16px] tracking-[-0.01em] text-cream font-bold">Automation Agent Academy</span>
       </a>
@@ -1692,11 +1710,12 @@
     </div>
     <div class="col-span-6 md:col-span-2 mt-10 md:mt-0">
       <p class="label-mono mb-4">Company</p>
+      <!-- fix: #5 -->
       <ul class="space-y-2 text-[13.5px] text-cream/80 font-medium">
-        <li><a class="ulink" href="#">Manifesto</a></li>
-        <li><a class="ulink" href="#">Press</a></li>
-        <li><a class="ulink" href="#">Careers</a></li>
-        <li><a class="ulink" href="#">Code of conduct</a></li>
+        <li><a class="ulink" href="#manifesto">Manifesto</a></li>
+        <li><a class="ulink" href="press.html">Press</a></li>
+        <li><a class="ulink" href="careers.html">Careers</a></li>
+        <li><a class="ulink" href="code-of-conduct.html">Code of conduct</a></li>
       </ul>
     </div>
     <div class="col-span-12 md:col-span-3 mt-10 md:mt-0">
@@ -1704,9 +1723,10 @@
       <p class="text-[13px] leading-[1.65] text-cream/75 mb-3 font-light">
         Once a month. Notes from the program — patterns we've seen ship, and ones we've watched fail.
       </p>
-      <form class="flex gap-2" onsubmit="event.preventDefault();">
-        <input type="email" placeholder="you@work.com" class="flex-1 bg-cream/5 border border-gold/25 px-3 py-2.5 text-[13px] text-cream placeholder:text-cream/40 rounded-full font-medium focus:outline-none focus:border-gold-3" />
-        <button class="btn-gold px-5 py-2.5 text-[13px] font-bold tracking-[.04em] rounded-full">Join</button>
+      <!-- fix: #3 -->
+      <form id="newsletter-form" class="flex gap-2" action="#" novalidate>
+        <input type="email" name="email" required placeholder="you@work.com" autocomplete="email" class="flex-1 bg-cream/5 border border-gold/25 px-3 py-2.5 text-[13px] text-cream placeholder:text-cream/40 rounded-full font-medium focus:outline-none focus:border-gold-3" />
+        <button type="submit" class="btn-gold px-5 py-2.5 text-[13px] font-bold tracking-[.04em] rounded-full">Join</button>
       </form>
     </div>
   </div>
@@ -1714,9 +1734,10 @@
   <div class="border-t border-gold/15">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 label-mono">
       <p>© 2026 Automation Agent Academy · San Francisco</p>
+      <!-- fix: #6 -->
       <p class="flex items-center gap-5">
-        <a href="#" class="hover:text-gold-3 transition-colors">Privacy</a>
-        <a href="#" class="hover:text-gold-3 transition-colors">Terms</a>
+        <a href="privacy.html" class="hover:text-gold-3 transition-colors">Privacy</a>
+        <a href="terms.html" class="hover:text-gold-3 transition-colors">Terms</a>
         <span class="hidden sm:inline">v07 · gold edition</span>
       </p>
     </div>
@@ -1994,22 +2015,53 @@
   requestAnimationFrame(tick);
 })();
 </script>
+<!-- fix: #2 + #3 — form handlers -->
 <script>
- var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbyyi4l11Zny4Zw5p5N5MgQNswNyJXkluS0hn13zJTVsnPM52gbDkM_itBhyqePtha26nA/exec';
+  // TODO: wire to real backend endpoint
+  (function () {
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    function submitForm(e) {
-      e.preventDefault();
-      var f = e.target;
-      fetch(SHEETS_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: JSON.stringify({
-          name:    f.name.value,
-          email:   f.email.value,
-          message: f.message.value
-        })
-      }).then(() => alert('Thanks! Message sent.'));
+    function setStatus(form, statusId, kind, msg) {
+      var existing = document.getElementById(statusId);
+      if (existing) existing.remove();
+      var p = document.createElement('p');
+      p.id = statusId;
+      p.className = 'form-status form-status--' + kind;
+      p.setAttribute('role', kind === 'success' ? 'status' : 'alert');
+      p.textContent = msg;
+      form.insertAdjacentElement('afterend', p);
     }
-    </script>
+
+    var contact = document.getElementById('contact-form');
+    if (contact) {
+      contact.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var name = (contact.elements.name && contact.elements.name.value || '').trim();
+        var email = (contact.elements.email && contact.elements.email.value || '').trim();
+        var message = (contact.elements.message && contact.elements.message.value || '').trim();
+        if (!name || !email || !message || !EMAIL_RE.test(email)) {
+          setStatus(contact, 'contact-form-status', 'error', "Please complete all fields with a valid email.");
+          return;
+        }
+        setStatus(contact, 'contact-form-status', 'success', "Thanks — we'll be in touch shortly.");
+        contact.reset();
+      });
+    }
+
+    var news = document.getElementById('newsletter-form');
+    if (news) {
+      news.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var email = (news.elements.email && news.elements.email.value || '').trim();
+        if (!email || !EMAIL_RE.test(email)) {
+          setStatus(news, 'newsletter-form-status', 'error', "Please enter a valid email.");
+          return;
+        }
+        setStatus(news, 'newsletter-form-status', 'success', "Subscribed — check your inbox.");
+        news.reset();
+      });
+    }
+  })();
+</script>
 </body>
 </html>

@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Apply — Automation Agent Academy</title>
+<meta name="description" content="Apply to Automation Agent Academy Cohort 07." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink:'#0A0908', coal:'#11100E', char:'#1A1714', smoke:'#241F1A', rule:'#3B3127',
+          gold:'#C6A559', 'gold-2':'#E6B979', 'gold-3':'#F5D58B', 'gold-dim':'#8E7740',
+          cream:'#F5EBD8', dim:'#A89F8E',
+        },
+        fontFamily: { sans: ['Montserrat', 'system-ui', 'sans-serif'] },
+      }
+    }
+  }
+</script>
+
+<style>
+  :root{
+    --ink:#0A0908; --coal:#11100E; --char:#1A1714;
+    --gold-start:#C6A559; --gold-end:#E6B979; --gold-bright:#F5D58B;
+    --cream:#F5EBD8;
+  }
+  html, body{ background: var(--ink); color: var(--cream); }
+  body{
+    font-family: 'Montserrat', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .stage{
+    background:
+      radial-gradient(60% 40% at 80% -10%, rgba(230,185,121,0.16), transparent 60%),
+      radial-gradient(50% 60% at -10% 30%, rgba(198,165,89,0.10), transparent 65%),
+      radial-gradient(40% 60% at 50% 110%, rgba(198,165,89,0.10), transparent 65%),
+      var(--ink);
+  }
+  .grain::before{
+    content:""; position:fixed; inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.78  0 0 0 0 0.65  0 0 0 0 0.35  0 0 0 0.30 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity:.18; mix-blend-mode:overlay; pointer-events:none; z-index:90;
+  }
+  .gold-text{
+    background: linear-gradient(135deg, var(--gold-start) 0%, var(--gold-bright) 50%, var(--gold-end) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .btn-gold{
+    background: linear-gradient(135deg, var(--gold-start) 0%, var(--gold-bright) 50%, var(--gold-end) 100%);
+    color:#1A1410;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, filter .35s ease;
+    box-shadow: 0 1px 0 rgba(255,220,150,.4) inset, 0 8px 24px -8px rgba(198,165,89,.55);
+  }
+  .btn-gold:hover{ transform: translateY(-1px); filter: brightness(1.06); box-shadow: 0 1px 0 rgba(255,220,150,.5) inset, 0 14px 30px -10px rgba(198,165,89,.7); }
+  .btn-gold:active{ transform: translateY(0); }
+  .btn-gold:focus-visible{ outline: 2px solid var(--gold-bright); outline-offset:3px; }
+  .btn-outline{
+    border:1px solid var(--gold-start); color:#E6B979; background: transparent;
+    transition: background-color .25s ease, color .25s ease, border-color .25s ease;
+  }
+  .btn-outline:hover{ background: rgba(198,165,89,.08); color: var(--gold-bright); border-color: var(--gold-bright); }
+  .btn-outline:focus-visible{ outline: 2px solid var(--gold-bright); outline-offset:3px; }
+  .card{
+    background: linear-gradient(180deg, rgba(26,23,20,.85) 0%, rgba(17,16,14,.85) 100%);
+    border:1px solid rgba(198,165,89,0.18);
+    backdrop-filter: blur(6px);
+  }
+  .gold-rule{
+    height:1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(198,165,89,.0) 0%, rgba(198,165,89,.55) 20%, rgba(245,213,139,.7) 50%, rgba(198,165,89,.55) 80%, rgba(198,165,89,0) 100%);
+  }
+  .eyebrow{ font-weight:600; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color: #E6B979; }
+  .label-mono{ font-weight:500; font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:#A89F8E; }
+  .display{ font-weight: 800; letter-spacing:-0.025em; line-height:.96; }
+  .display-light{ font-weight: 300; letter-spacing:-0.02em; line-height: 1.02; }
+  ::selection{ background: var(--gold-bright); color:#1A1410; }
+  .logo-glow{ filter: drop-shadow(0 1px 2px rgba(245,213,139,.35)) drop-shadow(0 4px 22px rgba(198,165,89,.35)); }
+
+  /* Select arrow — gold caret */
+  .field-select{
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%23F5D58B' stroke-width='2'><path d='M3 5l4 4 4-4'/></svg>");
+    background-repeat: no-repeat; background-position: right 0 center; background-size: 14px 14px;
+    padding-right: 24px;
+  }
+  .field-select option{ background:#11100E; color:#F5EBD8; }
+
+  .form-status{
+    margin-top: 0.5rem; font-weight: 600; font-size: 12px;
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+  .form-status--success{ color: #7BC79C; }
+  .form-status--error{ color: #E07A6B; }
+</style>
+</head>
+<body class="stage grain">
+
+<!-- header -->
+<header class="relative z-30">
+  <div class="max-w-[1100px] mx-auto px-6 lg:px-10 py-5 flex items-center justify-between">
+    <a href="index.html" aria-label="Automation Agent Academy — home" class="flex items-center gap-3 shrink-0">
+      <img src="Brand_assets/Tester%20Logo.png" alt="" class="w-10 h-10 logo-glow" />
+      <span class="leading-tight">
+        <span class="block font-bold text-[16px] tracking-[-0.01em] text-cream">Automation Agent Academy</span>
+        <span class="block text-[10px] font-medium tracking-[.26em] uppercase text-gold-2/80 mt-0.5">A · A · A</span>
+      </span>
+    </a>
+    <a href="index.html" class="btn-outline px-5 py-2.5 text-[12.5px] font-semibold tracking-[.05em] rounded-full">← Back</a>
+  </div>
+  <div class="gold-rule max-w-[1100px] mx-auto"></div>
+</header>
+
+<!-- form -->
+<main class="relative">
+  <div class="max-w-[1100px] mx-auto px-6 lg:px-10 py-20 lg:py-28 grid grid-cols-12 gap-x-6 lg:gap-x-12 items-start">
+
+    <div class="col-span-12 lg:col-span-5">
+      <p class="eyebrow mb-6">◆ § 08 — Apply · Cohort 07</p>
+      <h1 class="display text-[clamp(40px,6.5vw,80px)] text-cream leading-[0.95] tracking-[-0.03em]">
+        Start your <span class="gold-text italic">application</span>.
+      </h1>
+      <p class="mt-7 max-w-md text-cream/75 text-[15.5px] leading-[1.75] font-light">
+        A short form. Real humans review every application — usually within eight days. Take the time you need.
+      </p>
+
+      <ul class="mt-10 space-y-3 text-[13px] text-cream/70 font-light">
+        <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-gold-3 inline-block shrink-0"></span><span>No application fee.</span></li>
+        <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-gold-3 inline-block shrink-0"></span><span>Cohort 07 begins June 17, 2026.</span></li>
+        <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-gold-3 inline-block shrink-0"></span><span>Applications close May 24 — or sooner if seats fill.</span></li>
+      </ul>
+    </div>
+
+    <div class="col-span-12 lg:col-span-7 mt-14 lg:mt-0">
+      <form id="apply-form" class="card rounded-[18px] p-7 lg:p-10" action="#" novalidate>
+        <div class="flex items-center justify-between mb-8 pb-5 border-b border-gold/15">
+          <p class="label-mono">Application</p>
+          <p class="label-mono" style="color:#F5D58B;">4 fields · ~3 min</p>
+        </div>
+
+        <div class="space-y-7">
+          <label class="block">
+            <span class="label-mono block mb-2.5">Name <span class="text-gold-3 not-italic">*</span></span>
+            <input type="text" name="name" required autocomplete="name" placeholder="Ada Lovelace"
+              class="w-full bg-transparent border-0 border-b border-cream/15 px-0 py-3 text-cream text-[16px] placeholder:text-cream/25 focus:outline-none focus:border-gold-2 transition-colors duration-300" />
+          </label>
+
+          <label class="block">
+            <span class="label-mono block mb-2.5">Email <span class="text-gold-3 not-italic">*</span></span>
+            <input type="email" name="email" required autocomplete="email" placeholder="ada@example.com"
+              class="w-full bg-transparent border-0 border-b border-cream/15 px-0 py-3 text-cream text-[16px] placeholder:text-cream/25 focus:outline-none focus:border-gold-2 transition-colors duration-300" />
+          </label>
+
+          <label class="block">
+            <span class="label-mono block mb-2.5">Track <span class="text-gold-3 not-italic">*</span></span>
+            <select name="track" required
+              class="field-select w-full bg-transparent border-0 border-b border-cream/15 px-0 py-3 text-cream text-[16px] focus:outline-none focus:border-gold-2 transition-colors duration-300">
+              <option value="" disabled selected>Choose a track</option>
+              <option value="Builder">Builder — engineers shipping agents</option>
+              <option value="Operator">Operator — leaders deploying agents</option>
+            </select>
+          </label>
+
+          <label class="block">
+            <span class="label-mono block mb-2.5">Why this cohort? <span class="text-gold-3 not-italic">*</span></span>
+            <textarea name="message" required rows="5" placeholder="A few sentences on what you'd build and why now."
+              class="w-full bg-transparent border-0 border-b border-cream/15 px-0 py-3 text-cream text-[16px] placeholder:text-cream/25 focus:outline-none focus:border-gold-2 transition-colors duration-300 resize-none leading-[1.6]"></textarea>
+          </label>
+        </div>
+
+        <div class="mt-10 flex items-center justify-between gap-4 flex-wrap">
+          <p class="label-mono" style="opacity:.55;">Reviewed by a real person · No drip emails.</p>
+          <button type="submit" class="btn-gold inline-flex items-center gap-3 px-7 py-4 rounded-full text-[13px] font-bold tracking-[.06em] uppercase">
+            Submit application
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11L11 3M11 3H5M11 3V9"/></svg>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+<footer class="border-t border-gold/20">
+  <div class="max-w-[1100px] mx-auto px-6 lg:px-10 py-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 label-mono">
+    <p>© 2026 Automation Agent Academy · San Francisco</p>
+    <p class="flex items-center gap-5">
+      <a href="privacy.html" class="hover:text-gold-3 transition-colors">Privacy</a>
+      <a href="terms.html" class="hover:text-gold-3 transition-colors">Terms</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+  // TODO: wire to real backend endpoint
+  (function () {
+    var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    var form = document.getElementById('apply-form');
+    if (!form) return;
+
+    function setStatus(kind, msg) {
+      var existing = document.getElementById('apply-form-status');
+      if (existing) existing.remove();
+      var p = document.createElement('p');
+      p.id = 'apply-form-status';
+      p.className = 'form-status form-status--' + kind;
+      p.setAttribute('role', kind === 'success' ? 'status' : 'alert');
+      p.textContent = msg;
+      form.insertAdjacentElement('afterend', p);
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = (form.elements.name && form.elements.name.value || '').trim();
+      var email = (form.elements.email && form.elements.email.value || '').trim();
+      var track = (form.elements.track && form.elements.track.value || '').trim();
+      var message = (form.elements.message && form.elements.message.value || '').trim();
+      if (!name || !email || !track || !message || !EMAIL_RE.test(email)) {
+        setStatus('error', "Please complete all fields with a valid email.");
+        return;
+      }
+      setStatus('success', "Application received — we'll be in touch within 8 days.");
+      form.reset();
+    });
+  })();
+</script>
+</body>
+</html>
