@@ -1140,19 +1140,7 @@
   <!-- Video Reel: autoplays muted, loops -->
   <div class="reel-wrap reveal">
     <span class="reel-corner">Reel · Auto</span>
-
-    <!-- Once you generate reel.mp4 (via FFmpeg), replace the placeholder with: -->
-    <!--
-    <video src="reel.mp4" autoplay loop muted playsinline></video>
-    -->
-
-    <div class="reel-placeholder">
-      <div class="play">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg>
-      </div>
-      <div class="ttl">Reel coming soon</div>
-      <div class="lbl">Generate from project screenshots</div>
-    </div>
+    <video src="reel.mp4" autoplay loop muted playsinline preload="auto" aria-label="Project reel"></video>
   </div>
 
   <!-- Project Grid -->
@@ -1160,12 +1148,7 @@
 
     <a href="Frontend.html" class="card project-card reveal">
       <div class="thumb">
-        <!-- Once you run capture.js, replace .thumb-placeholder with: -->
-        <!-- <img src="screens/frontend.png" alt="Mood Board Generator screenshot"> -->
-        <div class="thumb-placeholder">
-          <div class="icon">✦</div>
-          <div class="note">Screenshot pending</div>
-        </div>
+        <img src="About_me_image/Mood_Board.png" alt="Mood Board Generator screenshot" loading="lazy" />
       </div>
       <div class="meta-row">
         <span>Project 01</span>
@@ -1186,11 +1169,7 @@
 
     <a href="Sights.html" class="card project-card reveal">
       <div class="thumb">
-        <!-- <img src="screens/sights.png" alt="City Sights screenshot"> -->
-        <div class="thumb-placeholder">
-          <div class="icon">◈</div>
-          <div class="note">Screenshot pending</div>
-        </div>
+        <img src="About_me_image/Mont_Saint_Michel.png" alt="Mont Saint-Michel city sights screenshot" loading="lazy" />
       </div>
       <div class="meta-row">
         <span>Project 02</span>
