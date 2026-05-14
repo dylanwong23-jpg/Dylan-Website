@@ -1,0 +1,1320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dylan Wong — Customer Success Specialist</title>
+<meta name="description" content="Customer Success Specialist with 9+ years driving retention, expansion, and adoption across B2B SaaS and AI." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,wght@9..144,0,300;9..144,0,400;9..144,0,500;9..144,0,700;9..144,1,300;9..144,1,400;9..144,1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --paper:        #F8F5F0;
+    --paper-2:      #F1ECE3;
+    --paper-warm:   #ECE5D8;
+    --ink:          #0F1B2D;
+    --ink-soft:     #2A3548;
+    --ink-mute:     #5C6473;
+    --ink-faint:    #94999F;
+    --line:         #DFD8CB;
+    --line-soft:    #ECE5D8;
+    --accent:       #C75D3A;
+    --accent-dark:  #A84A2C;
+    --accent-soft:  #E0846B;
+    --accent-bg:    #F6E5DC;
+    --good:         #4A7A4A;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  html, body{ background: var(--paper); color: var(--ink); }
+  body{
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x:hidden;
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* ===== Paper grain texture ===== */
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.4  0 0 0 0 0.35  0 0 0 0 0.25  0 0 0 0.18 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: 0.42;
+    mix-blend-mode: multiply;
+    pointer-events:none;
+    z-index: 99;
+  }
+
+  /* Soft ambient warmth top-right */
+  body::after{
+    content:"";
+    position:fixed; inset:0;
+    background:
+      radial-gradient(60% 50% at 90% -10%, rgba(199, 93, 58, 0.06), transparent 60%),
+      radial-gradient(50% 50% at -10% 80%, rgba(15, 27, 45, 0.04), transparent 60%);
+    pointer-events:none;
+    z-index: 1;
+  }
+
+  ::selection{ background: var(--accent); color: var(--paper); }
+
+  /* ===== Typographic helpers ===== */
+  .serif{ font-family: 'Fraunces', Georgia, serif; }
+  .mono{ font-family: 'JetBrains Mono', monospace; }
+
+  .eyebrow{
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .label-mono{
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  /* Hairline rule */
+  .rule{
+    height: 1px;
+    background: var(--line);
+    border: none;
+  }
+  .rule-accent{
+    height: 1px;
+    width: 60px;
+    background: var(--accent);
+    border: none;
+  }
+  .rule-center{ margin: 18px auto 0; }
+
+  /* ===== Buttons ===== */
+  .btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 26px;
+    border-radius: 4px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 13.5px;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    border: 1px solid transparent;
+  }
+  .btn-primary{
+    background: var(--accent);
+    color: var(--paper);
+  }
+  .btn-primary:hover{
+    background: var(--accent-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px -12px rgba(199, 93, 58, 0.5);
+  }
+  .btn-outline{
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+  .btn-outline:hover{
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ===== Cards ===== */
+  .card{
+    background: #FFFFFF;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    transition: border-color 0.3s ease, transform 0.4s cubic-bezier(.2,.8,.2,1), box-shadow 0.4s ease;
+  }
+  .card:hover{
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    box-shadow: 0 24px 48px -28px rgba(15, 27, 45, 0.18);
+  }
+
+  /* ===== Reveal ===== */
+  .reveal{
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.visible{ opacity: 1; transform: translateY(0); }
+
+  /* ============================== NAV ============================== */
+  header.nav{
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(248, 245, 240, 0.86);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner{
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 22px 44px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .brand .mark{
+    width: 36px; height: 36px;
+    border-radius: 4px;
+    background: var(--ink);
+    color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.02em;
+  }
+  .brand .name{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .brand .role{
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-top: 2px;
+  }
+
+  nav.primary ul{
+    list-style: none;
+    display: flex;
+    gap: 40px;
+  }
+  nav.primary a{
+    color: var(--ink-mute);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 400;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.2s ease;
+    position: relative;
+    padding: 6px 0;
+  }
+  nav.primary a:hover{ color: var(--ink); }
+  nav.primary a.active{ color: var(--accent); }
+  nav.primary a.active::after{
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: -6px;
+    height: 1px;
+    background: var(--accent);
+  }
+  .nav-cta{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .nav-cta:hover{ background: var(--accent); transform: translateY(-1px); }
+
+  /* ============================== HERO ============================== */
+  .hero{
+    position: relative;
+    z-index: 2;
+    padding: 100px 44px 120px;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .photo-wrap{
+    position: relative;
+    aspect-ratio: 1;
+  }
+  .photo-wrap::before{
+    content: '';
+    position: absolute;
+    top: 18px; left: 18px;
+    right: -18px; bottom: -18px;
+    background: var(--accent-bg);
+    border-radius: 6px;
+    z-index: 0;
+  }
+  .photo-frame{
+    position: relative;
+    z-index: 1;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--paper-2), var(--paper-warm));
+    box-shadow: 0 30px 60px -30px rgba(15, 27, 45, 0.25);
+  }
+  .photo-frame img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .hero-content .eyebrow-row{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .pulse-dot{
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: inline-block;
+    animation: pulse-dot 2.4s ease-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(199, 93, 58, 0.55); }
+    50%      { box-shadow: 0 0 0 7px rgba(199, 93, 58, 0); }
+  }
+
+  .hero-content h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(56px, 8.5vw, 108px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+    color: var(--ink);
+  }
+  .hero-content h1 .italic{
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .hero-content .tagline{
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.25;
+    margin-bottom: 32px;
+    color: var(--ink-soft);
+    max-width: 580px;
+  }
+  .hero-content .tagline em{
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .hero-content .bio{
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--ink-mute);
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+  .hero-content .bio em{
+    color: var(--ink);
+    font-style: normal;
+    font-weight: 600;
+  }
+  .chips{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+  .chip{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+  }
+  .chip::before{
+    content: '';
+    width: 5px; height: 5px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .hero-ctas{
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* ============================== SECTION SHELL ============================== */
+  section.block{
+    position: relative;
+    z-index: 2;
+    padding: 110px 44px;
+    max-width: 1240px;
+    margin: 0 auto;
+  }
+  .section-divider{
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 44px;
+  }
+  .section-divider .rule{
+    background: var(--line);
+  }
+  .section-head{
+    text-align: center;
+    margin-bottom: 64px;
+  }
+  .section-head .num{
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .section-head .num::before,
+  .section-head .num::after{
+    content: '';
+    width: 36px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.6;
+  }
+  .section-head h2{
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(40px, 5.5vw, 76px);
+    letter-spacing: -0.025em;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .section-head h2 .italic{
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+  .section-head p{
+    color: var(--ink-mute);
+    font-size: 17px;
+    line-height: 1.7;
+    margin-top: 22px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ============================== THINGS I DO ============================== */
+  .services{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .service{
+    padding: 40px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .service .num-display{
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-style: italic;
+    font-size: 56px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .service h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .service .lede{
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-mute);
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .service ul{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .service ul li{
+    position: relative;
+    padding-left: 20px;
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .service ul li::before{
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 6px; height: 1px;
+    background: var(--accent);
+  }
+  .service.featured{
+    grid-column: 1 / -1;
+    background: var(--paper-2);
+    border-color: var(--accent);
+  }
+  .service.featured h3{ font-size: 30px; }
+  .service.featured .num-display{ font-size: 64px; }
+
+  /* ============================== PROJECTS ============================== */
+  .reel-wrap{
+    margin-bottom: 36px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #FFFFFF;
+    box-shadow: 0 30px 60px -30px rgba(15, 27, 45, 0.18);
+    position: relative;
+  }
+  .reel-wrap video{
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+  .reel-wrap .reel-placeholder{
+    position: relative;
+    aspect-ratio: 16/9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(199, 93, 58, 0.08), transparent 60%),
+      linear-gradient(135deg, var(--paper-2), var(--paper));
+  }
+  .reel-wrap .reel-placeholder .play{
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+  }
+  .reel-wrap .reel-placeholder .play svg{
+    width: 28px; height: 28px;
+    margin-left: 4px;
+  }
+  .reel-wrap .reel-placeholder .ttl{
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--ink);
+  }
+  .reel-wrap .reel-placeholder .lbl{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .reel-wrap .reel-corner{
+    position: absolute;
+    top: 16px; left: 16px;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(248, 245, 240, 0.92);
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .reel-wrap .reel-corner::before{
+    content:'';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse-dot 2.4s ease-out infinite;
+  }
+
+  .project-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .project-card{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+  }
+  .project-card .thumb{
+    aspect-ratio: 16/10;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(199, 93, 58, 0.08), transparent 60%),
+      linear-gradient(135deg, var(--paper-2), var(--paper));
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .project-card .thumb img{
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(.2,.8,.2,1);
+  }
+  .project-card:hover .thumb img{ transform: scale(1.04); }
+  .project-card .thumb-placeholder{
+    position: absolute; inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .project-card .thumb-placeholder .icon{
+    font-family: 'Fraunces', serif;
+    font-size: 36px;
+    color: var(--accent);
+    opacity: 0.5;
+  }
+  .project-card .thumb-placeholder .note{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  .project-card .meta-row{
+    padding: 24px 28px 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .project-card .meta-row .sep{ color: var(--ink-faint); }
+  .project-card .meta-row .type{ color: var(--ink-mute); }
+  .project-card h3{
+    padding: 0 28px 12px;
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .project-card p{
+    padding: 0 28px 22px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-mute);
+    flex: 1;
+  }
+  .project-card .footer-row{
+    padding: 16px 28px 22px;
+    border-top: 1px solid var(--line-soft);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+  .project-card .view{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: gap 0.2s ease;
+  }
+  .project-card:hover .view{ gap: 12px; }
+  .project-card .badge-stack{
+    display: flex;
+    gap: 6px;
+  }
+  .project-card .badge-stack span{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 4px 9px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    background: var(--paper);
+  }
+
+  /* ============================== MY WORK ============================== */
+  .work-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .work-card{
+    padding: 40px;
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .work-logo{
+    width: 120px; height: 120px;
+    border-radius: 6px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    flex-shrink: 0;
+  }
+  .work-logo img{
+    width: 100%; height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+  .work-card h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .work-card p{
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-mute);
+  }
+  .work-card p b{
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .work-card p .pull{
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .case-link{
+    margin-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid var(--accent);
+    transition: gap 0.2s ease, color 0.2s ease;
+  }
+  .case-link:hover{
+    color: var(--accent-dark);
+    border-color: var(--accent-dark);
+    gap: 12px;
+  }
+
+  /* ============================== CONTACT ============================== */
+  .contact-block{
+    position: relative;
+    overflow: hidden;
+    padding: 80px 64px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 6px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .contact-block::after{
+    content: '';
+    position: absolute;
+    bottom: -40%; right: -15%;
+    width: 60%; aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(199, 93, 58, 0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .contact-block .eyebrow{ color: var(--accent-soft); margin-bottom: 18px; display: block; }
+  .contact-block h2{
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(36px, 4.5vw, 56px);
+    letter-spacing: -0.025em;
+    line-height: 1;
+    margin-bottom: 18px;
+    color: var(--paper);
+  }
+  .contact-block h2 .italic{
+    font-style: italic;
+    color: var(--accent-soft);
+    font-weight: 300;
+  }
+  .contact-block .sub{
+    color: rgba(248, 245, 240, 0.7);
+    font-size: 16px;
+    line-height: 1.65;
+    max-width: 460px;
+  }
+  .socials{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .social-link{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: rgba(248, 245, 240, 0.05);
+    border: 1px solid rgba(248, 245, 240, 0.1);
+    border-radius: 6px;
+    color: var(--paper);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .social-link:hover{
+    border-color: var(--accent);
+    background: rgba(199, 93, 58, 0.12);
+    transform: translateY(-2px);
+  }
+  .social-link .icon{
+    width: 38px; height: 38px;
+    border-radius: 4px;
+    background: rgba(199, 93, 58, 0.15);
+    border: 1px solid rgba(199, 93, 58, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent-soft);
+    flex-shrink: 0;
+  }
+  .social-link .text{ flex: 1; }
+  .social-link .label{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(248, 245, 240, 0.5);
+    margin-bottom: 2px;
+    font-weight: 500;
+  }
+  .social-link .val{
+    font-weight: 500;
+    font-size: 14.5px;
+  }
+  .social-link .arrow{
+    color: rgba(248, 245, 240, 0.4);
+    transition: all 0.2s ease;
+  }
+  .social-link:hover .arrow{
+    color: var(--accent-soft);
+    transform: translateX(4px);
+  }
+
+  /* ============================== FOOTER ============================== */
+  footer.foot{
+    border-top: 1px solid var(--line);
+    padding: 40px 44px;
+    max-width: 1240px;
+    margin: 80px auto 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    font-weight: 500;
+  }
+  footer.foot .accent{ color: var(--accent); }
+
+  /* ============================== RESPONSIVE ============================== */
+  @media (max-width: 1024px){
+    .nav-inner{ padding: 18px 32px; }
+    nav.primary ul{ gap: 28px; }
+    nav.primary a{ font-size: 10.5px; letter-spacing: 0.16em; }
+    .hero{ padding: 72px 32px 88px; }
+    .hero-grid{ grid-template-columns: 200px 1fr; gap: 56px; }
+    section.block{ padding: 88px 32px; }
+    .section-divider{ padding: 0 32px; }
+    .services{ gap: 16px; }
+    .service{ padding: 32px 28px; }
+    .work-card{ padding: 32px; gap: 24px; }
+  }
+  @media (max-width: 720px){
+    .nav-inner{ padding: 16px 20px; gap: 12px; }
+    .brand .name{ font-size: 16px; }
+    .brand .mark{ width: 32px; height: 32px; font-size: 14px; }
+    .brand .role{ display: none; }
+    nav.primary{ display: none; }
+    .nav-cta{ padding: 8px 14px; font-size: 11px; }
+
+    .hero{ padding: 48px 20px 64px; }
+    .hero-grid{ grid-template-columns: 1fr; gap: 36px; text-align: center; }
+    .photo-wrap{ max-width: 220px; margin: 0 auto; }
+    .photo-wrap::before{ top: 12px; left: 12px; right: -12px; bottom: -12px; }
+    .hero-content{ text-align: center; }
+    .hero-content .eyebrow-row{ justify-content: center; }
+    .hero-content h1{ font-size: clamp(48px, 13vw, 64px); }
+    .hero-content .tagline{ font-size: clamp(20px, 5vw, 24px); margin-left: auto; margin-right: auto; }
+    .hero-content .bio{ font-size: 15px; margin-left: auto; margin-right: auto; }
+    .hero-content .chips{ justify-content: center; }
+    .chip{ font-size: 10.5px; padding: 6px 12px; }
+    .hero-content .hero-ctas{ justify-content: center; }
+    .btn{ padding: 12px 22px; font-size: 12.5px; }
+
+    section.block{ padding: 64px 20px; }
+    .section-divider{ padding: 0 20px; }
+    .section-head{ margin-bottom: 44px; }
+    .section-head h2{ font-size: clamp(36px, 9vw, 48px); }
+    .section-head p{ font-size: 15px; }
+    .section-head .num::before, .section-head .num::after{ width: 24px; }
+
+    .services{ grid-template-columns: 1fr; gap: 14px; }
+    .service.featured{ grid-column: auto; }
+    .service{ padding: 28px 22px; }
+    .service .num-display{ font-size: 44px; }
+    .service.featured .num-display{ font-size: 50px; }
+    .service h3{ font-size: 20px; }
+    .service.featured h3{ font-size: 22px; }
+
+    .project-grid{ grid-template-columns: 1fr; gap: 14px; }
+    .project-card .meta-row{ padding: 20px 22px 6px; font-size: 9.5px; }
+    .project-card h3{ padding: 0 22px 10px; font-size: 20px; }
+    .project-card p{ padding: 0 22px 18px; font-size: 14px; }
+    .project-card .footer-row{ padding: 12px 22px 18px; }
+    .reel-wrap .reel-placeholder .ttl{ font-size: 20px; }
+
+    .work-grid{ grid-template-columns: 1fr; gap: 14px; }
+    .work-card{ grid-template-columns: 1fr; gap: 18px; padding: 28px 22px; text-align: center; }
+    .work-logo{ width: 100px; height: 100px; margin: 0 auto; padding: 14px; }
+    .work-card h3{ font-size: 20px; }
+    .work-card p{ font-size: 14px; }
+    .case-link{ font-size: 10.5px; }
+
+    .contact-block{ grid-template-columns: 1fr; padding: 48px 28px; gap: 32px; text-align: center; }
+    .contact-block .sub{ margin-left: auto; margin-right: auto; }
+    .social-link{ text-align: left; }
+    .social-link .val{ font-size: 13.5px; word-break: break-all; }
+
+    footer.foot{ flex-direction: column; gap: 12px; padding: 24px 20px; text-align: center; font-size: 10px; }
+  }
+  @media (max-width: 400px){
+    .hero{ padding: 36px 16px 52px; }
+    section.block{ padding: 52px 16px; }
+    .section-divider{ padding: 0 16px; }
+    .nav-inner{ padding: 14px 16px; }
+    .photo-wrap{ max-width: 180px; }
+    .hero-content h1{ font-size: 44px; }
+    .service{ padding: 24px 18px; }
+    .work-card{ padding: 22px 18px; }
+    .contact-block{ padding: 36px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================== NAV ============================== -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand">
+      <span class="mark">DW</span>
+      <div>
+        <span class="name">Dylan Wong</span>
+        <span class="role">Customer Success</span>
+      </div>
+    </a>
+    <nav class="primary">
+      <ul>
+        <li><a href="#about" class="active" aria-current="page">About Me</a></li>
+        <li><a href="#things">Things I Do</a></li>
+        <li><a href="#projects">My Projects</a></li>
+        <li><a href="#work">My Work</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <a href="https://drive.google.com/file/d/1ToqC5KCig1cww1iqrsjFo6FXUpbzkwFh/view?usp=sharing" target="_blank" rel="noopener" class="nav-cta">My Resume →</a>
+  </div>
+</header>
+
+<!-- ============================== HERO ============================== -->
+<section class="hero" id="about">
+  <div class="hero-grid">
+    <div class="photo-wrap reveal">
+      <div class="photo-frame">
+        <img src="profile.png" alt="Dylan Wong portrait" />
+      </div>
+    </div>
+
+    <div class="hero-content reveal">
+      <div class="eyebrow-row">
+        <span class="pulse-dot"></span>
+        <span class="eyebrow">About Me · Personal Profile</span>
+      </div>
+      <h1>Dylan <span class="italic">Wong.</span></h1>
+      <p class="tagline">Turning <em>clients</em> into <em>champions.</em></p>
+      <p class="bio">With <em>9+ years</em> driving retention, expansion, and adoption across B2B SaaS and AI, I help businesses get real value from the tools they invest in — from <em>onboarding through renewal</em> and beyond.</p>
+
+      <div class="chips">
+        <span class="chip">9+ years in B2B SaaS</span>
+        <span class="chip">UCaaS · CCaaS · AI</span>
+        <span class="chip">Based in Manila, PH</span>
+      </div>
+
+      <div class="hero-ctas">
+        <a href="https://drive.google.com/file/d/1ToqC5KCig1cww1iqrsjFo6FXUpbzkwFh/view?usp=sharing" target="_blank" rel="noopener" class="btn btn-primary">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          My Resume
+        </a>
+        <a href="#contact" class="btn btn-outline">Get in touch →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"><hr class="rule"></div>
+
+<!-- ============================== THINGS I DO ============================== -->
+<section class="block" id="things">
+  <div class="section-head reveal">
+    <div class="num">02 — What I Do</div>
+    <h2>Things <span class="italic">I do.</span></h2>
+    <p>From onboarding strategy to executive QBRs — I help companies and their clients thrive.</p>
+    <hr class="rule-accent rule-center" />
+  </div>
+
+  <div class="services">
+
+    <article class="card service featured reveal">
+      <div class="num-display">01</div>
+      <h3>Customer Success Management</h3>
+      <p class="lede">End-to-end ownership of the post-sale customer lifecycle — ensuring adoption, satisfaction, and measurable value.</p>
+      <ul>
+        <li>Onboarding & implementation support</li>
+        <li>Health scoring & risk management</li>
+        <li>QBRs & executive engagement</li>
+        <li>NPS / CSAT improvement programs</li>
+      </ul>
+    </article>
+
+    <article class="card service reveal">
+      <div class="num-display">02</div>
+      <h3>Renewals & Revenue Retention</h3>
+      <p class="lede">Proactive renewal management and data-driven upsell strategies that protect and grow revenue.</p>
+      <ul>
+        <li>Renewal pipeline management</li>
+        <li>Upsell & cross-sell identification</li>
+        <li>Churn risk mitigation playbooks</li>
+        <li>Contract negotiation support</li>
+      </ul>
+    </article>
+
+    <article class="card service reveal">
+      <div class="num-display">03</div>
+      <h3>Onboarding & Adoption Program</h3>
+      <p class="lede">Designing and refining onboarding flows that reduce time-to-value and set accounts up for long-term success.</p>
+      <ul>
+        <li>Onboarding playbook design</li>
+        <li>Success criteria alignment</li>
+        <li>Stakeholder mapping</li>
+        <li>Adoption milestone tracking</li>
+      </ul>
+    </article>
+
+    <article class="card service reveal">
+      <div class="num-display">04</div>
+      <h3>Account Management & Escalation</h3>
+      <p class="lede">Strategic portfolio management with strong escalation handling — keeping relationships intact through challenges and delivering resolution at speed.</p>
+      <ul>
+        <li>Multi-stakeholder portfolio management</li>
+        <li>Escalation handling & root-cause analysis</li>
+        <li>Cross-functional collaboration</li>
+        <li>Data analysis & reporting</li>
+      </ul>
+    </article>
+
+    <article class="card service reveal">
+      <div class="num-display">05</div>
+      <h3>Upsell & Cross-sell Execution</h3>
+      <p class="lede">Identifying and executing expansion opportunities — backed by data, customer context, and a track record of KPI overachievement (+25–30%).</p>
+      <ul>
+        <li>Expansion campaign design</li>
+        <li>Use-case driven upsell positioning</li>
+        <li>Cross-sell opportunity mapping</li>
+        <li>Revenue growth accountability</li>
+      </ul>
+    </article>
+
+  </div>
+</section>
+
+<div class="section-divider"><hr class="rule"></div>
+
+<!-- ============================== MY PROJECTS ============================== -->
+<section class="block" id="projects">
+  <div class="section-head reveal">
+    <div class="num">03 — Side Projects</div>
+    <h2>My <span class="italic">projects.</span></h2>
+    <p>Building small tools and pages on the side — sharpening my technical roots while staying close to the work.</p>
+    <hr class="rule-accent rule-center" />
+  </div>
+
+  <!-- Video Reel: autoplays muted, loops -->
+  <div class="reel-wrap reveal">
+    <span class="reel-corner">Reel · Auto</span>
+
+    <!-- Once you generate reel.mp4 (via FFmpeg), replace the placeholder with: -->
+    <!--
+    <video src="reel.mp4" autoplay loop muted playsinline></video>
+    -->
+
+    <div class="reel-placeholder">
+      <div class="play">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7L8 5z"/></svg>
+      </div>
+      <div class="ttl">Reel coming soon</div>
+      <div class="lbl">Generate from project screenshots</div>
+    </div>
+  </div>
+
+  <!-- Project Grid -->
+  <div class="project-grid">
+
+    <a href="Frontend.html" class="card project-card reveal">
+      <div class="thumb">
+        <!-- Once you run capture.js, replace .thumb-placeholder with: -->
+        <!-- <img src="screens/frontend.png" alt="Mood Board Generator screenshot"> -->
+        <div class="thumb-placeholder">
+          <div class="icon">✦</div>
+          <div class="note">Screenshot pending</div>
+        </div>
+      </div>
+      <div class="meta-row">
+        <span>Project 01</span>
+        <span class="sep">·</span>
+        <span class="type">Tool</span>
+      </div>
+      <h3>Mood Board Generator</h3>
+      <p>Generates mood boards and visual concepts — six unique homepage directions across minimalist, contemporary, and dynamic styles.</p>
+      <div class="footer-row">
+        <span class="view">View project →</span>
+        <div class="badge-stack">
+          <span>HTML</span>
+          <span>JS</span>
+          <span>AI</span>
+        </div>
+      </div>
+    </a>
+
+    <a href="Sights.html" class="card project-card reveal">
+      <div class="thumb">
+        <!-- <img src="screens/sights.png" alt="City Sights screenshot"> -->
+        <div class="thumb-placeholder">
+          <div class="icon">◈</div>
+          <div class="note">Screenshot pending</div>
+        </div>
+      </div>
+      <div class="meta-row">
+        <span>Project 02</span>
+        <span class="sep">·</span>
+        <span class="type">Map</span>
+      </div>
+      <h3>City Sights</h3>
+      <p>Interactive map of must-visit places — curated recommendations brought to life with markers, photos, and insider tips.</p>
+      <div class="footer-row">
+        <span class="view">View project →</span>
+        <div class="badge-stack">
+          <span>HTML</span>
+          <span>Maps</span>
+        </div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<div class="section-divider"><hr class="rule"></div>
+
+<!-- ============================== MY WORK ============================== -->
+<section class="block" id="work">
+  <div class="section-head reveal">
+    <div class="num">04 — Client Highlights</div>
+    <h2>My <span class="italic">work.</span></h2>
+    <p>Some of the clients I've worked with.</p>
+    <hr class="rule-accent rule-center" />
+  </div>
+
+  <div class="work-grid">
+
+    <article class="card work-card reveal">
+      <div class="work-logo">
+        <img src="strawberry-hill-logo.png" alt="Strawberry Hill Baking Company logo" />
+      </div>
+      <div>
+        <h3>Strawberry Hill Baking Company</h3>
+        <p><b>Strawberry Hill Baking Company</b> is a U.S.-based bakery and food company best known for producing traditional European-style pastries — especially <span class="pull">Czech kolaches</span>.</p>
+        <a href="#" class="case-link">Read Case Study →</a>
+      </div>
+    </article>
+
+    <article class="card work-card reveal">
+      <div class="work-logo">
+        <img src="bnamericas-logo.png" alt="BNamericas logo" />
+      </div>
+      <div>
+        <h3>BNamericas</h3>
+        <p><b>BNamericas</b> is a market and business intelligence platform serving 8 industries across Latin America, with over <span class="pull">150 employees, 700 clients</span>, and cross-regional teams spanning Chile, the US, and beyond. Following an acquisition by Endicott Growth Equity Partners in late 2020, the company set out to transform how it does business.</p>
+        <a href="#" class="case-link">Read Case Study →</a>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<div class="section-divider"><hr class="rule"></div>
+
+<!-- ============================== CONTACT ============================== -->
+<section class="block" id="contact">
+  <div class="contact-block reveal">
+    <div>
+      <span class="eyebrow">— Get in touch</span>
+      <h2>Let's <span class="italic">talk.</span></h2>
+      <p class="sub">Open to customer success roles, consulting engagements, and conversations about building long-term customer relationships in SaaS, AI, and beyond.</p>
+    </div>
+
+    <div class="socials">
+      <a href="mailto:dylanwong23@gmail.com" class="social-link">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </span>
+        <div class="text">
+          <div class="label">Email</div>
+          <div class="val">dylanwong23@gmail.com</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="https://www.linkedin.com/in/dylan-wong4b775691" target="_blank" rel="noopener" class="social-link">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </span>
+        <div class="text">
+          <div class="label">LinkedIn</div>
+          <div class="val">linkedin.com/in/dylan-wong</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+
+      <a href="tel:+639171692120" class="social-link">
+        <span class="icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+        </span>
+        <div class="text">
+          <div class="label">Phone</div>
+          <div class="val">+63 917 169 2120</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== FOOTER ============================== -->
+<footer class="foot">
+  <span>© 2026 Dylan Wong · All rights reserved</span>
+  <span>Built with <span class="accent">care</span> in Manila</span>
+</footer>
+
+<script>
+  // Scroll reveal — fade in as elements enter viewport
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
